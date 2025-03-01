@@ -1,25 +1,24 @@
 import { useState } from "react";
-import TickerSlide from '../TickerSlide/TickerSlide';
+// import TickerSlide from '../TickerSlide/TickerSlide';
 import './Ticker.css';
-// import BtnSlider from './BtnSlider' 
+import BtnSlider from './BtnSlider' 
 
 function Ticker( { executiveOrders } ){
-  const executiveOrderSlides = executiveOrders.map(executiveOrder => {
-    return (
-      <TickerSlide
-      title={executiveOrder.title}
-      summary={executiveOrder.summary}
-      id={executiveOrder.id}
-      key={executiveOrder.id}    
-    />
-    
-    )
-  })
   return (
-    <div className='ticker-container'>
-      {executiveOrderSlides}
-    </div>
-  )
-}
+      <div className="ticker-container">
+        { executiveOrders.map((order, index) => {
+          return (
+            <div className="slide">
+               <h3>{order.title}</h3>
+               <p>{order.summary}</p>
+               <button>🗑</button>
+            </div>
+          )
+        })}
+        <BtnSlider />
+        <BtnSlider />
+      </div>    
+    )
+  }
 
 export default Ticker;
