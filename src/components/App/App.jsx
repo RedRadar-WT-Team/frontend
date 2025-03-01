@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Routes, Route, Link, NavLink } from 'react-router-dom';
-import Logo from './assets/logo.webp'
-import burger from './assets/burger_menu.svg'
+import Logo from '/src/assets/logo.webp'
+import burger from '/src/assets/burger_menu.svg'
 import './App.css'
 
 function App() {
