@@ -1,34 +1,39 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { Routes, Route } from 'react-router-dom';
+import Logo from './assets/logo.webp'
+import burger from './assets/burger_menu.svg'
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [isOpen, setIsOpen] = useState(false)
+
+  function popOutMenu() {
+    setIsOpen(!isOpen);
+  }
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
+    <main className='App'>
+      <header>
+        <img src={Logo} alt='repRadar logo'></img>
+        <h1>RepRadar</h1>
+        <button className='burger-button'>
+        <img className='burger-img' src={burger} onClick={popOutMenu}></img>
         </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+        {isOpen && (
+          <div className='pop-up'>
+            <ul>
+              <li>About</li>
+              <li>All EO's</li>
+              <li>My Profile</li>
+              <li>Login/Logout</li>
+            </ul>
+          </div>
+        )}
+      </header>
+      <Routes>
+          {/* <Route path="/" element={<Home />}/> */}
+        </Routes>
+    </main>
   )
 }
 
