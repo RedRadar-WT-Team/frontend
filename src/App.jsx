@@ -16,19 +16,21 @@ function App() {
       <header>
         <img src={Logo} alt='repRadar logo'></img>
         <h1>RepRadar</h1>
-        <button className='burger-button'>
-        <img className='burger-img' src={burger} onClick={popOutMenu}></img>
-        </button>
-        {isOpen && (
-          <div className='pop-up'>
-            <ul>
-              <li>About</li>
-              <li>All EO's</li>
-              <li>My Profile</li>
-              <li>Login/Logout</li>
-            </ul>
-          </div>
-        )}
+        <section className='pop-out-container'>
+          <button className='burger-button'>
+          <img className='burger-img' src={burger} onClick={popOutMenu}></img>
+          </button>
+          {isOpen && (
+            <div className='pop-up'>
+              <ul>
+                <li>About</li>
+                <li>All EO's</li>
+                <li>My Profile</li>
+                <li>Login/Logout</li>
+              </ul>
+            </div>
+          )}
+        </section>
       </header>
       <Routes>
           {/* <Route path="/" element={<Home />}/> */}
