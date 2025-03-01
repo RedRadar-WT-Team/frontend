@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Link, NavLink } from 'react-router-dom';
 import Logo from './assets/logo.webp'
 import burger from './assets/burger_menu.svg'
 import './App.css'
@@ -30,11 +30,17 @@ function App() {
           </div>
         )}
       </header>
+      
+      <div className='searchbar-container'></div>
+
+      <div className='ticker-container'></div>
+
+
       <Routes>
-          {/* <Route path="/" element={<Home />}/> */}
-        </Routes>
+          {/* routes will go here once set up */}
+      </Routes>
     </main>
-  )
+  );
 }
 
 export default App
