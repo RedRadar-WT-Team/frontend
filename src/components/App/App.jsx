@@ -1,7 +1,8 @@
 import './App.css'
 import { Routes, Route } from 'react-router-dom';
 import Header from '../Header/Header';
-import SearchBar from '../SearchBar/SearchBar';
+import { useState } from 'react';
+// import SearchBar from '../SearchBar/SearchBar';
 import Ticker from '../Ticker/Ticker';
 
 function App() {
