@@ -15,17 +15,14 @@
   position: relative;
   display: block;
   overflow: hidden; 
-  color: var(--pale-dogwood);
-  background-color: var(--teal);
-  /* align-items: center;
-  justify-content: center; */
+  color: var(--teal);
+  /* background-color: var(--teal); */
 }
 
 .slide {
   width: 100%;
   height: 100%;
-  /* margin: 10px; */
-  /* padding: 10px; */
+  margin-left: 10px;
   top: 0;
   left: 0;
   position: absolute;
@@ -37,7 +34,6 @@
 
 .slide.active-anim {
   opacity: 1;
-  /* z-index: 1; */
 }
 
 h2 {
@@ -53,14 +49,36 @@ p {
   justify-content: center;
   width: 60px;
   height: 60px;
-  /* background-color: blueviolet; */
-  border: 1px solid;
-  border-color: black;
+  border: 1px solid black;
   border-radius: 60%;
   cursor: pointer;
   transition: transform 0.2 ease;
   position: absolute;
-  right: 0px;
+  right: 4px;
+}
+
+.btn-slide img {
+  width: 24px;
+  height: 24px;
+}
+
+.btn-slide:hover {
+  color: teal;
+  border-color: var(--teal);
+  background-color: rgba(2, 131, 139, 0.1);
+}
+
+.btn-slide:active {
+  color: white;
+  background-color: var(--teal);
+  border-color: var(--teal);
+  transform: scale(0.95); /* Slight shrink effect when pressed */
+}
+
+.btn-slide:focus {
+  border-color: var(--teal);
+  box-shadow: 0 0 0 2px rgba(2, 131, 139, 0.3);
+  outline: none;
 }
 
 .btn-slide.next {

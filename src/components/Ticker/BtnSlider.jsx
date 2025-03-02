@@ -1,7 +1,7 @@
 import React from "react";
 import './Ticker.css';
-import rightArrow from './icons/right_arrow.png';
-import leftArrow from './icons/left_arrow.png';
+import rightArrow from './icons/right_arrow_207.svg';
+import leftArrow from './icons/left_arrow_208.svg';
 
 export default function Btn({direction, moveSlide}) {
   console.log("THE direction: ", direction);
@@ -10,7 +10,7 @@ export default function Btn({direction, moveSlide}) {
     <button 
     onClick={moveSlide}
     className={direction === "next" ? "btn-slide next" : "btn-slide prev"}>
-      <img src={direction === "next" ? rightArrow : leftArrow}/>
+      <img src={direction === "next" ? rightArrow : leftArrow} alt={direction}/>
     </button>
   )
 }
