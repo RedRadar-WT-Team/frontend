@@ -24,10 +24,9 @@ function App() {
         </div>
 
         <div className='ticker-container'>
-        <Ticker executiveOrders={executiveOrders}/>
+          <Ticker executiveOrders={executiveOrders}/>
         </div>
       </div>
-
       <Routes>
         {/* Routes will go here */}
       </Routes>
