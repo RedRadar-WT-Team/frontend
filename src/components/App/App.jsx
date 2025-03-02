@@ -4,6 +4,9 @@ import Logo from '/src/assets/logo.webp'
 import burger from '/src/assets/burger_menu.svg'
 import './App.css'
 
+// import SearchBar from './components/SearchBar';
+// import Ticker from './components/Ticker';
+
 function App() {
   const [isOpen, setIsOpen] = useState(false)
 
@@ -18,29 +21,47 @@ function App() {
         <h1>RepRadar</h1>
         <section className='pop-out-container'>
           <button className='burger-button'>
-          <img className='burger-img' src={burger} onClick={popOutMenu}></img>
+          <img className='burger-img' src={burger} alt="Menu" onClick={popOutMenu}></img>
           </button>
           {isOpen && (
-            <div className='pop-up'>
+            <div className={`pop-up ${isOpen ? 'open' : ''}`}>
               <ul>
-                <li>About</li>
-                <li>All EO's</li>
-                <li>My Profile</li>
-                <li>Login/Logout</li>
+                <li>
+                  <NavLink to="/about">About</NavLink>
+                </li>
+                <li>
+                  <NavLink to="/all-eos">All EO's</NavLink>
+                </li>
+                <li>
+                  <NavLink to="/profile">My Profile</NavLink>
+                </li>
+                <li>
+                  <NavLink to="/login">Login/Logout</NavLink>
+                </li>
               </ul>
+
             </div>
           )}
         </section>
       </header>
       
-      <div className='searchbar-container'></div>
+      <div className='main-content'>
+        <div className='searchbar-container'>
+          <p>Search bar will go here.</p>
+        </div>
 
-      <div className='ticker-container'></div>
-
+        <div className='ticker-container'>
+          <p>Ticker will go here.</p>
+        </div>
+      </div>
 
       <Routes>
-          {/* routes will go here once set up */}
+        {/* <Route path="/about" element={<About />} />
+        <Route path="/eos" element={<AllEos />} />
+        <Route path="/user" element={<Profile />} />
+        <Route path="/login" element={<Login />} /> */}
       </Routes>
+
     </main>
   );
 }
