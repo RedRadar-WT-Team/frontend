@@ -1,0 +1,113 @@
+* {
+  --snow: #f6f2f3ff;
+  --pale-dogwood: #c7aba2ff;
+  --garnet: #663931ff;
+  --teal: #02838bff;
+  --black: #010a0bff;
+}
+
+.ticker-container {
+  height: 200px;
+  width: 60%;
+  border: 40px;
+  margin: 20px;
+  padding: 20px;
+  position: relative;
+  display: block;
+  overflow: hidden; 
+  color: black;
+  /* background-color: var(--teal); */
+}
+
+.feather-icon {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 10;
+}
+
+.feather-icon img {
+  width: 24px;
+  height: 24px;
+}
+
+.eo-label {
+  position: absolute;
+  top: 10px;
+  right: 30px;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-weight: bold;
+  /* color: var(--garnet); */
+  font-size: 0.9rem;
+  z-index: 10; /* to make sure it's above the slide!!!! */
+}
+
+.slide {
+  width: 100%;
+  height: 100%;
+  margin-left: 10px;
+  top: 0;
+  left: 0;
+  position: absolute;
+  opacity: 0;
+  transition: opacity ease-in-out 0.2s;
+  position-area: bottom;
+  
+}
+
+.slide.active-anim {
+  opacity: 1;
+}
+
+/* h2 {
+padding: ;
+} */
+
+p {
+  padding-right: 15px;
+}
+.btn-slide {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  border: 1px solid black;
+  border-radius: 60%;
+  cursor: pointer;
+  transition: transform 0.2 ease;
+  position: absolute;
+  right: 4px;
+}
+
+.btn-slide img {
+  width: 24px;
+  height: 24px;
+}
+
+.btn-slide:hover {
+  color: teal;
+  border-color: var(--teal);
+  background-color: rgba(2, 131, 139, 0.1);
+}
+
+.btn-slide:active {
+  color: white;
+  background-color: var(--teal);
+  border-color: var(--teal);
+  transform: scale(0.95);   
+}
+
+.btn-slide:focus {
+  border-color: var(--teal);
+  box-shadow: 0 0 0 2px rgba(2, 131, 139, 0.3);
+  outline: none;
+}
+
+.btn-slide.next {
+  bottom: 75px;
+}
+
+.btn-slide.prev {
+  bottom: 10px;
+}
