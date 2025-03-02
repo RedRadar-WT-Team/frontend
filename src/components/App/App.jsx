@@ -17,7 +17,9 @@ function App() {
   return (
     <main className='App'>
       <header>
-        <img src={Logo} alt='repRadar logo'></img>
+      <Link to="/">
+        <img src={Logo} alt="repRadar logo" />
+      </Link>
         <h1>RepRadar</h1>
         <section className='pop-out-container'>
           <button className='burger-button'>
@@ -30,13 +32,13 @@ function App() {
                   <NavLink to="/about">About</NavLink>
                 </li>
                 <li>
-                  <NavLink to="/all-eos">All EO's</NavLink>
+                  <NavLink to="/all-eos">All Executive Orders</NavLink>
                 </li>
                 <li>
-                  <NavLink to="/profile">My Profile</NavLink>
+                  <NavLink to="/profile">User Profile</NavLink>
                 </li>
                 <li>
-                  <NavLink to="/login">Login/Logout</NavLink>
+                  <NavLink to="/logout">Logout</NavLink>
                 </li>
               </ul>
 
