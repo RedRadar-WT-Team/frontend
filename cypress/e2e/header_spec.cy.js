@@ -1,9 +1,7 @@
-describe('Header functionality', () => {
-  beforeEach(() => {
+describe('header functionality', () => {
+    it('passes', () => {
     cy.visit('http://localhost:5173')
-  })
 
-  it('passes', () => {
     cy.get('.logo').should('be.visible')
 
     cy.get('h1').contains('RepRadar')
@@ -14,11 +12,11 @@ describe('Header functionality', () => {
 
     cy.get('ul li:first').contains('About')
     cy.get('ul li:last').contains('Logout')
-
-    cy.get('ul li:last').click()
+        .click()
+  
     cy.url().should('include', '/logout')
 
     cy.get('.logo').click()
-    cy.url().should('include', '/')
+    cy.url().should('not.include', '/logout')
   })
 })
