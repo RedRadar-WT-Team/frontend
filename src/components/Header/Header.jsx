@@ -15,7 +15,7 @@ function Header() {
   return (
       <header>
         <Link to="/">
-          <img src={Logo} alt="repRadar logo" />
+          <img className='logo' src={Logo} alt="repRadar logo" />
         </Link>
 
         <h1>RepRadar</h1>
