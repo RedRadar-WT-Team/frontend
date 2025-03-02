@@ -1,6 +1,8 @@
-import { useState } from "react";
 import './App.css'
-import Ticker from '../Ticker/Ticker'
+import { Routes, Route } from 'react-router-dom';
+import Header from '../Header/Header';
+import SearchBar from '../SearchBar/SearchBar';
+import Ticker from '../Ticker/Ticker';
 
 function App() {
   const dummyExecutiveOrders = [
@@ -11,13 +13,26 @@ function App() {
     {id: 5000, title: "Cuz 'Mercuh", summary: "Fireworks at 3:30 am. Everyday. Even Saturdays."}
   ]
   const [executiveOrders, setExecutiveOrders] = useState(dummyExecutiveOrders);
-
+  
   return (
     <main className='App'>
-      <h1>RepRadar</h1>
-      <Ticker executiveOrders={executiveOrders}/>
+      <Header />
+
+      <div className='main-content'>
+        <div className='searchbar-container'>
+          <p>Search bar will go here.</p>
+        </div>
+
+        <div className='ticker-container'>
+        <Ticker executiveOrders={executiveOrders}/>
+        </div>
+      </div>
+
+      <Routes>
+        {/* Routes will go here */}
+      </Routes>
     </main>
-  )
+  );
 }
 
-export default App; 
+export default App
