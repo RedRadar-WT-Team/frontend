@@ -1,5 +1,4 @@
 import { useState } from "react";
-// import TickerSlide from '../TickerSlide/TickerSlide'
 import './Ticker.css';
 import BtnSlider from './BtnSlider' 
 
@@ -17,7 +16,12 @@ function Ticker( { executiveOrders } ){
   }
  
   const prevSlide = () => {
-     
+    if(tickerIndex !== 1){
+      setTickerIndex(tickerIndex - 1)
+    }
+    else if (tickerIndex === 1) {
+      setTickerIndex(executiveOrders.length)
+    }
   }
 
   return (
@@ -27,9 +31,8 @@ function Ticker( { executiveOrders } ){
             <div 
             key={order.id}
             className={tickerIndex === index + 1 ? "slide active-anim" : "slide"}>
-               <h3>{order.title}</h3>
+               <h2>{order.title}</h2>
                <p>{order.summary}</p>
-               <button>🗑</button>
             </div>
           )
         })}
