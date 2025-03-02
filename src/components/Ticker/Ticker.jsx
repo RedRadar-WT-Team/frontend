@@ -1,6 +1,7 @@
 import { useState } from "react";
 import './Ticker.css';
-import BtnSlider from './BtnSlider' 
+import BtnSlider from './BtnSlider';
+import featherPenIcon from './icons/feather_pen_svg.svg';
 
 function Ticker( { executiveOrders } ){
 
@@ -26,6 +27,13 @@ function Ticker( { executiveOrders } ){
 
   return (
       <div className="ticker-container">
+
+        <div className="feather-icon">
+          <img src={featherPenIcon} alt="Feather Pen" />
+        </div>
+
+        <div className="eo-label">EO#</div>
+
         { executiveOrders.map((order, index) => {
           return (
             <div 
