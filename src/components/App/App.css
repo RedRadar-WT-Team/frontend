@@ -1,0 +1,33 @@
+body {
+  background-color: #37312A;
+  margin: 0;
+  height: 100%;
+}
+
+.App {
+  display: flex;
+  flex-direction: column;
+  background-color: #37312A;
+  min-height: 100vh; 
+  justify-content: center; 
+}
+
+.main-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; 
+  align-items: center;
+  text-align: center;
+  flex-grow: 1; 
+  width: 100%;
+  padding: 20px;
+}
+
+.searchbar-container,
+.ticker-container {
+  width: 80%;
+  border: solid #00C9AF;
+  margin-bottom: 20px;
+  padding: 20px;
+  border-radius: 10px;
+}
