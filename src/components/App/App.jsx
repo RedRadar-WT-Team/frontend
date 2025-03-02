@@ -1,45 +1,26 @@
-import { useState } from 'react'
-import { Routes, Route, Link, NavLink } from 'react-router-dom';
-import Logo from '/src/assets/logo.webp'
-import burger from '/src/assets/burger_menu.svg'
 import './App.css'
+import { Routes, Route } from 'react-router-dom';
+import Header from '../Header/Header';
+// import SearchBar from '../SearchBar/SearchBar';
+// import Ticker from '../Ticker/Ticker';
 
 function App() {
-  const [isOpen, setIsOpen] = useState(false)
-
-  function popOutMenu() {
-    setIsOpen(!isOpen);
-  }
-
   return (
     <main className='App'>
-      <header>
-        <img src={Logo} alt='repRadar logo'></img>
-        <h1>RepRadar</h1>
-        <section className='pop-out-container'>
-          <button className='burger-button'>
-          <img className='burger-img' src={burger} onClick={popOutMenu}></img>
-          </button>
-          {isOpen && (
-            <div className='pop-up'>
-              <ul>
-                <li>About</li>
-                <li>All EO's</li>
-                <li>My Profile</li>
-                <li>Login/Logout</li>
-              </ul>
-            </div>
-          )}
-        </section>
-      </header>
-      
-      <div className='searchbar-container'></div>
+      <Header />
 
-      <div className='ticker-container'></div>
+      <div className='main-content'>
+        <div className='searchbar-container'>
+          <p>Search bar will go here.</p>
+        </div>
 
+        <div className='ticker-container'>
+          <p>Ticker will go here.</p>
+        </div>
+      </div>
 
       <Routes>
-          {/* routes will go here once set up */}
+        {/* Routes will go here */}
       </Routes>
     </main>
   );
