@@ -1,52 +1,14 @@
-import { useState } from 'react'
-import { Routes, Route, Link, NavLink } from 'react-router-dom';
-import Logo from '/src/assets/logo.webp'
-import burger from '/src/assets/burger_menu.svg'
 import './App.css'
-
-// import SearchBar from './components/SearchBar';
-// import Ticker from './components/Ticker';
+import { Routes, Route } from 'react-router-dom';
+import Header from '../Header/Header';
+// import SearchBar from '../SearchBar/SearchBar';
+// import Ticker from '../Ticker/Ticker';
 
 function App() {
-  const [isOpen, setIsOpen] = useState(false)
-
-  function popOutMenu() {
-    setIsOpen(!isOpen);
-  }
-
   return (
     <main className='App'>
-      <header>
-      <Link to="/">
-        <img src={Logo} alt="repRadar logo" />
-      </Link>
-        <h1>RepRadar</h1>
-        <section className='pop-out-container'>
-          <button className='burger-button'>
-          <img className='burger-img' src={burger} alt="Menu" onClick={popOutMenu}></img>
-          </button>
-          {isOpen && (
-            <div className={`pop-up ${isOpen ? 'open' : ''}`}>
-              <ul>
-                <li>
-                  <NavLink to="/about">About</NavLink>
-                </li>
-                <li>
-                  <NavLink to="/all-eos">All Executive Orders</NavLink>
-                </li>
-                <li>
-                  <NavLink to="/profile">User Profile</NavLink>
-                </li>
-                <li>
-                  <NavLink to="/logout">Logout</NavLink>
-                </li>
-              </ul>
+      <Header />
 
-            </div>
-          )}
-        </section>
-      </header>
-      
       <div className='main-content'>
         <div className='searchbar-container'>
           <p>Search bar will go here.</p>
@@ -58,12 +20,8 @@ function App() {
       </div>
 
       <Routes>
-        {/* <Route path="/about" element={<About />} />
-        <Route path="/eos" element={<AllEos />} />
-        <Route path="/user" element={<Profile />} />
-        <Route path="/login" element={<Login />} /> */}
+        {/* Routes will go here */}
       </Routes>
-
     </main>
   );
 }
