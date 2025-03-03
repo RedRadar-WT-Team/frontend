@@ -5,9 +5,9 @@ function CreateAccount() {
   const [email, setEmail] = useState("");
   const [usState, setUsState] = useState("");
   const [zip, setZip] = useState("");
-  //email, state, zip_code-- don't need username (yet?)
   const [zipError, setZipError] = useState("");
   const [errorMessage, setErrorMessage] = useState(null);
+  const [successMessage, setSuccessMessage] = useState(null);
 
   const handleZipChange = (event) => {
     const zipValue = event.target.value;
@@ -28,14 +28,14 @@ function CreateAccount() {
     setUsState("");
     setZip("");
     setZipError("");
-    setEmailError("");
+    setErrorMessage("");
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     const formData = {
-      email, 
+      email,
       state: usState,
       zip,
     };
@@ -60,12 +60,14 @@ function CreateAccount() {
       const json = await response.json();
       console.log("Success:", json);
       setErrorMessage(null);
-      resetForm();
+      setSuccessMessage("Your account has been created successfully!"); // Show success message
+      resetForm(); // Reset the form fields, but not the success message
     } catch (error) {
       console.error("Error submitting form:", error.message);
       setErrorMessage("An error occurred while creating your account. Please try again.");
+      setSuccessMessage(null); // Clear success message on error
     }
-  };
+  }
 
   return (
     <div className="create-account-page">
@@ -73,11 +75,11 @@ function CreateAccount() {
 
       <form onSubmit={handleSubmit}>
         <label>Email:
-        <input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
         </label>
 
         <label>
@@ -97,9 +99,9 @@ function CreateAccount() {
         </label>
 
         {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
+        {successMessage && <p style={{ color: 'green' }}>{successMessage}</p>}
 
         <button type="submit">Create Account</button>
-      
       </form>
     </div>
   );
