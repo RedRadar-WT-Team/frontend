@@ -1,3 +1,11 @@
+* {
+  --snow: #f6f2f3ff;
+  --pale-dogwood: #c7aba2ff;
+  --garnet: #663931ff;
+  --teal: #02838bff;
+  --black: #010a0bff;
+}
+
 header {
   display: flex;
   justify-content: center;
@@ -19,17 +27,19 @@ header img {
 
 header h1 {
   margin: auto;
+  color: var(--snow)
 }
 
 .burger-img {
   height: 50px;
 }
 
-.burger-button:hover {
+.burger-button {
+ background-color: #37312A;
  cursor: pointer
 }
 
-.pop-up {
+/* .pop-up {
   display: flex;
   flex-direction: column;
   border-bottom-right-radius: 10px;
@@ -38,20 +48,29 @@ header h1 {
   color: #00C9AF;
   text-align: justify;
   padding: 10px;
-}
+  position: relative;
+  /* width: 50% */
+} */
 
 .pop-out-container {
   margin: 10px;
   padding: 10px;
   display: flex;
   flex-direction: column;
+  color: var(--teal);
 }
 
 .pop-up ul {
   list-style-type: none;
   padding: 0;
+  color: var(--teal);
 }
 
 .pop-up li {
   margin-bottom: 10px;
+}
+
+.login-button {
+  background: none;
+  color:inherit
 }
