@@ -1,6 +1,6 @@
 describe("Create Account Form", () => {
   beforeEach(() => {
-    cy.visit("/create-account"); 
+    cy.visit("/create_account"); 
   });
 
   it("renders the form correctly", () => {
