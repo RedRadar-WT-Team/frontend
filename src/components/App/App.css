@@ -8,11 +8,10 @@
 
 #root {
   width: 100%;
-  max-width: 1280px;
+  max-width: none; 
   margin: 0 auto;
-  padding: 2rem;
+  padding: 0; 
   box-sizing: border-box;
-  /* text-align: center; */
 }
 
 /* .logo {
@@ -83,5 +82,44 @@ body {
   margin-bottom: 20px;
   padding: 20px;
   border-radius: 10px;
+}
+
+.pop-up-login {
+  background-color: var(--snow);
+  /* width: 20%; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center; 
+  align-items: center;
+  text-align: center;
+  color: #37312A;
+  border-radius: 20px;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  margin: 40px;
+}
+
+.username-input {
+  height: 2em;
+  border-radius: 15px;
+}
+
+.pop-up {
+  display: flex;
+  flex-direction: column;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  background-color: var(--snow);
+  color: #00C9AF;
+  text-align: justify;
+  padding: 10px;
+  position: fixed;
+  margin-bottom: 30em;
+  right: 0em;
+  /* width: 50% */
+}
+
+.signin-button {
+  border-radius: 15px;
 }
 
