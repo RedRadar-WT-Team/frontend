@@ -80,7 +80,7 @@ function CreateAccount() {
         />
         </label>
 
-        <label>State:
+        <label>
           <StateDropdown value={usState} onChange={handleStateChange} />
         </label>
 
