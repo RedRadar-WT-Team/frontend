@@ -5,6 +5,7 @@ import { useState } from 'react';
 // import SearchBar from '../SearchBar/SearchBar';
 import Ticker from '../Ticker/Ticker';
 import { Link, NavLink } from 'react-router-dom';
+import CreateAccount from '../CreateAccount/CreateAccount';
 
 function App() {
   const dummyExecutiveOrders = [
@@ -71,6 +72,7 @@ function App() {
       </div>
       <Routes>
         {/* Routes will go here */}
+        <Route path="/create_account" element={<CreateAccount />} />
       </Routes>
     </main>
   );
