@@ -26,7 +26,7 @@ function CreateAccount() {
 
     async function createAccount(formData) {
       try {
-        const response = await fetch("http://localhost:3000", {
+        const response = await fetch("http://localhost:3000/create_account", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
