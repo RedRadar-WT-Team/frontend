@@ -4,7 +4,7 @@ import Header from '../Header/Header';
 import { useState } from 'react';
 // import SearchBar from '../SearchBar/SearchBar';
 import Ticker from '../Ticker/Ticker';
-// import CreateAccount from '../CreateAccount/CreateAccount';
+import CreateAccount from '../CreateAccount/CreateAccount';
 
 function App() {
   const dummyExecutiveOrders = [
@@ -31,6 +31,7 @@ function App() {
       </div>
       <Routes>
         {/* Routes will go here */}
+        <Route path="/create_account" element={<CreateAccount />} />
       </Routes>
     </main>
   );
