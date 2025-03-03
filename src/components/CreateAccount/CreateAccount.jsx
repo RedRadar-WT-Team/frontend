@@ -1,14 +1,49 @@
 import React, { useState } from "react";
+import StateDropdown from './StateDropdown';
+import { fetchModule } from "vite";
 
 function CreateAccount() {
   const [email, setEmail] = useState("");
-  const [state, setUsstate] = useState("");
-  const [zip, setZip] = useState("")
+  const [usState, setUsState] = useState("");
+  const [zip, setZip] = useState("");
   //email, state, zip_code-- don't need username (yet?)
 
-  const handleSubmit = (event) => {
+  const handleStateChange = (event) => {
+    setUsState(event.target.value);
+  };
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
-  }
+
+    const formData = {
+      email, 
+      state: usState,
+      zip,
+    };
+
+    await createAccount(formData);
+  };
+
+    async function createAccount(formData) {
+      try {
+        const response = await fetch("http://localhost:3000", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        });
+
+        if (!response.ok) {
+          throw new Error(`Response status: ${response.status}`);
+        }
+
+        const json = await response.json();
+        console.log("Success:", json);
+      } catch (error) {
+        console.error("Error submitting form:", error.message);
+      }
+    };
 
   return (
     <div className="create-account-page">
@@ -24,29 +59,25 @@ function CreateAccount() {
         </label>
 
         <label>State:
-        <input
-          type="state"
-          value={state}
-          onChange={(e) => setUsstate(e.target.value)}
-          required
-        />
+          <StateDropdown value={usState} onChange={handleStateChange} />
         </label>
 
         <label>Zip code:
-        <input
-          type="zip_code"
-          value={zip}
-          onChange={(e) => setZip(e.target.value)}
-          required
-        />
+          <input
+            type="text"
+            value={zip}
+            onChange={(e) => setZip(e.target.value)}
+            required
+            pattern="[0-9]{5}"
+            title="Zip code should be 5 digits"
+          />
         </label>
 
-        <input type="submit" />
+        <button type="submit">Create Account</button>
+      
       </form>
-
-
     </div>
-  )
+  );
 }
 
-export default CreateAccount
+export default CreateAccount;
