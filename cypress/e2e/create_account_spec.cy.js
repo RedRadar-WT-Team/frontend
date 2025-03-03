@@ -63,7 +63,29 @@ describe("Create Account Form", () => {
     cy.get("input[type=text]").then(($input) => {
       const pattern = $input.attr("pattern");
       expect(pattern).to.equal("[0-9]{5}");
-      cy.get("input[type=text]:invalid").should("exist"); // Check if the input is invalid
+      cy.get("input[type=text]:invalid").should("exist");
     });
   });
+
+  it("should show a success message when the account is created", () => {
+    const testEmail = "test@example.com";
+    const testZip = "12345";
+    const testState = "California";
+  
+    cy.get("input[type=email]").type(testEmail);
+    cy.get("select").select(testState);
+    cy.get("input[type=text]").type(testZip);
+  
+    cy.get("button[type=submit]").click();
+  
+    cy.intercept("POST", "http://localhost:3000/create_account", {
+      statusCode: 200,
+      body: { message: "Account created successfully!" },
+    }).as("createAccountRequest");
+  
+    cy.wait("@createAccountRequest").its("response.statusCode").should("eq", 200);
+  
+    cy.get("body").should("contain", "Account created successfully!");
+  });
+  
 });
