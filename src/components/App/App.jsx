@@ -1,14 +1,11 @@
 import './App.css'
 import { Routes, Route, useNavigate, useLocation  } from 'react-router-dom';
-import Header from '../Header/Header';
 import { useState } from 'react';
-// import SearchBar from '../SearchBar/SearchBar';
-import Ticker from '../Ticker/Ticker';
-import { Link, NavLink } from 'react-router-dom';
-import CreateAccount from '../CreateAccount/CreateAccount';
+import Header from '../Header/Header';
 import MenuPopUp from '../MenuPopUp/MenuPopUp';
 import LoginPopUp from '../LoginPopUp/LoginPopUp';
-
+import Homepage from '../Homepage/Homepage';
+import CreateAccount from '../CreateAccount/CreateAccount';
 
 function App() {
   const dummyExecutiveOrders = [
@@ -44,22 +41,16 @@ function App() {
   return (
     <main className='App'>
       <Header  popOutMenu={popOutMenu}/>
-      <div className='main-content'>
-        <MenuPopUp popOutLogin={popOutLogin} isOpen={isOpen}/>
-        <LoginPopUp isLoginOpen={isLoginOpen} closeLogin={closeLogin} navigateToCreate={navigateToCreate}/>
+      <MenuPopUp popOutLogin={popOutLogin} isOpen={isOpen}/>
+      <LoginPopUp isLoginOpen={isLoginOpen} closeLogin={closeLogin} navigateToCreate={navigateToCreate}/>
 
-        <div className='searchbar-container'>
-          <p>Search bar will go here.</p>
-        </div>
-
-        <div className='ticker-container'>
-          <Ticker executiveOrders={executiveOrders}/>
-        </div>
-      </div>
-      <Routes>
-        {/* Routes will go here */}
-        <Route path="/create_account" element={<CreateAccount />} />
-      </Routes>
+      <section className='content'>
+        <Routes>
+          <Route path="/" element={<Homepage executiveOrders={executiveOrders}  />} />
+          <Route path="/create_account" element={<CreateAccount />} />
+        </Routes>
+      </section>
+      
     </main>
   );
 }
