@@ -1,0 +1,14 @@
+.popup-container {
+  display: flex;
+  flex-direction: column;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  background-color: var(--snow);
+  color: #00C9AF;
+  text-align: justify;
+  padding: 10px;
+  position: fixed;
+  margin-bottom: 30em;
+  right: 0em;
+  /* width: 50% */
+}
