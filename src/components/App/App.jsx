@@ -1,11 +1,14 @@
 import './App.css'
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useNavigate, useLocation  } from 'react-router-dom';
 import Header from '../Header/Header';
 import { useState } from 'react';
 // import SearchBar from '../SearchBar/SearchBar';
 import Ticker from '../Ticker/Ticker';
 import { Link, NavLink } from 'react-router-dom';
 import CreateAccount from '../CreateAccount/CreateAccount';
+import MenuPopUp from '../MenuPopUp/MenuPopUp';
+import LoginPopUp from '../LoginPopUp/LoginPopUp';
+
 
 function App() {
   const dummyExecutiveOrders = [
@@ -18,6 +21,8 @@ function App() {
   const [executiveOrders, setExecutiveOrders] = useState(dummyExecutiveOrders);
   const [isLoginOpen, setIsLoginOpen] = useState(false)
   const [isOpen, setIsOpen] = useState(false)
+  const navigate = useNavigate()
+  // const location = useLocation()
 
   function popOutLogin() {
     setIsLoginOpen(!isLoginOpen);
@@ -27,41 +32,22 @@ function App() {
     setIsOpen(!isOpen);
   }
 
+  function closeLogin() {
+    setIsLoginOpen(!isLoginOpen);
+  }
+
+  function navigateToCreate() {
+    setIsLoginOpen(!isLoginOpen);
+    navigate('/create_account')
+  }
+
   return (
     <main className='App'>
       <Header  popOutMenu={popOutMenu}/>
-      
       <div className='main-content'>
-      {isOpen && (
-          <div className={`pop-up ${isOpen ? 'open' : ''}`}>
-            <ul>
-              <li>
-                <NavLink to="/about">About</NavLink>
-              </li>
-              <li>
-                <NavLink to="/executive-orders">All Executive Orders</NavLink>
-              </li>
-              <li>
-                <NavLink to="/profile">User Profile</NavLink>
-              </li>
-              <li>
-              <button onClick={popOutLogin} className="login-button">
-              Login/Logout
-              </button>
-              </li>
-            </ul>
-          </div>
-        )}
-      {isLoginOpen && (
-          <div className={`pop-up-login ${isLoginOpen ? 'open' : ''}`}>
-           <ul>
-             <p>Welcome!</p>
-             <input type="text" placeholder="Enter your username" className="username-input" />
-             <button className='signin-button'>Sign In</button>
-             <p>Dont have an account? Create one here!</p>
-            </ul>
-          </div>
-        )}
+        <MenuPopUp popOutLogin={popOutLogin} isOpen={isOpen}/>
+        <LoginPopUp isLoginOpen={isLoginOpen} closeLogin={closeLogin} navigateToCreate={navigateToCreate}/>
+
         <div className='searchbar-container'>
           <p>Search bar will go here.</p>
         </div>
