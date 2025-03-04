@@ -59,7 +59,7 @@ body {
 .App {
   display: flex;
   flex-direction: column;
-  background-color: #37312A;
+  background-color: var(--black);
   min-height: 100vh; 
   justify-content: center; 
 }
@@ -86,7 +86,7 @@ body {
 
 .pop-up-login {
   background-color: var(--snow);
-  /* width: 20%; */
+  width: 20%;
   display: flex;
   flex-direction: column;
   justify-content: center; 
@@ -97,6 +97,8 @@ body {
   padding-top: 40px;
   padding-bottom: 40px;
   margin: 40px;
+  position: fixed;
+  margin: 10em 48em 
 }
 
 .username-input {
@@ -104,22 +106,28 @@ body {
   border-radius: 15px;
 }
 
-.pop-up {
-  display: flex;
-  flex-direction: column;
-  border-top-left-radius: 10px;
-  border-bottom-left-radius: 10px;
-  background-color: var(--snow);
-  color: #00C9AF;
-  text-align: justify;
-  padding: 10px;
-  position: fixed;
-  margin-bottom: 30em;
-  right: 0em;
-  /* width: 50% */
-}
-
 .signin-button {
   border-radius: 15px;
 }
+
+.exit-button {
+  position: fixed;
+}
+
+.overlay {
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(5px); 
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+}
+
+.to-create-page {
+  background-color: var(--snow);
+  color: var(--teal);
+}
+
 
