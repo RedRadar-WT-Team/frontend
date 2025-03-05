@@ -13,3 +13,25 @@
   --lowOp_dogwood: rgba(199, 171, 162, 0.6);
   --lowOp_teal: rgba(2, 131, 139, 0.7);
 }
+
+.edit_profile-container {
+  width: 60%;
+  height: 25em;
+  background-color: var(--snow);
+  display: flex;
+  flex-direction: column;
+  justify-content: center; 
+  align-items: center;
+  text-align: center;
+  color: var(--garnet);
+  border-radius: 20px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  margin: 40px;
+  position: fixed;
+  margin: 10em 48em; 
+}
+
+.edit_profile-container h2 {
+  color: var(--garnet);
+}
