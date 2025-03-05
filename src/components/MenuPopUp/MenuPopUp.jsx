@@ -3,7 +3,7 @@ import './MenuPopUp.css'
 
 function MenuPopUp({popOutLogin, isOpen}) {
   return (
-    <main className='popup-container'>
+    <main className={`popup-container ${!isOpen ? 'hidden' : ''}`}>
       {isOpen && (
           <div className={`pop-up ${isOpen ? 'open' : ''}`}>
             <ul>
