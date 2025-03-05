@@ -1,0 +1,26 @@
+.homepage {
+    margin-top: 10em;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}   
+
+.searchbar-container,
+.ticker-container {
+  
+  margin-bottom: 20px;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.searchbar-container {
+    width: 70%;
+}
+
+.ticker-container {
+    width: 60%;
+    padding: 1.5em;
+    background-color: var(--xtra_lowOp_black);
+}

@@ -1,13 +1,13 @@
 import "./Homepage.css";
 import {useState} from 'react';
 import Ticker from '../Ticker/Ticker';
-// import SearchBar from '../SearchBar/SearchBar';
+import SearchBar from '../SearchBar/SearchBar';
 
 function Homepage({executiveOrders}) {
     return(
         <section className="homepage">
             <div className='searchbar-container'>
-                <p>Search bar will go here.</p>
+                <SearchBar />
             </div>
 
             <div className='ticker-container'>
@@ -17,4 +17,4 @@ function Homepage({executiveOrders}) {
     );
 }
 
-export default Homepage
+export default Homepage;
