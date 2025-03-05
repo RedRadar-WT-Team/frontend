@@ -12,6 +12,7 @@
   background-color: transparent;
   border: none;
   text-align: center;
+  color: var(--black);
 }
 
 .search_bar input:focus, button:focus {
