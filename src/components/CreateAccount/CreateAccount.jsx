@@ -1,6 +1,9 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import StateDropdown from './StateDropdown';
 import './CreateAccount.css';
+import X from '../../assets/x-symbol-svgrepo-com.svg';
+
 
 function CreateAccount() {
   const [email, setEmail] = useState("");
@@ -9,6 +12,8 @@ function CreateAccount() {
   const [zipError, setZipError] = useState("");
   const [errorMessage, setErrorMessage] = useState(null);
   const [successMessage, setSuccessMessage] = useState(null);
+  const [isOpen, setIsOpen] = useState(true);
+  const navigate = useNavigate();
 
   const handleZipChange = (event) => {
     const zipValue = event.target.value;
@@ -81,15 +86,27 @@ function CreateAccount() {
     }
   }
 
+  const closeCreateAccount = () => {
+    setIsOpen(false);
+    navigate('/');
+  };
+
+  if (!isOpen) {
+    return null;
+  }
+
   return (
     <div className="create-account-page">
       <div className='overlay'>
         <div className='create-account-container'>
           <h2>Create account</h2>
+          <button className='exit-button' onClick={closeCreateAccount}>
+            <img src={X} alt="exit"/>
+          </button>
           <form onSubmit={handleSubmit} noValidate>
             <div className='form-input-parent'>
               <div className='form-input'>
-                <label>Email:   </label>
+                <label>Email:     </label>
                   <input
                     type="email"
                     value={email}
@@ -98,12 +115,12 @@ function CreateAccount() {
                 {errorMessage?.email && <p style={{ color: 'red' }}>{errorMessage.email}</p>}
               </div>
               <div className='form-input-state'>
-                <label>State:    </label>
+                <label>State:        </label>
                   <StateDropdown className='state-dropdown' value={usState} onChange={handleStateChange} />
                   {errorMessage?.state && <p style={{ color: 'red' }}>{errorMessage.state}</p>}
               </div>
               <div className='form-input'>
-                <label>Zip code:   </label>
+                <label>Zip code:     </label>
                   <input
                     type="text"
                     value={zip}

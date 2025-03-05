@@ -1,5 +1,6 @@
 import './LoginPopUp.css';
 import X from '../../assets/x-symbol-svgrepo-com.svg';
+import { NavLink } from 'react-router-dom';
 
 
 function LoginPopUp({isLoginOpen, closeLogin, navigateToCreate}) {
@@ -16,7 +17,9 @@ function LoginPopUp({isLoginOpen, closeLogin, navigateToCreate}) {
               <input type="text" placeholder="Enter your email" className="username-input" />
               <button className='signin-button'>Sign In</button>
               <p>Don't have an account?</p>
-              <button className='to-create-page' onClick={navigateToCreate}>Create one here!</button>
+              <button className='to-create-page'>
+                <NavLink to="/create_account" className="nav-link">Create one here!</NavLink>
+              </button>            
             </div>
           </div>
         </div>

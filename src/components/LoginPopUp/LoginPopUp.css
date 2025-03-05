@@ -62,6 +62,7 @@
     border-radius: 15px;
     margin-left: 1em;
     background-color: var(--teal);
+    color: var(--snow);
   }
 
   .signin-button:hover{
@@ -75,7 +76,7 @@
 
   .to-create-page {
     background-color: var(--snow);
-    color: var(--teal);
+    color: var(--lowOp_teal);
   }
   
   .to-create-page:hover {
