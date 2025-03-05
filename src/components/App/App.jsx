@@ -40,14 +40,18 @@ function App() {
 
   return (
     <main className='App'>
-      <Header  popOutMenu={popOutMenu}/>
+      <Header  popOutMenu={popOutMenu} isOpen={isOpen}/>
       <MenuPopUp popOutLogin={popOutLogin} isOpen={isOpen}/>
-      <LoginPopUp isLoginOpen={isLoginOpen} closeLogin={closeLogin} navigateToCreate={navigateToCreate}/>
+      <section className="login_container">
+        <LoginPopUp isLoginOpen={isLoginOpen} closeLogin={closeLogin} navigateToCreate={navigateToCreate}/>
+      </section>
+      
 
       <section className='content'>
         <Routes>
           <Route path="/" element={<Homepage executiveOrders={executiveOrders}  />} />
           <Route path="/create_account" element={<CreateAccount />} />
+          {/* <Route path="/search_results" element={<SearchResults />} /> */}
         </Routes>
       </section>
       
