@@ -8,8 +8,8 @@
   --xtra_lowOp_black: rgba(1, 10, 11, 0.6);
   --lowOp_white: rgba(246, 242, 243, 0.2);
   --xtra_lowOp_white: rgba(246, 242, 243, 0.05);
-  --lowOp_dogwood: rgba(199, 171, 162, 0.6)
-  --lowOp_teal: rgba(2, 131, 139, 0.7)
+  --lowOp_dogwood: rgba(199, 171, 162, 0.6);
+  --lowOp_teal: rgba(2, 131, 139, 0.7);
 }
 
 #root {
