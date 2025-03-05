@@ -6,6 +6,9 @@ import MenuPopUp from '../MenuPopUp/MenuPopUp';
 import LoginPopUp from '../LoginPopUp/LoginPopUp';
 import Homepage from '../Homepage/Homepage';
 import CreateAccount from '../CreateAccount/CreateAccount';
+import SearchResultsContainer from '../SearchResultsContainer/SearchResultsContainer'
+import dummyRepData from '../../Data/dummyRepData.json'
+
 
 function App() {
   const dummyExecutiveOrders = [
@@ -20,14 +23,15 @@ function App() {
   const [isOpen, setIsOpen] = useState(false)
   const navigate = useNavigate()
   // const location = useLocation()
-  const [repData, setRepData] = useState([]);
+  const [repData, setRepData] = useState(dummyRepData);
 
   function getRepData(query) {
-    fetch(`/api/v1/representatives/search?db=false&query=${query}`)
+    // fetch(`/api/v1/representatives/search?db=false&query=${query}`)
+    fetch(dummyRepData)
     .then(response => response.json())
     .then(data => {
       setRepData([...data])
-      navigate('/results')
+      // navigate('/results')
     })
     .catch(error => console.log('error message: ', error.message))
   }
@@ -60,9 +64,9 @@ function App() {
 
       <section className='content'>
         <Routes>
-          <Route path="/" element={<Homepage executiveOrders={executiveOrders}  />} />
+          <Route path="/" element={<Homepage executiveOrders={executiveOrders} getRepData={getRepData}/>}/>
           <Route path="/create_account" element={<CreateAccount />} />
-          <Route path="/results" element={<SearchResultsContainer movies={repData}/>} />
+          <Route path="/results" element={<SearchResultsContainer reps={repData}/>} />
         </Routes>
       </section>
     </main>
