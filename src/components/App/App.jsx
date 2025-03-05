@@ -7,8 +7,6 @@ import LoginPopUp from '../LoginPopUp/LoginPopUp';
 import Homepage from '../Homepage/Homepage';
 import CreateAccount from '../CreateAccount/CreateAccount';
 import SearchResultsContainer from '../SearchResultsContainer/SearchResultsContainer'
-import dummyRepData from '../../Data/dummyRepData.json'
-
 import UserProfile from '../UserProfile/UserProfile';
 
 export const dummyExecutiveOrders = [
@@ -25,17 +23,21 @@ function App() {
   const [isOpen, setIsOpen] = useState(false)
   const navigate = useNavigate()
   // const location = useLocation()
-  const [repData, setRepData] = useState(dummyRepData);
+  const [repData, setRepData] = useState([]);
 
   function getRepData(query) {
-    // fetch(`/api/v1/representatives/search?db=false&query=${query}`)
-    fetch(dummyRepData)
-    .then(response => response.json())
-    .then(data => {
-      setRepData([...data])
-      // navigate('/results')
+    fetch(`http://localhost:3000/api/v1/representatives/search?db=false&query=${query}`)
+    .then(response => {
+      return response.json();
+      // console.log("Response JSON:", response.json())
     })
-    .catch(error => console.log('error message: ', error.message))
+    .then(data => {
+console.log("Data:", data)
+      setRepData(data)
+      console.log("RepData:", [repData])
+      navigate('/results')
+    })
+    // .catch(error => console.log('error message: ', error.message))
   }
 
   function popOutLogin() {
@@ -55,24 +57,26 @@ function App() {
     navigate('/create_account')
   }
 
-  return (
-    <main className='App'>
-      <Header  popOutMenu={popOutMenu} isOpen={isOpen}/>
-      <MenuPopUp popOutLogin={popOutLogin} isOpen={isOpen}/>
-      <section className="login_container">
-        <LoginPopUp isLoginOpen={isLoginOpen} closeLogin={closeLogin} navigateToCreate={navigateToCreate}/>
-      </section>
-      
+  // if (repData) {
+    return (
+      <main className='App'>
+        <Header  popOutMenu={popOutMenu} isOpen={isOpen}/>
+        <MenuPopUp popOutLogin={popOutLogin} isOpen={isOpen}/>
+        <section className="login_container">
+          <LoginPopUp isLoginOpen={isLoginOpen} closeLogin={closeLogin} navigateToCreate={navigateToCreate}/>
+        </section>
+        
 
-      <section className='content'>
-        <Routes>
-          <Route path="/" element={<Homepage executiveOrders={executiveOrders} getRepData={getRepData}/>}/>
-          <Route path="/create_account" element={<CreateAccount />} />
-          <Route path="/profile" element={<UserProfile />} />
-          <Route path="/results" element={<SearchResultsContainer reps={repData}/>} />
-        </Routes>
-      </section>
-    </main>
-  );
+        <section className='content'>
+          <Routes>
+            <Route path="/" element={<Homepage executiveOrders={executiveOrders} getRepData={getRepData}/>}/>
+            <Route path="/create_account" element={<CreateAccount />} />
+            <Route path="/profile" element={<UserProfile />} />
+            <Route path="/results" element={<SearchResultsContainer reps={repData}/>} />
+          </Routes>
+        </section>
+      </main>
+    );
+  // }
 }
 export default App
