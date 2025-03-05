@@ -26,7 +26,7 @@ function Ticker( { executiveOrders } ){
   }
 
   return (
-      <div className="ticker-container">
+      <div className="ticker">
 
         <div className="feather-icon">
           <img src={featherPenIcon} alt="Feather Pen" />
