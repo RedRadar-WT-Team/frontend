@@ -1,0 +1,47 @@
+/* src/components/UserProfile/UserProfile.css */
+
+* {
+  --snow: #f6f2f3ff;
+  --pale-dogwood: #c7aba2ff;
+  --garnet: #663931ff;
+  --teal: #02838bff;
+  --black: #010a0bff;
+  --lowOp_black: rgba(1, 10, 11, 0.8);
+  --xtra_lowOp_black: rgba(1, 10, 11, 0.6);
+  --lowOp_white: rgba(246, 242, 243, 0.2);
+  --xtra_lowOp_white: rgba(246, 242, 243, 0.05);
+  --lowOp_dogwood: rgba(199, 171, 162, 0.6);
+  --lowOp_teal: rgba(2, 131, 139, 0.7);
+}
+
+.user-profile-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Two columns */
+  grid-gap: 40px;
+  padding: 40px;
+}
+
+.quadrant {
+  border: 2px solid var(--garnet);
+  padding: 20px;
+  border-radius: 8px;
+  background-color: var(--pale-dogwood);
+}
+
+h2 {
+  margin-top: 0;
+  color: var(--snow);
+}
+
+button {
+  padding: 10px 20px;
+  background-color: var(--lowOp_teal);
+  color: var(--snow);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: var(--teal);
+}
