@@ -1,85 +1,98 @@
-describe("Create Account Form", () => {
+describe('Create Account Form', () => {
+  const validEmail = 'cypresstest@email.com';
+  const validZip = '12345'
+
+  const invalidEmail = 'invalidemail';
+  const invalidZip = '12';
+
   beforeEach(() => {
-    cy.visit("/create_account"); 
+    cy.visit('/create_account'); 
   });
 
-  it("renders the form correctly", () => {
-    cy.get("h2").should("contain", "Create account");
+  it('should render the form inputs and submit button', () => {
+    cy.get('h2').should('contain', 'Create account'); 
 
-    cy.get("input[type=email]").should("exist");
-
-    cy.get("select").should("exist");
-
-    cy.get("input[type=text]").should("exist");
-
-    cy.get("button[type=submit]").should("contain", "Create Account");
+    cy.get('input[type="email"]').should('exist');
+    cy.get('.form-input-state').should('exist');
+    cy.get('input[type="text"]').should('exist');  
+    cy.get('button[type="submit"]').should('exist');
   });
 
-  xit("should allow a user to fill out the form and submit", () => {
-    const testEmail = "test@example.com";
-    const testZip = "12345";
-    const testState = "California";
-    const testStateCode = "CA";
+  it('should display error when email is not valid', () => {
+    cy.get('input[type="email"]').type('invalidemail');
+    cy.get('select').select('California');
+    cy.get('input[type="text"]').type(validZip);  
 
-    cy.get("input[type=email]").type(testEmail);
-    cy.get("select").select(testState).should('have.value', testStateCode);
-    cy.get("input[type=text]").type(testZip);
-    cy.get("button[type=submit]").click();
+    cy.get('button[type="submit"]').click();
 
-    cy.get("select").debug();
-
-    cy.get("body").should("contain", "Account created successfully");
+    cy.get('p').should('contain', 'Email is not a valid email format');
   });
 
-  xit("should show an error if the API call fails", () => {
-    cy.intercept("POST", "http://localhost:3000/create_account", {
-      statusCode: 500,
-      body: { message: "Server error" },
-    }).as("createAccountRequest");
+  it('should display error when zip code is not valid', () => {
+    cy.get('input[type="email"]').type(validEmail);
+    cy.get('select').select('California');
+    cy.get('input[type="text"]').type(invalidZip);  
 
-    cy.get("input[type=email]").type("test@example.com");
-    cy.get("select").select("California");
-    cy.get("input[type=text]").type("12345");
+    cy.get('button[type="submit"]').click();
 
-    cy.get("button[type=submit]").click();
-
-    cy.wait("@createAccountRequest");
-
-    cy.get("body").should("not.contain", "Account created successfully");
-    cy.get("body").should("contain", "Server error"); // Optional: You can also check for error message on the UI
+    cy.get('p').should('contain', 'Zip must be a valid 5-digit zip code'); 
   });
 
-  it("validates zip code input", () => {
-    cy.get("input[type=email]").type("test@example.com");
-    cy.get("select").select("California");
-    cy.get("input[type=text]").type("123"); // Invalid zip code
+  it('should display error when state is blank', () => {
+    cy.get('input[type="email"]').type(validEmail);
+    cy.get('input[type="text"]').type(validZip);  
 
-    cy.get("button[type=submit]").click();
+    cy.get('button[type="submit"]').click();
 
-    cy.get("p").should("contain", "An error occurred while creating your account. Please try again.")
-
+    cy.get('p').should('contain', `State can't be blank`); 
   });
 
-  xit("should show a success message when the account is created", () => {
-    const testEmail = "test@example.com";
-    const testZip = "12345";
-    const testState = "California";
-  
-    cy.intercept("POST", "http://localhost:3000/create_account", {
-      statusCode: 201, // Ensure this matches your backend response
-      body: { message: "Account created successfully!" },
-    }).as("createAccountRequest");
-  
-    cy.get("input[type=email]").type(testEmail);
-    cy.get("select").select(testState);
-    cy.get("input[type=text]").type(testZip);
-    cy.get("button[type=submit]").click();
-  
-    cy.wait("@createAccountRequest")
-      .its("response.statusCode")
-      .should("eq", 201); // Expect 201 Created status
-  
-    cy.get("body").should("contain", "Account created successfully!");
+  it('should display success message when account is created', () => {
+    cy.intercept('POST', 'http://localhost:3000/api/v1/users', {
+      statusCode: 201,
+      body: { message: 'Account created successfully!' },
+    }).as('postUser');
+
+    cy.get('input[type="email"]').type(validEmail);
+    cy.get('select').select('California');
+    cy.get('input[type="text"]').type(validZip); 
+    cy.get('button[type="submit"]').click();
+
+    cy.wait('@postUser');
+
+    cy.get('p').should('contain', 'Your account has been created successfully!');
+  });
+
+  it('should reset the form after successful submission', () => {
+    cy.intercept('POST', 'http://localhost:3000/api/v1/users', {
+      statusCode: 201,
+      body: { message: 'Account created successfully!' },
+    }).as('postUser');
+
+    cy.get('input[type="email"]').type('anotheruser@email.com');
+    cy.get('select').select('California');
+    cy.get('input[type="text"]').type(validZip);
+    cy.get('button[type="submit"]').click();
+
+    cy.wait('@postUser');
+
+    cy.get('input[type="email"]').should('have.value', '');
+    cy.get('select').should('contain', 'Select a state');
+    cy.get('input[type="text"]').should('have.value', '');
+  });
+
+  it('should display error if email is not unique to database', () => {
+    cy.intercept('POST', 'http://localhost:3000/api/v1/users', {
+      statusCode: 422,
+      body: { errors: 'Email is already taken' },
+    }).as('postUser');
+
+    cy.get('input[type="email"]').type('user@domain.com');
+    cy.get('input[type="text"]').type('123'); 
+    cy.get('button[type="submit"]').click();
+
+    cy.wait('@postUser');
+
+    cy.get('p').should('contain', 'Email is already taken');
   });
 });
-

@@ -86,7 +86,7 @@ function CreateAccount() {
       <div className='overlay'>
         <div className='create-account-container'>
           <h2>Create account</h2>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} noValidate>
             <div className='form-input-parent'>
               <div className='form-input'>
                 <label>Email:   </label>
