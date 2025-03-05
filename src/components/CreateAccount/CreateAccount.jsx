@@ -12,11 +12,6 @@ function CreateAccount() {
 
   const handleZipChange = (event) => {
     const zipValue = event.target.value;
-    if (!/^\d{5}$/.test(zipValue)) {
-      setZipError("Zip code must be exactly 5 digits.");
-    } else {
-      setZipError("");
-    }
     setZip(zipValue);
   };
 
@@ -55,18 +50,34 @@ function CreateAccount() {
       });
 
       if (!response.ok) {
+        const json = await response.json();
+        if (json.errors) {
+          const errorMessages = json.errors.split(", ");
+          let errorObj = {};
+  
+          errorMessages.forEach((error) => {
+            if (error.includes("Email")) {
+              errorObj.email = error;
+            } else if (error.includes("Zip")) {
+              errorObj.zip = error;
+            } else if (error.includes("State")) {
+              errorObj.state = error;
+            }
+          });
+  
+          setErrorMessage(errorObj);
+        }
         throw new Error(`Response status: ${response.status}`);
       }
 
       const json = await response.json();
       console.log("Success:", json);
       setErrorMessage(null);
-      setSuccessMessage("Your account has been created successfully!"); // Show success message
-      resetForm(); // Reset the form fields, but not the success message
+      setSuccessMessage("Your account has been created successfully!"); 
+      resetForm(); 
     } catch (error) {
       console.error("Error submitting form:", error.message);
-      setErrorMessage("An error occurred while creating your account. Please try again.");
-      setSuccessMessage(null); // Clear success message on error
+      setSuccessMessage(null); 
     }
   }
 
@@ -84,10 +95,12 @@ function CreateAccount() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                   />
+                {errorMessage?.email && <p style={{ color: 'red' }}>{errorMessage.email}</p>}
               </div>
               <div className='form-input-state'>
                 <label>State:    </label>
                   <StateDropdown className='state-dropdown' value={usState} onChange={handleStateChange} />
+                  {errorMessage?.state && <p style={{ color: 'red' }}>{errorMessage.state}</p>}
               </div>
               <div className='form-input'>
                 <label>Zip code:   </label>
@@ -95,14 +108,16 @@ function CreateAccount() {
                     type="text"
                     value={zip}
                     onChange={(e) => setZip(e.target.value)}
-                    required
-                    pattern="[0-9]{5}"
-                    title="Zip code should be 5 digits"
                   />
                   {zipError && <p style={{ color: 'red' }}>{zipError}</p>}
+                  {errorMessage?.zip && <p style={{ color: 'red' }}>{errorMessage.zip}</p>}
               </div>
             </div>
-            {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
+            
+            {errorMessage && !errorMessage.zip && !errorMessage.email && !errorMessage.state && (
+            <p style={{ color: 'red' }}>{errorMessage.general}</p>
+            )}
+
             {successMessage && <p style={{ color: 'green' }}>{successMessage}</p>}
 
             <button className='submit-button' type="submit">Submit</button>
