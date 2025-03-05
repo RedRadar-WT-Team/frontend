@@ -1,5 +1,5 @@
 import './App.css'
-import { Routes, Route, useNavigate, useLocation  } from 'react-router-dom';
+import { Routes, Route, useNavigate  } from 'react-router-dom';
 import { useState } from 'react';
 import Header from '../Header/Header';
 import MenuPopUp from '../MenuPopUp/MenuPopUp';
@@ -23,21 +23,18 @@ function App() {
   const [isOpen, setIsOpen] = useState(false)
   const navigate = useNavigate()
   // const location = useLocation()
-  const [repData, setRepData] = useState([]);
+  const [repData, setRepData] = useState(null);
 
   function getRepData(query) {
     fetch(`http://localhost:3000/api/v1/representatives/search?db=false&query=${query}`)
     .then(response => {
       return response.json();
-      // console.log("Response JSON:", response.json())
     })
     .then(data => {
-console.log("Data:", data)
       setRepData(data)
-      console.log("RepData:", [repData])
       navigate('/results')
     })
-    // .catch(error => console.log('error message: ', error.message))
+    .catch(error => console.log('error message: ', error.message))
   }
 
   function popOutLogin() {
@@ -57,26 +54,23 @@ console.log("Data:", data)
     navigate('/create_account')
   }
 
-  // if (repData) {
-    return (
-      <main className='App'>
-        <Header  popOutMenu={popOutMenu} isOpen={isOpen}/>
-        <MenuPopUp popOutLogin={popOutLogin} isOpen={isOpen}/>
-        <section className="login_container">
-          <LoginPopUp isLoginOpen={isLoginOpen} closeLogin={closeLogin} navigateToCreate={navigateToCreate}/>
-        </section>
-        
-
-        <section className='content'>
-          <Routes>
-            <Route path="/" element={<Homepage executiveOrders={executiveOrders} getRepData={getRepData}/>}/>
-            <Route path="/create_account" element={<CreateAccount />} />
-            <Route path="/profile" element={<UserProfile />} />
-            <Route path="/results" element={<SearchResultsContainer reps={repData}/>} />
-          </Routes>
-        </section>
-      </main>
-    );
-  // }
+  return (
+    <main className='App'>
+      <Header  popOutMenu={popOutMenu} isOpen={isOpen}/>
+      <MenuPopUp popOutLogin={popOutLogin} isOpen={isOpen}/>
+      <section className="login_container">
+        <LoginPopUp isLoginOpen={isLoginOpen} closeLogin={closeLogin} navigateToCreate={navigateToCreate}/>
+      </section>
+      
+      <section className='content'>
+        <Routes>
+          <Route path="/" element={<Homepage executiveOrders={executiveOrders} getRepData={getRepData}/>}/>
+          <Route path="/create_account" element={<CreateAccount />} />
+          <Route path="/profile" element={<UserProfile />} />
+          <Route path="/results" element={<SearchResultsContainer reps={repData}/>} />
+        </Routes>
+      </section>
+    </main>
+  );
 }
 export default App
