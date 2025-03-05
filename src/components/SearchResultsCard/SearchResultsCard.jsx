@@ -1,4 +1,5 @@
 import './SearchResultsCard.css'
+import { Link } from "react-router-dom"
 
 function SearchCard({ photoURL, name, area, party, state }) {
   return (
