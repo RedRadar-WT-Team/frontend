@@ -15,14 +15,9 @@ function CreateAccount() {
   const [isOpen, setIsOpen] = useState(true);
   const navigate = useNavigate();
 
-  const handleZipChange = (event) => {
-    const zipValue = event.target.value;
-    setZip(zipValue);
-  };
-
-  const handleStateChange = (event) => {
-    setUsState(event.target.value);
-  };
+  const handleEmailChange = (event) => setEmail(event.target.value);
+  const handleStateChange = (event) => setUsState(event.target.value);
+  const handleZipChange = (event) => setZip(event.target.value);
 
   const resetForm = () => {
     setEmail("");
@@ -110,7 +105,7 @@ function CreateAccount() {
                   <input
                     type="email"
                     value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    onChange={handleEmailChange}
                   />
                 {errorMessage?.email && <p style={{ color: 'red' }}>{errorMessage.email}</p>}
               </div>
@@ -124,7 +119,7 @@ function CreateAccount() {
                   <input
                     type="text"
                     value={zip}
-                    onChange={(e) => setZip(e.target.value)}
+                    onChange={handleZipChange}
                   />
                   {zipError && <p style={{ color: 'red' }}>{zipError}</p>}
                   {errorMessage?.zip && <p style={{ color: 'red' }}>{errorMessage.zip}</p>}
