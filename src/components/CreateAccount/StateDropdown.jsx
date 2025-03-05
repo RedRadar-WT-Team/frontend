@@ -1,4 +1,5 @@
 import React from 'react';
+import './StateDropdown.css';
 
 const states = [
   { code: "AL", name: "Alabama" },
@@ -55,17 +56,14 @@ const states = [
 
 const StateDropdown = ({ value, onChange }) => {
   return (
-    <label>
-      State:
-      <select value={value} onChange={onChange}>
-        <option value="">Select a state</option>
-        {states.map((state) => (
-          <option key={state.code} value={state.code}>
-            {state.name}
-          </option>
-        ))}
-      </select>
-    </label>
+    <select className='state-dropdown' value={value} onChange={onChange}>
+      <option value="">Select a state</option>
+      {states.map((state) => (
+        <option key={state.code} value={state.code}>
+          {state.name}
+        </option>
+      ))}
+    </select>
   );
 };
 

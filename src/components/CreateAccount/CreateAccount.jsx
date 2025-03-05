@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import StateDropdown from './StateDropdown';
+import './CreateAccount.css';
 
 function CreateAccount() {
   const [email, setEmail] = useState("");
@@ -11,11 +12,6 @@ function CreateAccount() {
 
   const handleZipChange = (event) => {
     const zipValue = event.target.value;
-    if (!/^\d{5}$/.test(zipValue)) {
-      setZipError("Zip code must be exactly 5 digits.");
-    } else {
-      setZipError("");
-    }
     setZip(zipValue);
   };
 
@@ -45,7 +41,7 @@ function CreateAccount() {
 
   async function createAccount(formData) {
     try {
-      const response = await fetch("http://localhost:3000/users", {
+      const response = await fetch("http://localhost:3000/api/v1/users", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -54,55 +50,80 @@ function CreateAccount() {
       });
 
       if (!response.ok) {
+        const json = await response.json();
+        if (json.errors) {
+          const errorMessages = json.errors.split(", ");
+          let errorObj = {};
+  
+          errorMessages.forEach((error) => {
+            if (error.includes("Email")) {
+              errorObj.email = error;
+            } else if (error.includes("Zip")) {
+              errorObj.zip = error;
+            } else if (error.includes("State")) {
+              errorObj.state = error;
+            }
+          });
+  
+          setErrorMessage(errorObj);
+        }
         throw new Error(`Response status: ${response.status}`);
       }
 
       const json = await response.json();
       console.log("Success:", json);
       setErrorMessage(null);
-      setSuccessMessage("Your account has been created successfully!"); // Show success message
-      resetForm(); // Reset the form fields, but not the success message
+      setSuccessMessage("Your account has been created successfully!"); 
+      resetForm(); 
     } catch (error) {
       console.error("Error submitting form:", error.message);
-      setErrorMessage("An error occurred while creating your account. Please try again.");
-      setSuccessMessage(null); // Clear success message on error
+      setSuccessMessage(null); 
     }
   }
 
   return (
     <div className="create-account-page">
-      <h2>Create account</h2>
+      <div className='overlay'>
+        <div className='create-account-container'>
+          <h2>Create account</h2>
+          <form onSubmit={handleSubmit} noValidate>
+            <div className='form-input-parent'>
+              <div className='form-input'>
+                <label>Email:   </label>
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                {errorMessage?.email && <p style={{ color: 'red' }}>{errorMessage.email}</p>}
+              </div>
+              <div className='form-input-state'>
+                <label>State:    </label>
+                  <StateDropdown className='state-dropdown' value={usState} onChange={handleStateChange} />
+                  {errorMessage?.state && <p style={{ color: 'red' }}>{errorMessage.state}</p>}
+              </div>
+              <div className='form-input'>
+                <label>Zip code:   </label>
+                  <input
+                    type="text"
+                    value={zip}
+                    onChange={(e) => setZip(e.target.value)}
+                  />
+                  {zipError && <p style={{ color: 'red' }}>{zipError}</p>}
+                  {errorMessage?.zip && <p style={{ color: 'red' }}>{errorMessage.zip}</p>}
+              </div>
+            </div>
+            
+            {errorMessage && !errorMessage.zip && !errorMessage.email && !errorMessage.state && (
+            <p style={{ color: 'red' }}>{errorMessage.general}</p>
+            )}
 
-      <form onSubmit={handleSubmit}>
-        <label>Email:
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </label>
+            {successMessage && <p style={{ color: 'green' }}>{successMessage}</p>}
 
-        <label>
-          <StateDropdown value={usState} onChange={handleStateChange} />
-        </label>
-
-        <label>Zip code:
-          <input
-            type="text"
-            value={zip}
-            onChange={(e) => setZip(e.target.value)}
-            required
-            pattern="[0-9]{5}"
-            title="Zip code should be 5 digits"
-          />
-          {zipError && <p style={{ color: 'red' }}>{zipError}</p>}
-        </label>
-
-        {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
-        {successMessage && <p style={{ color: 'green' }}>{successMessage}</p>}
-
-        <button type="submit">Create Account</button>
-      </form>
+            <button className='submit-button' type="submit">Submit</button>
+          </form>
+        </div>
+      </div>
     </div>
   );
 }
