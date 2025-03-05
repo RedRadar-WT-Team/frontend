@@ -78,19 +78,19 @@ function CreateAccount() {
           <form onSubmit={handleSubmit}>
             <div className='form-input-parent'>
               <div className='form-input'>
-                <label>Email:</label>
+                <label>Email:   </label>
                   <input
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                   />
               </div>
-              <div className='form-input'>
-                <label>State:</label>
-                  <StateDropdown value={usState} onChange={handleStateChange} />
+              <div className='form-input-state'>
+                <label>State:    </label>
+                  <StateDropdown className='state-dropdown' value={usState} onChange={handleStateChange} />
               </div>
               <div className='form-input'>
-                <label>Zip code:</label>
+                <label>Zip code:   </label>
                   <input
                     type="text"
                     value={zip}
@@ -105,7 +105,7 @@ function CreateAccount() {
             {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
             {successMessage && <p style={{ color: 'green' }}>{successMessage}</p>}
 
-            <button type="submit">Create Account</button>
+            <button className='submit-button' type="submit">Submit</button>
           </form>
         </div>
       </div>

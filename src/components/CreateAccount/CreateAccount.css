@@ -20,18 +20,45 @@
   background-color: var(--snow);
   width: 13em;
   color: var(--black);
+
 }
 
 .create-account-container form {
   display: flex;
   flex-direction: column;
-  /* width: 100%; */
+}
+
+.form-input-parent {
+  padding: 20px;
 }
 
 .form-input {
   width: 100%;
 }
 
-button {
+.form-input input {
+  color: var(--black);
+  background-color: var(--lowOp_dogwood);
+  border-radius: 10px;
+  height: 2em;
+  flex: content;
+}
+
+.form-input-state {
+  padding: 1em;
+  flex: content;
+}
+
+.state-dropdown {
+  height: 2.5em;
+  border-radius: 10px;
+}
+
+.submit-button {
   background-color: var(--teal);
+  border-radius: 15px;  
+}
+
+label {
+  font-weight: 600;
 }
