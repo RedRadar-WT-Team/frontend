@@ -23,6 +23,17 @@ function App() {
   const [isOpen, setIsOpen] = useState(false)
   const navigate = useNavigate()
   // const location = useLocation()
+  const [repData, setRepData] = useState([]);
+
+  function getRepData(query) {
+    fetch(`/api/v1/representatives/search?db=false&query=${query}`)
+    .then(response => response.json())
+    .then(data => {
+      setRepData([...data])
+      navigate('/results')
+    })
+    .catch(error => console.log('error message: ', error.message))
+  }
 
   function popOutLogin() {
     setIsLoginOpen(!isLoginOpen);
@@ -57,7 +68,7 @@ function App() {
         </div>
       </div>
       <Routes>
-        {/* Routes will go here */}
+        <Route path="/results" element={<SearchResultsContainer movies={repData}/>} />
         <Route path="/create_account" element={<CreateAccount />} />
       </Routes>
     </main>
