@@ -15,7 +15,7 @@ function LoginPopUp({isLoginOpen, closeLogin, navigateToCreate}) {
             <div className="login_create">
               <input type="text" placeholder="Enter your email" className="username-input" />
               <button className='signin-button'>Sign In</button>
-              <p>Dont have an account?</p>
+              <p>Don't have an account?</p>
               <button className='to-create-page' onClick={navigateToCreate}>Create one here!</button>
             </div>
           </div>
