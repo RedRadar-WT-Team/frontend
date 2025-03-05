@@ -1,0 +1,37 @@
+.create-account-container {
+  width: 60%;
+  height: 25em;
+  background-color: var(--snow);
+  display: flex;
+  flex-direction: column;
+  justify-content: center; 
+  align-items: center;
+  text-align: center;
+  color: #37312A;
+  border-radius: 20px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  margin: 40px;
+  position: fixed;
+  margin: 10em 48em; 
+}
+
+.create-account-container input {
+  background-color: var(--snow);
+  width: 13em;
+  color: var(--black);
+}
+
+.create-account-container form {
+  display: flex;
+  flex-direction: column;
+  /* width: 100%; */
+}
+
+.form-input {
+  width: 100%;
+}
+
+button {
+  background-color: var(--teal);
+}
