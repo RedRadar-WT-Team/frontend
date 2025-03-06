@@ -1,36 +1,67 @@
 import './App.css'
-import { Routes, Route, useNavigate, useLocation  } from 'react-router-dom';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import Homepage from '../Homepage/Homepage';
 import Header from '../Header/Header';
 import MenuPopUp from '../MenuPopUp/MenuPopUp';
 import LoginPopUp from '../LoginPopUp/LoginPopUp';
-import Homepage from '../Homepage/Homepage';
 import CreateAccount from '../CreateAccount/CreateAccount';
 import UserProfile from '../UserProfile/UserProfile';
 import AllExecutiveOrdersPage from '../AllExecutiveOrdersPage/AllExecutiveOrdersPage';
 import Ticker from '../Ticker/Ticker';
-
-// export const dummyExecutiveOrders = [
-//   {id: 1000, title: "Zoo Dress Code", summary: "Walruses must wear pants."}, 
-//   {id: 2000, title: "Ice Scream", summary: "Mandatory screaming upon consumption of Mint Chocolate Chip Ice Cream on Thursdays."}, 
-//   {id: 3000, title: "Middle Name Penalty", summary: "Those with a middle 'L' initial must walk backwards all day on the Sabbath."},
-//   {id: 4000, title: "Bye Bye Cap'n Crunch", summary: "If you like Cap'n Crunch, no more Cap'n Crunch for you."},
-//   {id: 5000, title: "Cuz 'Mercuh", summary: "Fireworks at 3:30 am. Everyday. Even Saturdays."}
-// ]
+import EditProfile from '../EditProfile/EditProfile';
+import SearchResultsContainer from '../SearchResultsContainer/SearchResultsContainer';
+import DetailsPage from '../DetailsPage/DetailsPage.jsx';
 
 function App() {
-  const [executiveOrders, setExecutiveOrders] = useState([]);
-  const [isLoginOpen, setIsLoginOpen] = useState(false)
-  const [isOpen, setIsOpen] = useState(false)
-  const navigate = useNavigate()
-  const [ allExecutiveOrders, setAllExecutiveOrders ] = useState({});
-  // const location = useLocation()
+  const navigate = useNavigate();
 
-    useEffect(() => {
+  const [executiveOrders, setExecutiveOrders] = useState([]);
+  const [repData, setRepData] = useState(null);
+  const [isLoginOpen, setIsLoginOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const [detailTarget, setDetailTarget] = useState(""); // Set target based on returned click in EOs or Reps
+  const [ allExecutiveOrders, setAllExecutiveOrders ] = useState({});
+
+  useEffect(() => {
     showFiveMostRecentExecutiveOrders();
   }, [])
+  
+  function popOutLogin() {
+    setIsLoginOpen(!isLoginOpen);
+  }
 
-  function showAllExecutiveOrders() {
+  function popOutMenu() {
+    setIsOpen(!isOpen);
+  }
+
+  function closeLogin() {
+    setIsLoginOpen(!isLoginOpen);
+  }
+
+  function navigateToCreate() {
+    setIsLoginOpen(!isLoginOpen);
+    navigate('/create_account')
+  }
+
+  function handleDetailsTarget(type) {
+    setDetailTarget(type);
+  }
+
+  // Fetches to backend
+  function getRepData(query) {
+    fetch(`http://localhost:3000/api/v1/representatives/search?db=false&query=${query}`)
+    .then(response => {
+      return response.json();
+    })
+    .then(data => {
+      setRepData(data)
+      navigate('/results')
+    })
+    .catch(error => console.log('error message: ', error.message))
+  }
+  
+   function showAllExecutiveOrders() {
     fetch('http://localhost:3000/api/v1/executive_orders')
       .then(response => response.json())
       .then(data => {
@@ -52,7 +83,7 @@ function App() {
           return;
         }
         
-        if (data && typeof data === 'object') { //data is actually an array IN A JS OBJECT!!!! that's why it's been hard to access
+        if (data && typeof data === 'object') {
           const possibleArray = Object.values(data).find(val => Array.isArray(val));
           setExecutiveOrders(possibleArray || []);
           return;
@@ -65,48 +96,27 @@ function App() {
         setExecutiveOrders([]);
       });
   }
-
-
-
-  function popOutLogin() {
-    setIsLoginOpen(!isLoginOpen);
-  }
-
-  function popOutMenu() {
-    setIsOpen(!isOpen);
-  }
-
-  function closeLogin() {
-    setIsLoginOpen(!isLoginOpen);
-  }
-
-  function navigateToCreate() {
-    setIsLoginOpen(!isLoginOpen);
-    navigate('/create_account')
-  }
-
+  
   return (
     <main className='App'>
       <Header  popOutMenu={popOutMenu} isOpen={isOpen}/>
       <MenuPopUp popOutLogin={popOutLogin} isOpen={isOpen} showAllExecutiveOrders={showAllExecutiveOrders}/>
-      {/* <Ticker executiveOrders={executiveOrders} /> */}
       <section className="login_container">
         <LoginPopUp isLoginOpen={isLoginOpen} closeLogin={closeLogin} navigateToCreate={navigateToCreate}/>
       </section>
       
-
       <section className='content'>
         <Routes>
-          <Route path="/" element={<Homepage executiveOrders={executiveOrders}  />} />
-          <Route path="/create_account" element={<CreateAccount />} />
+          <Route path="/" element={<Homepage executiveOrders={executiveOrders} getRepData={getRepData}/>}/>
           <Route path="/profile" element={<UserProfile />} />
           <Route path="/executive_orders" element={<AllExecutiveOrdersPage allExecutiveOrders={allExecutiveOrders} />} />
-          {/* <Route path="/search_results" element={<SearchResults />} /> */}
+          <Route path="/create_account" element={<CreateAccount />} />
+          <Route path="/update" element={<EditProfile />} />
+          <Route path="/results" element={<SearchResultsContainer reps={repData}/>} />
+          <Route path="/details" element={<DetailsPage target={detailTarget} />} />
         </Routes>
       </section>
-      
     </main>
   );
 }
-
 export default App
