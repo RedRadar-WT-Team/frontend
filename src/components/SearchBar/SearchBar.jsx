@@ -9,7 +9,6 @@ function SearchBar() {
           <input type="text" name="searchInput" placeholder="  Enter your zip code"></input>
           <button><img src={searchIcon} alt="search Rep"/></button>
         </div>
-       
     </section>
   );  
 }
