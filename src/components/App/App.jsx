@@ -17,18 +17,16 @@ function App() {
   const navigate = useNavigate();
 
   const [executiveOrders, setExecutiveOrders] = useState([]);
+  const [ allExecutiveOrders, setAllExecutiveOrders ] = useState({});
   const [repData, setRepData] = useState(null);
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [detailTarget, setDetailTarget] = useState(""); // Set target based on returned click in EOs or Reps
-  const [ allExecutiveOrders, setAllExecutiveOrders ] = useState({});
   const [details, setDetails] = useState({});
 
   useEffect(() => {
     showFiveMostRecentExecutiveOrders();
   }, [])
-  
-
 
   function popOutLogin() {
     setIsLoginOpen(!isLoginOpen);
@@ -49,6 +47,20 @@ function App() {
 
   function handleDetailsTarget(type) {
     setDetailTarget(type);
+  }
+
+  function getDetails(id, location) {
+    if (detailTarget === "EO") {
+      fetchEODetails(id)
+    } else if (detailTarget === "rep") {
+      fetchRepDetails(id, location, "false")
+    } else if (detailTarget === "repDB") {
+      fetchRepDetails(id, location, "true")
+    }
+  }
+
+  function fetchEODetails(id) {
+    // Fetch for single EO
   }
 
   // Fetches to backend
@@ -99,20 +111,6 @@ function App() {
         console.error("Error fetching executive orders:", error.message);
         setExecutiveOrders([]);
       });
-  }
-  
-  function getDetails(id, location) {
-    if (detailTarget === "EO") {
-      fetchEODetails(id)
-    } else if (detailTarget === "rep") {
-      fetchRepDetails(id, location, "false")
-    } else if (detailTarget === "repDB") {
-      fetchRepDetails(id, location, "true")
-    }
-  }
-
-  function fetchEODetails(id) {
-    // Fetch for single EO
   }
 
   function fetchRepDetails(id, location, source) {
