@@ -11,7 +11,7 @@ function MenuPopUp({popOutLogin, isOpen, showAllExecutiveOrders}) {
                 <NavLink to="/about">About</NavLink>
               </li>
               <li>
-                <NavLink to="/executive_orders" onClick={showAllExecutiveOrders}>All Executive Orders</NavLink>
+                <NavLink onClick={showAllExecutiveOrders}>All Executive Orders</NavLink>
               </li>
               <li>
                 <NavLink to="/profile">User Profile</NavLink>
