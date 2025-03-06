@@ -10,7 +10,7 @@ import UserProfile from '../UserProfile/UserProfile';
 import AllExecutiveOrdersPage from '../AllExecutiveOrdersPage/AllExecutiveOrdersPage';
 import EditProfile from '../EditProfile/EditProfile';
 import SearchResultsContainer from '../SearchResultsContainer/SearchResultsContainer';
-import DetailsPage from '../DetailsPage/DetailsPage.jsx';
+import RepDetails from '../RepDetailsPage/RepDetailsPage.jsx';
 
 function App() {
   const navigate = useNavigate();
@@ -21,7 +21,7 @@ function App() {
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [detailTarget, setDetailTarget] = useState(""); // Set target based on returned click in EOs or Reps
-  const [details, setDetails] = useState({});
+  const [repDetails, setRepDetails] = useState({});
 
   useEffect(() => {
     showFiveMostRecentExecutiveOrders();
@@ -48,10 +48,8 @@ function App() {
     setDetailTarget(type);
   }
 
-  function getDetails(id, location) {
-    if (detailTarget === "EO") {
-      fetchEODetails(id)
-    } else if (detailTarget === "rep") {
+  function getRepDetails(id, location) {
+   if (detailTarget === "rep") {
       fetchRepDetails(id, location, "false")
     } else if (detailTarget === "repDB") {
       fetchRepDetails(id, location, "true")
@@ -114,20 +112,8 @@ function App() {
       return response.json();
     })
     .then(data => {
-      setDetails(data)
-      navigate("/details")
-    })
-    .catch(error => console.log('error message: ', error.message))
-  }
-
-  function fetchEODetails(doc_num, location="", source="") {
-    fetch(`http://localhost:3000/api/v1/executive_orders/${doc_num}`)
-    .then(response => {
-      return response.json();
-    })
-    .then(data => {
-      setDetails(data)
-      navigate("/details")
+      setRepDetails(data)
+      navigate("/repDetails")
     })
     .catch(error => console.log('error message: ', error.message))
   }
@@ -144,11 +130,11 @@ function App() {
         <Routes>
           <Route path="/" element={<Homepage executiveOrders={executiveOrders} getRepData={getRepData}/>}/>
           <Route path="/profile" element={<UserProfile />} />
-          <Route path="/executive_orders" element={<AllExecutiveOrdersPage allExecutiveOrders={allExecutiveOrders} setDetailsTarget={handleDetailsTarget} getDetails={getDetails} />} />
+          <Route path="/executive_orders" element={<AllExecutiveOrdersPage />} />
           <Route path="/create_account" element={<CreateAccount />} />
           <Route path="/update" element={<EditProfile />} />
-          <Route path="/results" element={<SearchResultsContainer reps={repData} setDetailsTarget={handleDetailsTarget} getDetails={getDetails} />} />
-          <Route path="/details" element={<DetailsPage target={detailTarget} details={details}/>} />
+          <Route path="/results" element={<SearchResultsContainer reps={repData} setDetailsTarget={handleDetailsTarget} getDetails={getRepDetails} />} />
+          <Route path="/repDetails" element={<RepDetails repDetails={repDetails}/>} />
         </Routes>
       </section>
     </main>
