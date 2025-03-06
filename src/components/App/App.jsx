@@ -7,6 +7,7 @@ import LoginPopUp from '../LoginPopUp/LoginPopUp';
 import Homepage from '../Homepage/Homepage';
 import CreateAccount from '../CreateAccount/CreateAccount';
 import UserProfile from '../UserProfile/UserProfile';
+import EditProfile from '../EditProfile/EditProfile';
 
 export const dummyExecutiveOrders = [
   {id: 1000, title: "Zoo Dress Code", summary: "Walruses must wear pants."}, 
@@ -54,6 +55,7 @@ function App() {
           <Route path="/" element={<Homepage executiveOrders={executiveOrders}  />} />
           <Route path="/create_account" element={<CreateAccount />} />
           <Route path="/profile" element={<UserProfile />} />
+          <Route path="/update" element={<EditProfile />} />
           {/* <Route path="/search_results" element={<SearchResults />} /> */}
         </Routes>
       </section>
