@@ -12,6 +12,7 @@ import Ticker from '../Ticker/Ticker';
 import EditProfile from '../EditProfile/EditProfile';
 import SearchResultsContainer from '../SearchResultsContainer/SearchResultsContainer';
 import DetailsPage from '../DetailsPage/DetailsPage.jsx';
+import ExecutiveOrderDetailsPage from '../ExecutiveOrderDetailsPage/ExecutiveOrderDetailsPage.jsx';
 
 function App() {
   const navigate = useNavigate();
@@ -114,6 +115,7 @@ function App() {
           <Route path="/update" element={<EditProfile />} />
           <Route path="/results" element={<SearchResultsContainer reps={repData}/>} />
           <Route path="/details" element={<DetailsPage target={detailTarget} />} />
+          <Route path="/executive_orders/:eoID" element={<ExecutiveOrderDetailsPage />} />
         </Routes>
       </section>
     </main>
