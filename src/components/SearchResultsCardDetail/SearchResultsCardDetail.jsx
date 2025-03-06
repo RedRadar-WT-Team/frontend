@@ -1,10 +1,12 @@
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 
 function SearchResultsCardDetails() {
-  const repId = useParams().repId;
-  const zipCode = useParams().zipCode
-  console.log("You're in searchREsultsCArdDeatilas:", repId)
+  const {repId} = useParams();
+  const location = useLocation()
+  const zipCode = location.state?.zipCode;
+  console.log("ZipCode SCRD:", zipCode)
+
   const [clickedRep, setClickedRep] = useState();
 
   function getRepDetails() {

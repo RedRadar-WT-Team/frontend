@@ -2,7 +2,8 @@ import './SearchResultsContainer.css';
 import SearchResultsCard from '../SearchResultsCard/SearchResultsCard.jsx';
 
 function SearchResultCards( { reps } ) {
-  const repDataCards = reps.data.map((rep) => {
+
+  const repDataCards = reps.representatives.data.map((rep) => {
     return (
       < SearchResultsCard 
           photoURL = { rep.attributes.photo_url }
