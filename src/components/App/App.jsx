@@ -48,10 +48,6 @@ function App() {
     setDetailTarget(type);
   }
 
-  function hideLogin() {
-    setIsLoginOpen(!isLoginOpen)
-  }
-
   // Fetches to backend
   function getRepData(query) {
     fetch(`http://localhost:3000/api/v1/representatives/search?db=false&query=${query}`)
