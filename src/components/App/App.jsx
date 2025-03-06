@@ -20,7 +20,7 @@ export const dummyExecutiveOrders = [
 ]
 
 function App() {
-  const [executiveOrders, setExecutiveOrders] = useState(dummyExecutiveOrders);
+  const [executiveOrders] = useState(dummyExecutiveOrders);
   const [isLoginOpen, setIsLoginOpen] = useState(false)
   const [isOpen, setIsOpen] = useState(false)
   const navigate = useNavigate()

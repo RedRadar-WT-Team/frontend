@@ -3,7 +3,6 @@ import SearchResultsCard from '../SearchResultsCard/SearchResultsCard.jsx';
 
 function SearchResultCards( { reps } ) {
   const repDataCards = reps.data.map((rep) => {
-    console.log(rep)
     return (
       < SearchResultsCard 
           photoURL = { rep.attributes.photo_url }
