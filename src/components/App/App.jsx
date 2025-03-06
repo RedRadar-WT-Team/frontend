@@ -23,11 +23,13 @@ function App() {
   const navigate = useNavigate();
 
   const [executiveOrders, setExecutiveOrders] = useState(dummyExecutiveOrders);
-  const [repData, setRepData] = useState(null);
+  const [repData, setRepData] = useState({});
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [detailTarget, setDetailTarget] = useState(""); // Set target based on returned click in EOs or Reps
-  
+  const [details, setDetails] = useState({});
+
+
   function popOutLogin() {
     setIsLoginOpen(!isLoginOpen);
   }
@@ -53,11 +55,38 @@ function App() {
   function getRepData(query) {
     fetch(`http://localhost:3000/api/v1/representatives/search?db=false&query=${query}`)
     .then(response => {
+      console.log(response)
       return response.json();
     })
     .then(data => {
       setRepData(data)
       navigate('/results')
+    })
+    .catch(error => console.log('error message: ', error.message))
+  }
+
+  function getDetails(id, location) {
+    if (detailTarget === "EO") {
+      fetchEODetails(id)
+    } else if (detailTarget === "rep") {
+      fetchRepDetails(id, location, "false")
+    } else if (detailTarget === "repDB") {
+      fetchRepDetails(id, location, "true")
+    }
+  }
+
+  function fetchEODetails(id) {
+    // Fetch for single EO
+  }
+
+  function fetchRepDetails(id, location, source) {
+    fetch(`http://localhost:3000/api/v1/representatives/details?db=${source}&query=${location}&id=${id}`)
+    .then(response => {
+      return response.json();
+    })
+    .then(data => {
+      setDetails(data)
+      navigate("/details")
     })
     .catch(error => console.log('error message: ', error.message))
   }
@@ -76,8 +105,8 @@ function App() {
           <Route path="/profile" element={<UserProfile />} />
           <Route path="/create_account" element={<CreateAccount />} />
           <Route path="/update" element={<EditProfile />} />
-          <Route path="/results" element={<SearchResultsContainer reps={repData}/>} />
-          <Route path="/details" element={<DetailsPage target={detailTarget} />} />
+          <Route path="/results" element={<SearchResultsContainer reps={repData} setDetailsTarget={handleDetailsTarget} getDetails={getDetails} />} />
+          <Route path="/details" element={<DetailsPage target={detailTarget} details={details}/>} />
         </Routes>
       </section>
     </main>
