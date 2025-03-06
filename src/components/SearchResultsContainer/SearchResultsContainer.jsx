@@ -17,7 +17,7 @@ function SearchResultCards( { reps } ) {
   })
 
   return (
-      <section className='MoviesContainer'>
+      <section className='results_container'>
         { repDataCards }
       </section>
   );

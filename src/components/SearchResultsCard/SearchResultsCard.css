@@ -1,3 +1,47 @@
-.favorites {
+.search-card {
+  width: 30%;
+  background-color: var(--lowOp_teal);
+  border-radius: 15px;
+  padding: 1em;
+  margin: 1em;
+  z-index: 1;
+  color: var(--black);
+  position: relative;
+  overflow: hidden;
+}
+
+.content-container {
   display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+}
+
+.search-card-info {
+  flex-grow: 1;
+  font-weight: bold;
+}
+
+.search-card-info h3 {
+  text-decoration: underline;
+}
+
+.content-container button {
+  width: 4em;
+  height: 4em;
+  padding: 1em;
+  margin: 0.5em;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background-color: transparent;
+}
+
+.content-container button:hover {
+
+}
+
+.star {
+  width: 2em;
+  height: auto;
 }
