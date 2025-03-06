@@ -1,7 +1,7 @@
 import './SearchResultsContainer.css';
 import SearchResultsCard from '../SearchResultsCard/SearchResultsCard.jsx';
 
-function SearchResultCards( { reps } ) {
+function SearchResultCards( { reps, setDetailsTarget, getDetails } ) {
   const repDataCards = reps.data.map((rep) => {
     return (
       < SearchResultsCard 
@@ -10,8 +10,11 @@ function SearchResultCards( { reps } ) {
           area= { rep.attributes.area }
           party= { rep.attributes.party } 
           state= { rep.attributes.state }
+          location= { rep.attributes.location}
           id= { rep.attributes.id } 
           key = { rep.attributes.id }
+          setDetailsTarget = { setDetailsTarget }
+          getDetails = { getDetails }
       />
     )
   })
