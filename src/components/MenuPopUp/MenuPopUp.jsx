@@ -1,7 +1,7 @@
 import { Link, NavLink } from 'react-router-dom';
 import './MenuPopUp.css'
 
-function MenuPopUp({popOutLogin, isOpen}) {
+function MenuPopUp({popOutLogin, isOpen, showAllExecutiveOrders}) {
   return (
     <main className={`popup-container ${!isOpen ? 'hidden' : ''}`}>
       {isOpen && (
@@ -11,7 +11,7 @@ function MenuPopUp({popOutLogin, isOpen}) {
                 <NavLink to="/about">About</NavLink>
               </li>
               <li>
-                <NavLink to="/executive-orders">All Executive Orders</NavLink>
+                <NavLink to="/executive_orders" onClick={showAllExecutiveOrders}>All Executive Orders</NavLink>
               </li>
               <li>
                 <NavLink to="/profile">User Profile</NavLink>
