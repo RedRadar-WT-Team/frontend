@@ -15,6 +15,7 @@
 
 .exec-order-page {
   display: flex;
+  flex-direction: column;
   grid-template-columns: 1fr 1fr; /* Two columns */
   grid-gap: 40px;
   padding: 40px;
