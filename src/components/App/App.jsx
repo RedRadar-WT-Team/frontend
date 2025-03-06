@@ -1,14 +1,15 @@
 import './App.css'
 import { Routes, Route, useNavigate  } from 'react-router-dom';
 import { useState } from 'react';
+import Homepage from '../Homepage/Homepage';
 import Header from '../Header/Header';
 import MenuPopUp from '../MenuPopUp/MenuPopUp';
 import LoginPopUp from '../LoginPopUp/LoginPopUp';
-import Homepage from '../Homepage/Homepage';
 import CreateAccount from '../CreateAccount/CreateAccount';
-import SearchResultsContainer from '../SearchResultsContainer/SearchResultsContainer'
 import UserProfile from '../UserProfile/UserProfile';
 import EditProfile from '../EditProfile/EditProfile';
+import SearchResultsContainer from '../SearchResultsContainer/SearchResultsContainer';
+import DetailsPage from '../DetailsPage/DetailsPage.jsx';
 
 export const dummyExecutiveOrders = [
   {id: 1000, title: "Zoo Dress Code", summary: "Walruses must wear pants."}, 
@@ -19,25 +20,14 @@ export const dummyExecutiveOrders = [
 ]
 
 function App() {
+  const navigate = useNavigate();
+
   const [executiveOrders, setExecutiveOrders] = useState(dummyExecutiveOrders);
-  const [isLoginOpen, setIsLoginOpen] = useState(false)
-  const [isOpen, setIsOpen] = useState(false)
-  const navigate = useNavigate()
-  // const location = useLocation()
   const [repData, setRepData] = useState(null);
-
-  function getRepData(query) {
-    fetch(`http://localhost:3000/api/v1/representatives/search?db=false&query=${query}`)
-    .then(response => {
-      return response.json();
-    })
-    .then(data => {
-      setRepData(data)
-      navigate('/results')
-    })
-    .catch(error => console.log('error message: ', error.message))
-  }
-
+  const [isLoginOpen, setIsLoginOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const [detailTarget, setDetailTarget] = useState(""); // Set target based on returned click in EOs or Reps
+  
   function popOutLogin() {
     setIsLoginOpen(!isLoginOpen);
   }
@@ -55,6 +45,23 @@ function App() {
     navigate('/create_account')
   }
 
+  function handleDetailsTarget(type) {
+    setDetailTarget(type);
+  }
+
+  // Fetches to backend
+  function getRepData(query) {
+    fetch(`http://localhost:3000/api/v1/representatives/search?db=false&query=${query}`)
+    .then(response => {
+      return response.json();
+    })
+    .then(data => {
+      setRepData(data)
+      navigate('/results')
+    })
+    .catch(error => console.log('error message: ', error.message))
+  }
+
   return (
     <main className='App'>
       <Header  popOutMenu={popOutMenu} isOpen={isOpen}/>
@@ -66,12 +73,11 @@ function App() {
       <section className='content'>
         <Routes>
           <Route path="/" element={<Homepage executiveOrders={executiveOrders} getRepData={getRepData}/>}/>
-          <Route path="/create_account" element={<CreateAccount />} />
           <Route path="/profile" element={<UserProfile />} />
-          <Route path="/results" element={<SearchResultsContainer reps={repData}/>} />
+          <Route path="/create_account" element={<CreateAccount />} />
           <Route path="/update" element={<EditProfile />} />
-       
-
+          <Route path="/results" element={<SearchResultsContainer reps={repData}/>} />
+          <Route path="/details" element={<DetailsPage target={detailTarget} />} />
         </Routes>
       </section>
     </main>
