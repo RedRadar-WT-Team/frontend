@@ -1,37 +1,30 @@
 import { useParams} from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import './ExecutiveOrderDetails.css';
+import './ExecutiveOrderDetailsPage.css';
 
 function ExecutiveOrderDetails() {
-  // const clickedId = useParams().movieId;
-  const [clickedMovie, setClickedMovie] = useState();
+  const eoID = useParams().eoId;
+  console.log(eoID)
+  const [clickedEO, setClickedEO] = useState();
 
-  function getMovieDetails() {
-    fetch(`https://rancid-tomatillos-api-ce4a3879078e.herokuapp.com/api/v1/movies/${clickedMovieId}`)
+  function getEODetails() {
+    fetch(`http://127.0.0.1:3000/api/v1/executive_orders/api/v1/executive_orders/${eoID}`)
     .then(response => response.json())
     .then(data => {
-      setClickedMovie(data)
+      setClickedEO(data)
     })
     .catch(error => console.log('error message: ', error.message))
   }
 
   useEffect(() => {
-    getMovieDetails();
+    getEODetails();
   })
 
-  if(clickedMovie) {
+  if(clickedEO) {
+    console.log(clickedEO)
     return (
-      <section className='MovieDetails'>
-        <img src= { clickedMovie.backdrop_path } alt={ clickedMovie.title } />
-        <h1>{ clickedMovie.title }</h1>
-        <div className="genres">
-          {clickedMovie.genre_ids.map((genre, index) => (
-            <h2 key={index}>{ genre }</h2>
-        ))}
-        </div>
-        <p>{ clickedMovie.overview } </p>
-      </section>
-    );
+      console.log("Hello")
+    )
   }
 }
 
