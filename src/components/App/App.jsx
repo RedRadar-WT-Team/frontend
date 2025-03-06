@@ -17,16 +17,17 @@ function App() {
   const navigate = useNavigate();
 
   const [executiveOrders, setExecutiveOrders] = useState([]);
+  const [ allExecutiveOrders, setAllExecutiveOrders ] = useState({});
   const [repData, setRepData] = useState(null);
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [detailTarget, setDetailTarget] = useState(""); // Set target based on returned click in EOs or Reps
-  const [ allExecutiveOrders, setAllExecutiveOrders ] = useState({});
+  const [details, setDetails] = useState({});
 
   useEffect(() => {
     showFiveMostRecentExecutiveOrders();
   }, [])
-  
+
   function popOutLogin() {
     setIsLoginOpen(!isLoginOpen);
   }
@@ -48,10 +49,25 @@ function App() {
     setDetailTarget(type);
   }
 
+  function getDetails(id, location) {
+    if (detailTarget === "EO") {
+      fetchEODetails(id)
+    } else if (detailTarget === "rep") {
+      fetchRepDetails(id, location, "false")
+    } else if (detailTarget === "repDB") {
+      fetchRepDetails(id, location, "true")
+    }
+  }
+
+  function fetchEODetails(id) {
+    // Fetch for single EO
+  }
+
   // Fetches to backend
   function getRepData(query) {
     fetch(`http://localhost:3000/api/v1/representatives/search?db=false&query=${query}`)
     .then(response => {
+      console.log(response)
       return response.json();
     })
     .then(data => {
@@ -96,7 +112,19 @@ function App() {
         setExecutiveOrders([]);
       });
   }
-  
+
+  function fetchRepDetails(id, location, source) {
+    fetch(`http://localhost:3000/api/v1/representatives/details?db=${source}&query=${location}&id=${id}`)
+    .then(response => {
+      return response.json();
+    })
+    .then(data => {
+      setDetails(data)
+      navigate("/details")
+    })
+    .catch(error => console.log('error message: ', error.message))
+  }
+
   return (
     <main className='App'>
       <Header  popOutMenu={popOutMenu} isOpen={isOpen}/>
@@ -112,8 +140,8 @@ function App() {
           <Route path="/executive_orders" element={<AllExecutiveOrdersPage allExecutiveOrders={allExecutiveOrders} />} />
           <Route path="/create_account" element={<CreateAccount />} />
           <Route path="/update" element={<EditProfile />} />
-          <Route path="/results" element={<SearchResultsContainer reps={repData}/>} />
-          <Route path="/details" element={<DetailsPage target={detailTarget} />} />
+          <Route path="/results" element={<SearchResultsContainer reps={repData} setDetailsTarget={handleDetailsTarget} getDetails={getDetails} />} />
+          <Route path="/details" element={<DetailsPage target={detailTarget} details={details}/>} />
         </Routes>
       </section>
     </main>

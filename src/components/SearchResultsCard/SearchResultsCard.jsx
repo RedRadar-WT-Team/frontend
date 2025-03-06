@@ -1,14 +1,20 @@
 import './SearchResultsCard.css'
 import { Link } from "react-router-dom"
 
-function SearchCard({ photoURL, name, area, party, state, id }) {
-  
-  const handleOnClick = () => {
-    // Navigate to details page and set target state in app to be passed to show fetch
+function SearchCard({ photoURL, name, area, party, state, location, id, setDetailsTarget, getDetails }) {
+
+  const cardClick = () => {
+    setDetailsTarget("rep")
+    getDetails(id, location)
+  }
+
+  const starClick = (event) => {
+    event.stopPropagation();
+    alert("star clicked!")
   }
 
   return (
-    <div className="search-card" onClick={ () => handleOnClick(id)}>
+    <div className="search-card" onClick={cardClick}>
       <img src={ photoURL } alt={`photo of ${name}`} className="search-card-img"/>
       
       <div className="content-container">
@@ -18,7 +24,7 @@ function SearchCard({ photoURL, name, area, party, state, id }) {
             <p className="search-card-party">{party}</p>
             <p className="search-card-state">{state}</p>
         </div>
-        <button><img className="star" src="src/assets/Five-pointed_star.svg" /></button>
+        <button onClick={starClick}><img className="star" src="src/assets/Five-pointed_star.svg" /></button>
       </div>
     </div>
   );
