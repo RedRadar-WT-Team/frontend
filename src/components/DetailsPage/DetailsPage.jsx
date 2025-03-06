@@ -2,21 +2,23 @@ import './DetailsPage.css'
 // import EOs component
 // import reps component
 
-function DetailsPage( { target }) {
+function DetailsPage( { target, details }) {
     const targetComponent = () => {
-        if ( target === "EO" )
+        if ( target === "EO" ) {
             return (
                 <div>{/* Load in eoDetails component */}</div>
             );
-        else
-        return (
-            <div>{/* Load in repDetails component */}</div>
-        );
-        end
+        } else {
+            return (
+                <div>{/* Load in repDetails component */}</div>
+            );
+        } 
     }
     
     return (
-        {targetComponent}
+        <section className="details_container">
+            {targetComponent}
+        </section>
     );
 }
 
