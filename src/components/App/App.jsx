@@ -11,6 +11,8 @@ import AllExecutiveOrdersPage from '../AllExecutiveOrdersPage/AllExecutiveOrders
 import EditProfile from '../EditProfile/EditProfile';
 import SearchResultsContainer from '../SearchResultsContainer/SearchResultsContainer';
 import RepDetails from '../RepDetailsPage/RepDetailsPage.jsx';
+import ExecutiveOrderDetailsPage from '../ExecutiveOrderDetailsPage/ExecutiveOrderDetailsPage.jsx';
+import AboutPage from '../AboutPage/AboutPage.jsx';
 
 function App() {
   const navigate = useNavigate();
@@ -135,9 +137,12 @@ function App() {
           <Route path="/update" element={<EditProfile />} />
           <Route path="/results" element={<SearchResultsContainer reps={repData} setDetailsTarget={handleDetailsTarget} getDetails={getRepDetails} />} />
           <Route path="/repDetails" element={<RepDetails repDetails={repDetails}/>} />
+          <Route path="/executive_orders/:eoId" element={<ExecutiveOrderDetailsPage />} />
+          <Route path="/about" element={<AboutPage/>} />
         </Routes>
       </section>
     </main>
   );
 }
+
 export default App
