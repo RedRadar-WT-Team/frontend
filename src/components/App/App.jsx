@@ -8,7 +8,6 @@ import LoginPopUp from '../LoginPopUp/LoginPopUp';
 import CreateAccount from '../CreateAccount/CreateAccount';
 import UserProfile from '../UserProfile/UserProfile';
 import AllExecutiveOrdersPage from '../AllExecutiveOrdersPage/AllExecutiveOrdersPage';
-import Ticker from '../Ticker/Ticker';
 import EditProfile from '../EditProfile/EditProfile';
 import SearchResultsContainer from '../SearchResultsContainer/SearchResultsContainer';
 import DetailsPage from '../DetailsPage/DetailsPage.jsx';
@@ -57,10 +56,6 @@ function App() {
     } else if (detailTarget === "repDB") {
       fetchRepDetails(id, location, "true")
     }
-  }
-
-  function fetchEODetails(id) {
-    // Fetch for single EO
   }
 
   // Fetches to backend
@@ -125,6 +120,18 @@ function App() {
     .catch(error => console.log('error message: ', error.message))
   }
 
+  function fetchEODetails(doc_num, location="", source="") {
+    fetch(`http://localhost:3000/api/v1/executive_orders/${doc_num}`)
+    .then(response => {
+      return response.json();
+    })
+    .then(data => {
+      setDetails(data)
+      navigate("/details")
+    })
+    .catch(error => console.log('error message: ', error.message))
+  }
+
   return (
     <main className='App'>
       <Header  popOutMenu={popOutMenu} isOpen={isOpen}/>
@@ -137,7 +144,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Homepage executiveOrders={executiveOrders} getRepData={getRepData}/>}/>
           <Route path="/profile" element={<UserProfile />} />
-          <Route path="/executive_orders" element={<AllExecutiveOrdersPage allExecutiveOrders={allExecutiveOrders} />} />
+          <Route path="/executive_orders" element={<AllExecutiveOrdersPage allExecutiveOrders={allExecutiveOrders} setDetailsTarget={handleDetailsTarget} getDetails={getDetails} />} />
           <Route path="/create_account" element={<CreateAccount />} />
           <Route path="/update" element={<EditProfile />} />
           <Route path="/results" element={<SearchResultsContainer reps={repData} setDetailsTarget={handleDetailsTarget} getDetails={getDetails} />} />
