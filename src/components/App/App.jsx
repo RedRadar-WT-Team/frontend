@@ -115,7 +115,7 @@ function App() {
           <Route path="/update" element={<EditProfile />} />
           <Route path="/results" element={<SearchResultsContainer reps={repData}/>} />
           <Route path="/details" element={<DetailsPage target={detailTarget} />} />
-          <Route path="/executive_orders/:eoID" element={<ExecutiveOrderDetailsPage />} />
+          <Route path="/executive_orders/:eoId" element={<ExecutiveOrderDetailsPage />} />
         </Routes>
       </section>
     </main>

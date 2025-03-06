@@ -8,7 +8,7 @@ function ExecutiveOrderDetails() {
   const [clickedEO, setClickedEO] = useState();
 
   function getEODetails() {
-    fetch(`http://127.0.0.1:3000/api/v1/executive_orders/api/v1/executive_orders/${eoID}`)
+    fetch(`http://127.0.0.1:3000/api/v1/executive_orders/${eoID}`)
     .then(response => response.json())
     .then(data => {
       setClickedEO(data)
@@ -18,12 +18,17 @@ function ExecutiveOrderDetails() {
 
   useEffect(() => {
     getEODetails();
-  })
+  }, [])
 
   if(clickedEO) {
-    console.log(clickedEO)
     return (
-      console.log("Hello")
+      <section className='EODetails'>
+      <h1>{ clickedEO.data.attributes.title }</h1>
+      <h2>{ clickedEO.data.attributes.document_number}</h2>
+      <h2>{ clickedEO.data.attributes.publication_date}</h2>
+      <h2>{ clickedEO.data.attributes.html_url}</h2>
+      <h2>{ clickedEO.data.attributes.pdf_url}</h2>
+    </section>
     )
   }
 }
