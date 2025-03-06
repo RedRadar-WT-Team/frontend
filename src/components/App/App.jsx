@@ -1,12 +1,14 @@
 import './App.css'
 import { Routes, Route, useNavigate, useLocation  } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Header from '../Header/Header';
 import MenuPopUp from '../MenuPopUp/MenuPopUp';
 import LoginPopUp from '../LoginPopUp/LoginPopUp';
 import Homepage from '../Homepage/Homepage';
 import CreateAccount from '../CreateAccount/CreateAccount';
 import UserProfile from '../UserProfile/UserProfile';
+import AllExecutiveOrdersPage from '../AllExecutiveOrdersPage/AllExecutiveOrdersPage';
+import ExecutiveOrderCard from '../ExecutiveOrderCard/ExecutiveOrderCard';
 
 export const dummyExecutiveOrders = [
   {id: 1000, title: "Zoo Dress Code", summary: "Walruses must wear pants."}, 
@@ -21,7 +23,23 @@ function App() {
   const [isLoginOpen, setIsLoginOpen] = useState(false)
   const [isOpen, setIsOpen] = useState(false)
   const navigate = useNavigate()
+  const [ allExecutiveOrders, setAllExecutiveOrders ] = useState([]);
   // const location = useLocation()
+
+  function showAllExecutiveOrders() {
+    fetch('http://localhost:3000/api/v1/executive_orders')
+      .then(response => response.json())
+      .then(data => { console.log(data)
+        setAllExecutiveOrders(data);
+      })
+      .catch(error => console.log(error.message)
+      )
+  }
+
+  // useEffect(() => {
+  //   getRecentEOs();
+  // })
+
 
   function popOutLogin() {
     setIsLoginOpen(!isLoginOpen);
@@ -43,7 +61,7 @@ function App() {
   return (
     <main className='App'>
       <Header  popOutMenu={popOutMenu} isOpen={isOpen}/>
-      <MenuPopUp popOutLogin={popOutLogin} isOpen={isOpen}/>
+      <MenuPopUp popOutLogin={popOutLogin} isOpen={isOpen} showAllExecutiveOrders={showAllExecutiveOrders}/>
       <section className="login_container">
         <LoginPopUp isLoginOpen={isLoginOpen} closeLogin={closeLogin} navigateToCreate={navigateToCreate}/>
       </section>
@@ -54,6 +72,7 @@ function App() {
           <Route path="/" element={<Homepage executiveOrders={executiveOrders}  />} />
           <Route path="/create_account" element={<CreateAccount />} />
           <Route path="/profile" element={<UserProfile />} />
+          <Route path="/executive_orders" element={<AllExecutiveOrdersPage allExecutiveOrders={allExecutiveOrders} />} />
           {/* <Route path="/search_results" element={<SearchResults />} /> */}
         </Routes>
       </section>
