@@ -8,37 +8,64 @@ import Homepage from '../Homepage/Homepage';
 import CreateAccount from '../CreateAccount/CreateAccount';
 import UserProfile from '../UserProfile/UserProfile';
 import AllExecutiveOrdersPage from '../AllExecutiveOrdersPage/AllExecutiveOrdersPage';
-import ExecutiveOrderCard from '../ExecutiveOrderCard/ExecutiveOrderCard';
+import Ticker from '../Ticker/Ticker';
 
-export const dummyExecutiveOrders = [
-  {id: 1000, title: "Zoo Dress Code", summary: "Walruses must wear pants."}, 
-  {id: 2000, title: "Ice Scream", summary: "Mandatory screaming upon consumption of Mint Chocolate Chip Ice Cream on Thursdays."}, 
-  {id: 3000, title: "Middle Name Penalty", summary: "Those with a middle 'L' initial must walk backwards all day on the Sabbath."},
-  {id: 4000, title: "Bye Bye Cap'n Crunch", summary: "If you like Cap'n Crunch, no more Cap'n Crunch for you."},
-  {id: 5000, title: "Cuz 'Mercuh", summary: "Fireworks at 3:30 am. Everyday. Even Saturdays."}
-]
+// export const dummyExecutiveOrders = [
+//   {id: 1000, title: "Zoo Dress Code", summary: "Walruses must wear pants."}, 
+//   {id: 2000, title: "Ice Scream", summary: "Mandatory screaming upon consumption of Mint Chocolate Chip Ice Cream on Thursdays."}, 
+//   {id: 3000, title: "Middle Name Penalty", summary: "Those with a middle 'L' initial must walk backwards all day on the Sabbath."},
+//   {id: 4000, title: "Bye Bye Cap'n Crunch", summary: "If you like Cap'n Crunch, no more Cap'n Crunch for you."},
+//   {id: 5000, title: "Cuz 'Mercuh", summary: "Fireworks at 3:30 am. Everyday. Even Saturdays."}
+// ]
 
 function App() {
-  const [executiveOrders, setExecutiveOrders] = useState(dummyExecutiveOrders);
+  const [executiveOrders, setExecutiveOrders] = useState([]);
   const [isLoginOpen, setIsLoginOpen] = useState(false)
   const [isOpen, setIsOpen] = useState(false)
   const navigate = useNavigate()
-  const [ allExecutiveOrders, setAllExecutiveOrders ] = useState([]);
+  const [ allExecutiveOrders, setAllExecutiveOrders ] = useState({});
   // const location = useLocation()
+
+    useEffect(() => {
+    showFiveMostRecentExecutiveOrders();
+  }, [])
 
   function showAllExecutiveOrders() {
     fetch('http://localhost:3000/api/v1/executive_orders')
       .then(response => response.json())
-      .then(data => { console.log(data)
+      .then(data => {
         setAllExecutiveOrders(data);
+        navigate("/executive_orders")
       })
       .catch(error => console.log(error.message)
       )
   }
 
-  // useEffect(() => {
-  //   getRecentEOs();
-  // })
+  function showFiveMostRecentExecutiveOrders() {
+    fetch('http://localhost:3000/api/v1/executive_orders/recent')
+      .then(response => response.json())
+      .then(data => {
+        console.log("five most recent data: ", data);
+        
+        if (Array.isArray(data)) {
+          setExecutiveOrders(data);
+          return;
+        }
+        
+        if (data && typeof data === 'object') { //data is actually an array IN A JS OBJECT!!!! that's why it's been hard to access
+          const possibleArray = Object.values(data).find(val => Array.isArray(val));
+          setExecutiveOrders(possibleArray || []);
+          return;
+        }
+        
+        setExecutiveOrders([]);
+      })
+      .catch(error => {
+        console.error("Error fetching executive orders:", error.message);
+        setExecutiveOrders([]);
+      });
+  }
+
 
 
   function popOutLogin() {
@@ -62,6 +89,7 @@ function App() {
     <main className='App'>
       <Header  popOutMenu={popOutMenu} isOpen={isOpen}/>
       <MenuPopUp popOutLogin={popOutLogin} isOpen={isOpen} showAllExecutiveOrders={showAllExecutiveOrders}/>
+      {/* <Ticker executiveOrders={executiveOrders} /> */}
       <section className="login_container">
         <LoginPopUp isLoginOpen={isLoginOpen} closeLogin={closeLogin} navigateToCreate={navigateToCreate}/>
       </section>
