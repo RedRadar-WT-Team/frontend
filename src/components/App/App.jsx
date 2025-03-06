@@ -9,6 +9,7 @@ import CreateAccount from '../CreateAccount/CreateAccount';
 import SearchResultsContainer from '../SearchResultsContainer/SearchResultsContainer'
 import UserProfile from '../UserProfile/UserProfile';
 import EditProfile from '../EditProfile/EditProfile';
+import SearchResultsCardDetails from '../SearchResultsCardDetail/SearchResultsCardDetail';
 
 export const dummyExecutiveOrders = [
   {id: 1000, title: "Zoo Dress Code", summary: "Walruses must wear pants."}, 
@@ -68,10 +69,9 @@ function App() {
           <Route path="/" element={<Homepage executiveOrders={executiveOrders} getRepData={getRepData}/>}/>
           <Route path="/create_account" element={<CreateAccount />} />
           <Route path="/profile" element={<UserProfile />} />
-          <Route path="/results" element={<SearchResultsContainer reps={repData}/>} />
           <Route path="/update" element={<EditProfile />} />
-       
-
+          <Route path="/results" element={<SearchResultsContainer reps={repData}/>} />
+          <Route path="/results/:repId" element={<SearchResultsCardDetails />} />
         </Routes>
       </section>
     </main>
