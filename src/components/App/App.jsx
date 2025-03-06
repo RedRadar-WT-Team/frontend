@@ -1,11 +1,12 @@
 import './App.css'
-import { Routes, Route, useNavigate, useLocation  } from 'react-router-dom';
+import { Routes, Route, useNavigate  } from 'react-router-dom';
 import { useState } from 'react';
 import Header from '../Header/Header';
 import MenuPopUp from '../MenuPopUp/MenuPopUp';
 import LoginPopUp from '../LoginPopUp/LoginPopUp';
 import Homepage from '../Homepage/Homepage';
 import CreateAccount from '../CreateAccount/CreateAccount';
+import SearchResultsContainer from '../SearchResultsContainer/SearchResultsContainer'
 import UserProfile from '../UserProfile/UserProfile';
 import EditProfile from '../EditProfile/EditProfile';
 
@@ -23,6 +24,19 @@ function App() {
   const [isOpen, setIsOpen] = useState(false)
   const navigate = useNavigate()
   // const location = useLocation()
+  const [repData, setRepData] = useState(null);
+
+  function getRepData(query) {
+    fetch(`http://localhost:3000/api/v1/representatives/search?db=false&query=${query}`)
+    .then(response => {
+      return response.json();
+    })
+    .then(data => {
+      setRepData(data)
+      navigate('/results')
+    })
+    .catch(error => console.log('error message: ', error.message))
+  }
 
   function popOutLogin() {
     setIsLoginOpen(!isLoginOpen);
@@ -49,19 +63,18 @@ function App() {
         <LoginPopUp isLoginOpen={isLoginOpen} closeLogin={closeLogin} navigateToCreate={navigateToCreate}/>
       </section>
       
-
       <section className='content'>
         <Routes>
-          <Route path="/" element={<Homepage executiveOrders={executiveOrders}  />} />
+          <Route path="/" element={<Homepage executiveOrders={executiveOrders} getRepData={getRepData}/>}/>
           <Route path="/create_account" element={<CreateAccount />} />
           <Route path="/profile" element={<UserProfile />} />
+          <Route path="/results" element={<SearchResultsContainer reps={repData}/>} />
           <Route path="/update" element={<EditProfile />} />
-          {/* <Route path="/search_results" element={<SearchResults />} /> */}
+       
+
         </Routes>
       </section>
-      
     </main>
   );
 }
-
 export default App

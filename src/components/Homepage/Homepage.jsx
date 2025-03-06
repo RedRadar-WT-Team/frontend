@@ -3,11 +3,11 @@ import {useState} from 'react';
 import Ticker from '../Ticker/Ticker';
 import SearchBar from '../SearchBar/SearchBar';
 
-function Homepage({executiveOrders}) {
+function Homepage({executiveOrders, getRepData}) {
     return(
         <section className="homepage">
-            <div className='searchbar-container'>
-                <SearchBar />
+            <div className='searchbar-container' >
+                <SearchBar getRepData={getRepData}/>
             </div>
 
             <div className='ticker-container'>
