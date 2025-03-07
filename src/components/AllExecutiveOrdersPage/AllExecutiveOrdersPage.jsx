@@ -1,7 +1,7 @@
 import './AllExecutiveOrdersPage.css';
 import ExecutiveOrderCard from '../ExecutiveOrderCard/ExecutiveOrderCard'
 
-function AllExecutiveOrdersPage({allExecutiveOrders, setDetailsTarget, getDetails}) {
+function AllExecutiveOrdersPage({allExecutiveOrders, setDetailsTarget, getDetails, handleSavedEos}) {
 
   const allExecOrders = allExecutiveOrders.data.map((execOrder) => {
       return (
@@ -10,6 +10,7 @@ function AllExecutiveOrdersPage({allExecutiveOrders, setDetailsTarget, getDetail
         execOrder={execOrder.attributes}
         setDetailsTarget={setDetailsTarget}
         getDetails={getDetails}
+        handleSavedEos={handleSavedEos}
       />
     )
   })
