@@ -1,7 +1,7 @@
 import './SearchResultsContainer.css';
 import SearchResultsCard from '../SearchResultsCard/SearchResultsCard.jsx';
 
-function SearchResultCards( { reps, setDetailsTarget, getDetails } ) {
+function SearchResultCards( { reps, setDetailsTarget, getDetails, handleSavedReps } ) {
   const repDataCards = reps.data.map((rep) => {
     return (
       < SearchResultsCard 
@@ -15,6 +15,7 @@ function SearchResultCards( { reps, setDetailsTarget, getDetails } ) {
           key = { rep.attributes.id }
           setDetailsTarget = { setDetailsTarget }
           getDetails = { getDetails }
+          handleSavedReps = { handleSavedReps }
       />
     )
   })
