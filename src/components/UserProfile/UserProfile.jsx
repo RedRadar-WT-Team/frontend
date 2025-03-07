@@ -1,45 +1,94 @@
 // src/components/UserProfile/UserProfile.jsx
+
 import React, { useState, useEffect } from "react";
 import { NavLink } from 'react-router-dom';
-// import { dummyExecutiveOrders } from "../App/App";
 import MenuPopUp from "../MenuPopUp/MenuPopUp";
 import './UserProfile.css';
 
 function UserProfile() {
-  const [userInfo, setUserInfo] = useState({
-    name: "Test Person",
-    email: "testperson@email.com",
-    state: "New York",
-    zip: "12345",
-  });
-
+  const [userInfo, setUserInfo] = useState(null);
   const [localRepresentatives, setLocalRepresentatives] = useState([]);
   const [savedRepresentatives, setSavedRepresentatives] = useState([]);
-  const [savedExecutiveOrders, setSavedExecutiveOrders] = useState(dummyExecutiveOrders);
+  const [savedExecutiveOrders, setSavedExecutiveOrders] = useState([]);
+  const [isLoggedIn, setIsLoggedIn] = useState(null);  // Track if the user is logged in
+  const [showLoginPopup, setShowLoginPopup] = useState(false);  // Track if login popup is shown
 
+  // Check login status when the component mounts
   useEffect(() => {
-    fetchLocalRepresentatives(userInfo.zip);
-  }, [userInfo.zip]);
+    const checkLoginStatus = async () => {
+      try {
+        const response = await fetch('http://localhost:3000/api/v1/status', {
+          method: 'GET',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'include',  // Include credentials (cookies) for session-based auth
+        });
 
+        const data = await response.json();
+
+        if (data.logged_in) {
+          setIsLoggedIn(true);
+          setUserInfo(data.user);  // Set the user information if logged in
+        } else {
+          setIsLoggedIn(false);
+          setShowLoginPopup(true);  // Show login popup if not logged in
+        }
+      } catch (error) {
+        console.error('Error checking login status:', error);
+        setIsLoggedIn(false);
+        setShowLoginPopup(true);  // Show login popup if error occurs
+      }
+    };
+
+    checkLoginStatus();
+  }, []);
+
+  // Fetch local representatives based on the user's zip code
+  useEffect(() => {
+    if (userInfo && userInfo.zip) {
+      fetchLocalRepresentatives(userInfo.zip);
+    }
+  }, [userInfo]);
+
+  // Fetch local representatives from an external API
   const fetchLocalRepresentatives = (zip) => {
     setLocalRepresentatives([
-      // FETCH CALL HERE
-      { name: "Representative 1", party: "Yes", state: "NY" }, 
-      { name: "Representative 2", party: "No", state: "NY" }, 
+      { name: "Representative 1", party: "Yes", state: "NY" },
+      { name: "Representative 2", party: "No", state: "NY" },
     ]);
   };
 
+  // Fetch saved representatives (example)
   const fetchSavedRepresentatives = () => {
     setSavedRepresentatives([
-      //FETCH CALL HERE
+      { name: "Saved Representative 1" },
+      { name: "Saved Representative 2" },
     ]);
   };
 
+  // Fetch saved executive orders (example)
   const fetchSavedEOs = () => {
     setSavedExecutiveOrders([
-      //FETCH CALL HERE
+      { title: "Executive Order 1" },
+      { title: "Executive Order 2" },
     ]);
   };
+
+  if (isLoggedIn === null) {
+    // Show loading state while checking login status
+    return <div>Loading...</div>;
+  }
+
+  if (!isLoggedIn) {
+    // Show the login popup if the user is not logged in
+    return (
+      <div>
+        <h2>Please log in to view your profile.</h2>
+        <NavLink to="/login">
+          <button>Log In</button>
+        </NavLink>
+      </div>
+    );
+  }
 
   return (
     <div className="user-profile-container">
@@ -67,7 +116,6 @@ function UserProfile() {
 
       <div className="quadrant">
         <h2>Saved Representatives</h2>
-        {/* Display saved representatives here */}
         <ul>
           {savedRepresentatives.map((rep, index) => (
             <li key={index}>{rep.name}</li>
@@ -77,7 +125,6 @@ function UserProfile() {
 
       <div className="quadrant eo">
         <h2>Saved Executive Orders</h2>
-        {/* Display saved executive orders here */}
         <ul>
           {savedExecutiveOrders.map((order, index) => (
             <li key={index}>{order.title}</li>
