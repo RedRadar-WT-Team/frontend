@@ -39,6 +39,13 @@ header h1 {
  cursor: pointer
 }
 
+.burger-button:hover {
+  -webkit-box-shadow:0px 0px 205px 7px var(--lowOp_white);
+  -moz-box-shadow: 0px 0px 205px 7px var(--lowOp_white);
+  box-shadow: 0px 0px 205px 7px var(--lowOp_white);
+  background-color: var(--xtra_lowOp_white);
+}
+
 .pop-out-container {
   margin: 10px;
   padding: 10px;
@@ -52,5 +59,9 @@ header h1 {
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0;
   box-shadow: -5px 0 10px var(--lowOp_black);
+}
+
+.open:hover {
+  background-color: var(--snow);
 }
 
