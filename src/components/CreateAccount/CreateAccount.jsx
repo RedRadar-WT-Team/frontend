@@ -108,7 +108,7 @@ function CreateAccount() {
           <form onSubmit={handleSubmit} noValidate>
             <div className='form-input-parent'>
               <div className='form-input'>
-                <label>Email:     </label>
+                <label>Email:</label>
                   <input
                     type="email"
                     value={email}
@@ -117,12 +117,11 @@ function CreateAccount() {
                 {errorMessage?.email && <p style={{ color: 'red' }}>{errorMessage.email}</p>}
               </div>
               <div className='form-input-state'>
-                <label>State:        </label>
-                  <StateDropdown className='state-dropdown' value={usState} onChange={handleStateChange} />
-                  {errorMessage?.state && <p style={{ color: 'red' }}>{errorMessage.state}</p>}
+                <StateDropdown className='state-dropdown' value={usState} onChange={handleStateChange} />
+                {errorMessage?.state && <p style={{ color: 'red' }}>{errorMessage.state}</p>}
               </div>
               <div className='form-input'>
-                <label>Zip code:     </label>
+                <label>Zip code:</label>
                   <input
                     type="text"
                     value={zip}
