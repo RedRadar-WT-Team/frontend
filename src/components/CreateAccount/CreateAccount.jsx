@@ -41,13 +41,20 @@ function CreateAccount() {
 
   async function createAccount(formData) {
     try {
-      const response = await fetch("http://localhost:3000/api/v1/users", {
-        method: "POST",
+      const response = await fetch(`http://localhost:3000/api/v1/users`, {
+        method: 'POST',
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
-      });
+      })
+      .then(response => {
+        return response.json();
+      })
+      .then(data => {
+        console.log(data)
+      })
+      .catch(error => console.log('error message: ', error.message));
 
       if (!response.ok) {
         const json = await response.json();

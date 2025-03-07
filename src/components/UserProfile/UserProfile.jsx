@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { NavLink } from 'react-router-dom';
 import MenuPopUp from "../MenuPopUp/MenuPopUp";
+import LoginPopUp from "../LoginPopUp/LoginPopUp";
 import './UserProfile.css';
 
 function UserProfile() {
@@ -11,23 +12,19 @@ function UserProfile() {
   const [savedRepresentatives, setSavedRepresentatives] = useState([]);
   const [savedExecutiveOrders, setSavedExecutiveOrders] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(null);  // Track if the user is logged in
-  const [showLoginPopup, setShowLoginPopup] = useState(false);  // Track if login popup is shown
+  const [showLoginPopup, setShowLoginPopup] = useState(false);  // Track if login popup is shown]
+  const [statusData, setStatusData] = useState({});
 
   // Check login status when the component mounts
   useEffect(() => {
-    const checkLoginStatus = async () => {
       try {
-        const response = await fetch('http://localhost:3000/api/v1/status', {
-          method: 'GET',
-          headers: { 'Content-Type': 'application/json' },
-          credentials: 'include',  // Include credentials (cookies) for session-based auth
-        });
 
-        const data = await response.json();
+        fetchStatus();
 
-        if (data.logged_in) {
+        if (statusData.logged_in) {
           setIsLoggedIn(true);
-          setUserInfo(data.user);  // Set the user information if logged in
+          setUserInfo(statusData.user);  // Set the user information if logged in
+          setShowLoginPopup(false)
         } else {
           setIsLoggedIn(false);
           setShowLoginPopup(true);  // Show login popup if not logged in
@@ -37,10 +34,19 @@ function UserProfile() {
         setIsLoggedIn(false);
         setShowLoginPopup(true);  // Show login popup if error occurs
       }
-    };
-
-    checkLoginStatus();
   }, []);
+
+  // const fetchStatus = () => {
+  //   fetch(`http://localhost:3000/api/v1/status`)
+  //   .then(response => {
+  //     return response.json();
+  //   })
+  //   .then(data => {
+  //     setStatusData(data);
+  //     console.log(data)
+  //   })
+  //   .catch(error => console.log('error message: ', error.message))
+  // }
 
   // Fetch local representatives based on the user's zip code
   useEffect(() => {
@@ -83,9 +89,7 @@ function UserProfile() {
     return (
       <div>
         <h2>Please log in to view your profile.</h2>
-        <NavLink to="/login">
-          <button>Log In</button>
-        </NavLink>
+        <LoginPopUp isLoginOpen={showLoginPopup} closeLogin={() => setShowLoginPopup(false)} />
       </div>
     );
   }
