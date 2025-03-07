@@ -2,11 +2,11 @@ import SearchCard from '../SearchResultsCard/SearchResultsCard';
 import './ExecutiveOrderCard.css';
 import { Link } from 'react-router-dom';
 
-function ExecutiveOrderCard({ execOrder }) {
+function ExecutiveOrderCard({ execOrder, handleSavedEos}) {
     
   const starClick = (event) => {
     event.stopPropagation();
-    alert("star clicked!")
+    handleSavedEos(execOrder.executive_order_number);
   }
   
   return (
