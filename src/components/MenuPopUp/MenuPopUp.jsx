@@ -7,13 +7,13 @@ function MenuPopUp({popOutLogin, isOpen, showAllExecutiveOrders}) {
       {isOpen && (
           <div className={`pop-up ${isOpen ? 'open' : ''}`}>
             <ul>
-              <li>
+              <li className="link">
                 <NavLink to="/about">About</NavLink>
               </li>
-              <li>
+              <li className="link">
                 <NavLink onClick={showAllExecutiveOrders}>All Executive Orders</NavLink>
               </li>
-              <li>
+              <li className="link">
                 <NavLink to="/profile">User Profile</NavLink>
               </li>
               <li>
