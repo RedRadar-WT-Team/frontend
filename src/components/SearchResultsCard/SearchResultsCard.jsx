@@ -1,7 +1,7 @@
 import './SearchResultsCard.css'
 import { Link } from "react-router-dom"
 
-function SearchCard({ photoURL, name, area, party, state, location, id, setDetailsTarget, getDetails }) {
+function SearchCard({ photoURL, name, area, party, state, location, id, setDetailsTarget, getDetails, handleSavedReps }) {
 
   const cardClick = () => {
     setDetailsTarget("rep")
@@ -10,7 +10,7 @@ function SearchCard({ photoURL, name, area, party, state, location, id, setDetai
 
   const starClick = (event) => {
     event.stopPropagation();
-    alert("star clicked!")
+    handleSavedReps(id, location);
   }
 
   return (
