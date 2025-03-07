@@ -4,7 +4,6 @@ import './ExecutiveOrderDetailsPage.css';
 
 function ExecutiveOrderDetails() {
   const eoID = useParams().eoId;
-  console.log(eoID)
   const [clickedEO, setClickedEO] = useState();
 
   function getEODetails() {
@@ -26,8 +25,7 @@ function ExecutiveOrderDetails() {
       <h1>{ clickedEO.data.attributes.title }</h1>
       <h2>{ clickedEO.data.attributes.document_number}</h2>
       <h2>{ clickedEO.data.attributes.publication_date}</h2>
-      <h2>{ clickedEO.data.attributes.html_url}</h2>
-      <h2>{ clickedEO.data.attributes.pdf_url}</h2>
+      <a href={ clickedEO.data.attributes.pdf_url }>Click me to see full executive order</a>
     </section>
     )
   }

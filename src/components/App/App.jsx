@@ -10,7 +10,7 @@ import UserProfile from '../UserProfile/UserProfile';
 import AllExecutiveOrdersPage from '../AllExecutiveOrdersPage/AllExecutiveOrdersPage';
 import EditProfile from '../EditProfile/EditProfile';
 import SearchResultsContainer from '../SearchResultsContainer/SearchResultsContainer';
-import RepDetails from '../RepDetailsPage/RepDetailsPage.jsx';
+import RepDetailsPage from '../RepDetailsPage/RepDetailsPage.jsx';
 import ExecutiveOrderDetailsPage from '../ExecutiveOrderDetailsPage/ExecutiveOrderDetailsPage.jsx';
 import AboutPage from '../AboutPage/AboutPage.jsx';
 
@@ -24,7 +24,7 @@ function App() {
   const [isOpen, setIsOpen] = useState(false);
   const [detailTarget, setDetailTarget] = useState(""); 
   const [repDetails, setRepDetails] = useState({});
-  
+  const [currentUser, setCurrentUser] = useState({});
 
   useEffect(() => {
     showFiveMostRecentExecutiveOrders();
@@ -166,18 +166,19 @@ function App() {
       <Header  popOutMenu={popOutMenu} isOpen={isOpen}/>
       <MenuPopUp popOutLogin={popOutLogin} isOpen={isOpen} showAllExecutiveOrders={showAllExecutiveOrders}/>
       <section className="login_container">
-        <LoginPopUp isLoginOpen={isLoginOpen} closeLogin={closeLogin} navigateToCreate={navigateToCreate}/>
+        <LoginPopUp isLoginOpen={isLoginOpen} closeLogin={closeLogin} navigateToCreate={navigateToCreate} setCurrentUser={setCurrentUser} />
       </section>
       
       <section className='content'>
         <Routes>
           <Route path="/" element={<Homepage executiveOrders={executiveOrders} getRepData={getRepData}/>}/>
+          <Route path="/login" element={<LoginPopUp />} /> 
           <Route path="/profile" element={<UserProfile />} />
           <Route path="/executive_orders" element={<AllExecutiveOrdersPage allExecutiveOrders={allExecutiveOrders}  handleSavedEos={handleSavedEos}/>} />
           <Route path="/create_account" element={<CreateAccount />} />
           <Route path="/update" element={<EditProfile />} />
           <Route path="/results" element={<SearchResultsContainer reps={repData} setDetailsTarget={handleDetailsTarget} getDetails={getRepDetails} handleSavedReps={handleSavedReps} />} />
-          <Route path="/repDetails" element={<RepDetails repDetails={repDetails}/>} />
+          <Route path="/repDetails" element={<RepDetailsPage repDetails={repDetails}/>} />
           <Route path="/executive_orders/:eoId" element={<ExecutiveOrderDetailsPage />} />
           <Route path="/about" element={<AboutPage/>} />
         </Routes>
