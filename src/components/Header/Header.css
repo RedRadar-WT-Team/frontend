@@ -27,6 +27,7 @@ header img:hover {
 
 header h1 {
   margin: auto;
+  padding-left: 1em;
   color: var(--snow)
 }
 
