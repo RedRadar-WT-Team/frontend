@@ -1,4 +1,4 @@
-describe('Search and Save Representatives Flow', () => {
+describe('Search Results', () => {
   beforeEach(() => {
     cy.intercept('GET', 'http://localhost:3000/api/v1/executive_orders/recent', {
       statusCode: 200,
