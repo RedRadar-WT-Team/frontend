@@ -18,12 +18,13 @@ function App() {
   const navigate = useNavigate();
 
   const [executiveOrders, setExecutiveOrders] = useState([]);
-  const [ allExecutiveOrders, setAllExecutiveOrders ] = useState({});
+  const [allExecutiveOrders, setAllExecutiveOrders ] = useState({});
   const [repData, setRepData] = useState(null);
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const [detailTarget, setDetailTarget] = useState(""); // Set target based on returned click in EOs or Reps
+  const [detailTarget, setDetailTarget] = useState(""); 
   const [repDetails, setRepDetails] = useState({});
+  
 
   useEffect(() => {
     showFiveMostRecentExecutiveOrders();
@@ -120,6 +121,46 @@ function App() {
     .catch(error => console.log('error message: ', error.message))
   }
 
+  function saveEos(EoNum) {
+    fetch(`http://localhost:3000/api/v1/executive_orders_users/${EoNum}?user_id=${currentUser}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+    .then(response => {
+      return response.json();
+    })
+    .then(data => {
+      navigate("/profile")
+    })
+    .catch(error => console.log('error message: ', error.message))
+  }
+
+  function saveReps(id, location) {
+    fetch(`http://localhost:3000/api/v1/representatives?query=${location}&id=${id}&user_id=${currentUser}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+    .then(response => {
+      return response.json();
+    })
+    .then(data => {
+      navigate("/profile")
+    })
+    .catch(error => console.log('error message: ', error.message))
+  }
+
+  function handleSavedEos(EoNum) {
+    saveEos(EoNum);
+  }
+
+  function handleSavedReps(id, location) {
+    saveReps(id, location);
+  }
+
   return (
     <main className='App'>
       <Header  popOutMenu={popOutMenu} isOpen={isOpen}/>
@@ -132,10 +173,10 @@ function App() {
         <Routes>
           <Route path="/" element={<Homepage executiveOrders={executiveOrders} getRepData={getRepData}/>}/>
           <Route path="/profile" element={<UserProfile />} />
-          <Route path="/executive_orders" element={<AllExecutiveOrdersPage allExecutiveOrders={allExecutiveOrders}/>} />
+          <Route path="/executive_orders" element={<AllExecutiveOrdersPage allExecutiveOrders={allExecutiveOrders}  handleSavedEos={handleSavedEos}/>} />
           <Route path="/create_account" element={<CreateAccount />} />
           <Route path="/update" element={<EditProfile />} />
-          <Route path="/results" element={<SearchResultsContainer reps={repData} setDetailsTarget={handleDetailsTarget} getDetails={getRepDetails} />} />
+          <Route path="/results" element={<SearchResultsContainer reps={repData} setDetailsTarget={handleDetailsTarget} getDetails={getRepDetails} handleSavedReps={handleSavedReps} />} />
           <Route path="/repDetails" element={<RepDetails repDetails={repDetails}/>} />
           <Route path="/executive_orders/:eoId" element={<ExecutiveOrderDetailsPage />} />
           <Route path="/about" element={<AboutPage/>} />
