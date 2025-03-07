@@ -24,6 +24,7 @@ function App() {
   const [isOpen, setIsOpen] = useState(false);
   const [detailTarget, setDetailTarget] = useState(""); // Set target based on returned click in EOs or Reps
   const [repDetails, setRepDetails] = useState({});
+  const [currentUser, setCurrentUser] = useState({});
 
   useEffect(() => {
     showFiveMostRecentExecutiveOrders();
@@ -125,12 +126,13 @@ function App() {
       <Header  popOutMenu={popOutMenu} isOpen={isOpen}/>
       <MenuPopUp popOutLogin={popOutLogin} isOpen={isOpen} showAllExecutiveOrders={showAllExecutiveOrders}/>
       <section className="login_container">
-        <LoginPopUp isLoginOpen={isLoginOpen} closeLogin={closeLogin} navigateToCreate={navigateToCreate}/>
+        <LoginPopUp isLoginOpen={isLoginOpen} closeLogin={closeLogin} navigateToCreate={navigateToCreate} setCurrentUser={setCurrentUser} />
       </section>
       
       <section className='content'>
         <Routes>
           <Route path="/" element={<Homepage executiveOrders={executiveOrders} getRepData={getRepData}/>}/>
+          <Route path="/login" element={<LoginPopUp />} /> 
           <Route path="/profile" element={<UserProfile />} />
           <Route path="/executive_orders" element={<AllExecutiveOrdersPage allExecutiveOrders={allExecutiveOrders}/>} />
           <Route path="/create_account" element={<CreateAccount />} />
