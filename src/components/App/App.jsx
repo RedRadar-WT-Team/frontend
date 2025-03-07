@@ -15,6 +15,8 @@ import ExecutiveOrderDetailsPage from '../ExecutiveOrderDetailsPage/ExecutiveOrd
 import AboutPage from '../AboutPage/AboutPage.jsx';
 
 function App() {
+  // const baseURL = "http://localhost:3000"; // Use server locally
+  const baseURL = "https://repradar-backend.onrender.com";
   const navigate = useNavigate();
 
   const [executiveOrders, setExecutiveOrders] = useState([]);
@@ -61,7 +63,7 @@ function App() {
 
   // Fetches to backend
   function getRepData(query) {
-    fetch(`http://localhost:3000/api/v1/representatives/search?db=false&query=${query}`)
+    fetch(`${baseURL}/api/v1/representatives/search?db=false&query=${query}`)
     .then(response => {
       console.log(response)
       return response.json();
@@ -74,7 +76,7 @@ function App() {
   }
   
    function showAllExecutiveOrders() {
-    fetch('http://localhost:3000/api/v1/executive_orders')
+    fetch(`${baseURL}/api/v1/executive_orders`)
       .then(response => response.json())
       .then(data => {
         setAllExecutiveOrders(data);
@@ -85,7 +87,7 @@ function App() {
   }
 
   function showFiveMostRecentExecutiveOrders() {
-    fetch('http://localhost:3000/api/v1/executive_orders/recent')
+    fetch(`${baseURL}/api/v1/executive_orders/recent`)
       .then(response => response.json())
       .then(data => {
         console.log("five most recent data: ", data);
@@ -110,7 +112,7 @@ function App() {
   }
 
   function fetchRepDetails(id, location, source) {
-    fetch(`http://localhost:3000/api/v1/representatives/details?db=${source}&query=${location}&id=${id}`)
+    fetch(`${baseURL}/api/v1/representatives/details?db=${source}&query=${location}&id=${id}`)
     .then(response => {
       return response.json();
     })
@@ -122,7 +124,7 @@ function App() {
   }
 
   function saveEos(EoNum) {
-    fetch(`http://localhost:3000/api/v1/executive_orders_users/${EoNum}?user_id=${currentUser}`, {
+    fetch(`${baseURL}/api/v1/executive_orders_users/${EoNum}?user_id=${currentUser}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -138,7 +140,7 @@ function App() {
   }
 
   function saveReps(id, location) {
-    fetch(`http://localhost:3000/api/v1/representatives?query=${location}&id=${id}&user_id=${currentUser}`, {
+    fetch(`${baseURL}/api/v1/representatives?query=${location}&id=${id}&user_id=${currentUser}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -166,20 +168,20 @@ function App() {
       <Header  popOutMenu={popOutMenu} isOpen={isOpen}/>
       <MenuPopUp popOutLogin={popOutLogin} isOpen={isOpen} showAllExecutiveOrders={showAllExecutiveOrders}/>
       <section className="login_container">
-        <LoginPopUp isLoginOpen={isLoginOpen} closeLogin={closeLogin} navigateToCreate={navigateToCreate} setCurrentUser={setCurrentUser} />
+        <LoginPopUp isLoginOpen={isLoginOpen} closeLogin={closeLogin} navigateToCreate={navigateToCreate} setCurrentUser={setCurrentUser} baseUrl={baseURL} />
       </section>
       
       <section className='content'>
         <Routes>
           <Route path="/" element={<Homepage executiveOrders={executiveOrders} getRepData={getRepData}/>}/>
           <Route path="/login" element={<LoginPopUp />} /> 
-          <Route path="/profile" element={<UserProfile />} />
+          <Route path="/profile" element={<UserProfile baseURL={baseURL}/>} />
           <Route path="/executive_orders" element={<AllExecutiveOrdersPage allExecutiveOrders={allExecutiveOrders}  handleSavedEos={handleSavedEos}/>} />
-          <Route path="/create_account" element={<CreateAccount />} />
-          <Route path="/update" element={<EditProfile />} />
+          <Route path="/create_account" element={<CreateAccount baseURL={baseURL} />} />
+          <Route path="/update" element={<EditProfile baseURL={baseURL} />} />
           <Route path="/results" element={<SearchResultsContainer reps={repData} setDetailsTarget={handleDetailsTarget} getDetails={getRepDetails} handleSavedReps={handleSavedReps} />} />
           <Route path="/repDetails" element={<RepDetailsPage repDetails={repDetails}/>} />
-          <Route path="/executive_orders/:eoId" element={<ExecutiveOrderDetailsPage />} />
+          <Route path="/executive_orders/:eoId" element={<ExecutiveOrderDetailsPage baseURL={baseURL} />} />
           <Route path="/about" element={<AboutPage/>} />
         </Routes>
       </section>

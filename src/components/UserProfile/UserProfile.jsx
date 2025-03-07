@@ -6,7 +6,7 @@ import MenuPopUp from "../MenuPopUp/MenuPopUp";
 import LoginPopUp from "../LoginPopUp/LoginPopUp";
 import './UserProfile.css';
 
-function UserProfile() {
+function UserProfile( {baseURL} ) {
   const [userInfo, setUserInfo] = useState(null);
   const [localRepresentatives, setLocalRepresentatives] = useState([]);
   const [savedRepresentatives, setSavedRepresentatives] = useState([]);
@@ -37,7 +37,7 @@ function UserProfile() {
   }, []);
 
   // const fetchStatus = () => {
-  //   fetch(`http://localhost:3000/api/v1/status`)
+  //   fetch(`${baseURL}/api/v1/status`)
   //   .then(response => {
   //     return response.json();
   //   })
