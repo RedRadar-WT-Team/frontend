@@ -10,7 +10,7 @@ import UserProfile from '../UserProfile/UserProfile';
 import AllExecutiveOrdersPage from '../AllExecutiveOrdersPage/AllExecutiveOrdersPage';
 import EditProfile from '../EditProfile/EditProfile';
 import SearchResultsContainer from '../SearchResultsContainer/SearchResultsContainer';
-import RepDetails from '../RepDetailsPage/RepDetailsPage.jsx';
+import RepDetailsPage from '../RepDetailsPage/RepDetailsPage.jsx';
 import ExecutiveOrderDetailsPage from '../ExecutiveOrderDetailsPage/ExecutiveOrderDetailsPage.jsx';
 import AboutPage from '../AboutPage/AboutPage.jsx';
 
@@ -136,7 +136,7 @@ function App() {
           <Route path="/create_account" element={<CreateAccount />} />
           <Route path="/update" element={<EditProfile />} />
           <Route path="/results" element={<SearchResultsContainer reps={repData} setDetailsTarget={handleDetailsTarget} getDetails={getRepDetails} />} />
-          <Route path="/repDetails" element={<RepDetails repDetails={repDetails}/>} />
+          <Route path="/repDetails" element={<RepDetailsPage repDetails={repDetails}/>} />
           <Route path="/executive_orders/:eoId" element={<ExecutiveOrderDetailsPage />} />
           <Route path="/about" element={<AboutPage/>} />
         </Routes>
