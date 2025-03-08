@@ -40,52 +40,32 @@ function CreateAccount({baseURL}) {
   };
 
   async function createAccount(formData) {
-    try {
-      const response = await fetch(`${baseURL}/api/v1/users`, {
-        method: 'POST',
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      })
+    fetch(`${baseURL}/api/v1/users`, {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    })
       .then(response => {
-        return response.json();
+        if (!response.ok) {
+          // Throw error if response status is not OK
+          return response.json().then((json) => {
+            throw new Error(`Error: ${json.errors || response.statusText}`);
+          });
+        }
+        return response.json(); // Parse the response if OK
       })
       .then(data => {
-        console.log(data)
+        console.log('Created user:', data);
+        setSuccessMessage("Your account has been created successfully!");
+        resetForm(); // Reset form after successful account creation
+        setErrorMessage(null); // Reset any previous error messages
       })
-      .catch(error => console.log('error message: ', error.message));
-
-      if (!response.ok) {
-        const json = await response.json();
-        if (json.errors) {
-          const errorMessages = json.errors.split(", ");
-          let errorObj = {};
-  
-          errorMessages.forEach((error) => {
-            if (error.includes("Email")) {
-              errorObj.email = error;
-            } else if (error.includes("Zip")) {
-              errorObj.zip = error;
-            } else if (error.includes("State")) {
-              errorObj.state = error;
-            }
-          });
-  
-          setErrorMessage(errorObj);
-        }
-        throw new Error(`Response status: ${response.status}`);
-      }
-
-      const json = await response.json();
-      console.log("Success:", json);
-      setErrorMessage(null);
-      setSuccessMessage("Your account has been created successfully!"); 
-      resetForm(); 
-    } catch (error) {
-      console.error("Error submitting form:", error.message);
-      setSuccessMessage(null); 
-    }
+      .catch(error => {
+        console.log('Create user error:', error.message);
+        setErrorMessage({ general: error.message });
+      });
   }
 
   const closeCreateAccount = () => {
