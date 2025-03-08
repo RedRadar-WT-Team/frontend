@@ -27,8 +27,7 @@ header img:hover {
 
 header h1 {
   margin: auto;
-  padding-left: 1em;
-  color: var(--snow)
+  color: var(--snow);
 }
 
 .burger-img {
@@ -37,7 +36,7 @@ header h1 {
 
 .burger-button {
   position: fixed;
-  right: 4em;
+  right: 1em;
   top: 2em;
   background-color:  transparent;
   cursor: pointer;
@@ -84,7 +83,7 @@ header h1 {
 
   .burger-button {
     position: fixed;
-    right: 4em;
+    right: 0.88em;
     top: 2em;
   }
 
