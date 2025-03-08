@@ -1,6 +1,6 @@
 describe('Eos Detail Page', () => {
   beforeEach(() => {
-    cy.visit('/'); 
+    cy.visit('http://localhost:5173/');
     cy.get('.burger-button').click()
     cy.get('.active').click()
     cy.get('.ExecutiveOrderCard').first().click()
