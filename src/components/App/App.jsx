@@ -185,7 +185,7 @@ function App() {
       <Header  popOutMenu={popOutMenu} isOpen={isOpen}/>
       <MenuPopUp popOutLogin={popOutLogin} isOpen={isOpen} showAllExecutiveOrders={showAllExecutiveOrders}/>
       <section className="login_container">
-        <LoginPopUp isLoginOpen={isLoginOpen} closeLogin={closeLogin} navigateToCreate={navigateToCreate} setCurrentUser={setCurrentUser} baseUrl={baseURL} />
+        <LoginPopUp isLoginOpen={isLoginOpen} closeLogin={closeLogin} navigateToCreate={navigateToCreate} setCurrentUser={setCurrentUser} baseURL={baseURL} />
       </section>
       
       <section className='content'>
