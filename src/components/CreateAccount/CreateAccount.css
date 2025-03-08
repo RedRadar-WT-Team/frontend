@@ -1,18 +1,18 @@
 .create-account-container {
   width: 60%;
-  height: 25em;
+  height: 22em;
   background-color: var(--snow);
   display: flex;
   flex-direction: column;
   justify-content: center; 
   align-items: center;
-  text-align: center;
   color: var(--garnet);
-  border-radius: 20px;
-  padding-top: 20px;
-  padding-bottom: 20px;
-  margin: 40px;
+  border-radius: 2em;
+  padding-top: 2em;
+  padding-bottom: 2em;
+  margin: 4.5em;
   position: fixed;
+  top: 7em;
   margin: 10em 48em; 
 }
 
@@ -30,39 +30,68 @@
 .create-account-container form {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  width: 100%;
 }
 
 .form-input-parent {
   padding: 20px;
+  display: flex;
+  flex-direction: column;
 }
 
 .form-input {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   width: 100%;
+  text-align: left;
+  margin-bottom: 1.5em;
 }
 
-.form-input input {
+.form-input input,
+.state-dropdown {
   color: var(--black);
   background-color: var(--lowOp_dogwood);
-  border-radius: 10px;
+  border-radius: 0.75em;
   height: 2em;
   flex: content;
+  text-align: center;
+  margin-left: 1em;
+  width: 13em;
 }
 
 .form-input-state {
-  padding: 1em;
-  flex: content;
+  padding-bottom: 1.5em;
 }
 
 .state-dropdown {
-  height: 2.5em;
-  border-radius: 10px;
+  height: 2.5em; /* Matches input height */
+  width: 13em; /* Matches input width */
+  background-color: var(--lowOp_dogwood);
+  color: var(--black);
+  border-radius: 0.75em;
+  text-align: center;
+  border: 1px solid var(--garnet);
+  padding: 0 0.5em;
 }
 
 .submit-button {
+  width: 15em;
+  padding: 0.75em;
   background-color: var(--teal);
-  border-radius: 15px;  
+  border-radius: 0.9em;
+  text-align: center;
+}
+
+.submit-button:hover {
+  outline: solid 0.1em var(--garnet);
 }
 
 label {
-  font-weight: 600;
+  font-weight: bolder;
+  width: 6em; /* Adjust based on label length */
+  text-align: right;
+  margin-right: 1em;
 }
+

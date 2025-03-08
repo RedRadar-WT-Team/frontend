@@ -46,6 +46,8 @@ function Ticker( { executiveOrders } ){
   }
 
   return (
+    <section className="container">
+      <h2>Most Recent Executive Orders!</h2>
       <div className="ticker">
         <div className="feather-icon">
           <img src={featherPenIcon} alt="Feather Pen" />
@@ -67,10 +69,14 @@ function Ticker( { executiveOrders } ){
             </div>
           )
         })}
-        <BtnSlider moveSlide={nextSlide} direction={"next"}/>
-        <BtnSlider moveSlide={prevSlide} direction={"prev"}/>
-      </div>    
-    )
+        <div className="btn-slider-container">
+          <BtnSlider moveSlide={nextSlide} direction={"next"}/>
+          <BtnSlider moveSlide={prevSlide} direction={"prev"}/>
+        </div>
+       
+      </div> 
+    </section>  
+    );
   }
 
 export default Ticker;

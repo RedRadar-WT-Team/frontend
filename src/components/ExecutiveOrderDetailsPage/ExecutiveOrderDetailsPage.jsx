@@ -22,11 +22,13 @@ function ExecutiveOrderDetails({ baseURL }) {
   if(clickedEO) {
     return (
       <section className='EODetails'>
-      <h1>{ clickedEO.data.attributes.title }</h1>
-      <h2>{ clickedEO.data.attributes.document_number}</h2>
-      <h2>{ clickedEO.data.attributes.publication_date}</h2>
-      <a href={ clickedEO.data.attributes.pdf_url }>Click me to see full executive order</a>
-    </section>
+        <div className="EOCard"> 
+          <h2>{ clickedEO.data.attributes.title }</h2>
+          <h3>Document #: { clickedEO.data.attributes.document_number}</h3>
+          <h3>Published Date: { clickedEO.data.attributes.publication_date}</h3>
+          <a href={ clickedEO.data.attributes.pdf_url }>Click me to see full executive order</a>
+        </div>
+      </section>
     )
   }
 }

@@ -11,12 +11,12 @@ describe('header functionality', () => {
     cy.get('ul li').should('have.length', 4)
 
     cy.get('ul li:first').contains('About')
-    cy.get('ul li:last').contains('Logout')
+    cy.get('ul li:last').contains('Login')
         .click()
-  
-    cy.url().should('include', '/logout')
+
+    cy.get('.exit-button').click()
 
     cy.get('.logo').click()
-    cy.url().should('not.include', '/logout')
+    cy.url().should('not.include', '/login')
   })
 })

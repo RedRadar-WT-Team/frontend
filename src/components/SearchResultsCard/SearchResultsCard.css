@@ -10,6 +10,10 @@
   overflow: hidden;
 }
 
+.search-card:hover {
+  cursor: pointer;
+}
+
 .content-container {
   display: flex;
   align-items: center;
@@ -35,10 +39,6 @@
   bottom: 0;
   right: 0;
   background-color: transparent;
-}
-
-.content-container button:hover {
-
 }
 
 .star {
