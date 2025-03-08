@@ -93,6 +93,6 @@ describe('Create Account Form', () => {
 
     cy.wait('@postUser');
 
-    cy.get('p').should('contain', 'Email is already taken');
+    cy.get('p').should('contain', 'This email is already taken. Please use a different one.');
   });
 });

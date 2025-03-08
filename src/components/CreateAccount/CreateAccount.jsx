@@ -10,7 +10,7 @@ function CreateAccount({baseURL}) {
   const [usState, setUsState] = useState("");
   const [zip, setZip] = useState("");
   const [zipError, setZipError] = useState("");
-  const [errorMessage, setErrorMessage] = useState(null);
+  const [errorMessage, setErrorMessage] = useState({});
   const [successMessage, setSuccessMessage] = useState(null);
   const [isOpen, setIsOpen] = useState(true);
   const navigate = useNavigate();
@@ -48,26 +48,50 @@ function CreateAccount({baseURL}) {
         },
         body: JSON.stringify(formData),
       })
-
+      
       if (!response.ok) {
         const json = await response.json();
+        console.log("json: ", json)
         if (json.errors) {
           const errorMessages = json.errors.split(", ");
           let errorObj = {};
+          let errorTypes = []
   
-          errorMessages.forEach((error) => {
-            if (error.includes("Email")) {
-              errorObj.email = error;
-            } else if (error.includes("Zip")) {
-              errorObj.zip = error;
-            } else if (error.includes("State")) {
-              errorObj.state = error;
-            }
-          });
-  
-          setErrorMessage(errorObj);
+          if (errorMessages.some((error) => error.includes("Email"))) {
+            if (errorMessages.some((error) => error.includes("taken"))) {
+              errorTypes.push("email")
+              errorObj.email = "This email is already taken. Please use a different one.";
+            } else {
+              errorTypes.push("email")
+              errorObj.email = errorMessages.find((error) => error.includes("Email"));
+            } 
+          } 
+          if (errorMessages.some((error) => error.includes("Zip"))) {
+            errorTypes.push("zip")
+            errorObj.zip = errorMessages.find((error) => error.includes("Zip"));
+          }
+          if (errorMessages.some((error) => error.includes("State"))) {
+            errorTypes.push("state")
+            errorObj.state = errorMessages.find((error) => error.includes("State"));
+          }
+          
+          if (errorTypes.length > 1) {
+            setErrorMessage({
+              type: "multiple",
+              message: "More than one of these fields contain errors. Please check your inputs."
+            });
+          } else if  (errorTypes.length === 1) {
+            setErrorMessage({
+              type: errorTypes[0],
+              message: errorObj[errorTypes[0]], 
+            });
+          } else {
+            setErrorMessage({
+              type: "general",
+              message: json.errors,
+            });
+          }
         }
-        throw new Error(`Response status: ${response.status}`);
       }
 
       const json = await response.json();
@@ -123,15 +147,9 @@ function CreateAccount({baseURL}) {
             <button className='submit-button' type="submit">Submit</button>
           </form>
 
-          {(errorMessage || zipError) && (
+          {(errorMessage.message) && (
             <div className="error-messages">
-              {errorMessage?.email && <p style={{ color: 'red'}}>{errorMessage.email}</p>}
-              {errorMessage?.state && <p style={{ color: 'red'}}>{errorMessage.state}</p>}
-              {errorMessage?.zip && <p style={{ color: 'red'}}>{errorMessage.zip}</p>}
-              {zipError && <p style={{ color: 'red'}}>{zipError}</p>}
-              {errorMessage && !errorMessage.zip && !errorMessage.email && !errorMessage.state && (
-                <p style={{ color: 'red'}}>{errorMessage.general}</p>
-              )}
+              <p style={{ color: 'red'}}>{errorMessage.type === "multiple" ? "More than one of these fields contain errors. Please check your inputs." : errorMessage.message}</p>
             </div>
           )}
 
