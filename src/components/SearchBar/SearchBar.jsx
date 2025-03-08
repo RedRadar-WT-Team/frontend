@@ -14,7 +14,7 @@ function SearchBar({getRepData}) {
         <h2>Find your local Representatives!</h2>
         <div className="search_bar"> 
           <input type="text" name="searchInput" placeholder="  Enter your zip code" value={inputQuery} onChange={handleChange}></input>
-          <button onClick={() => getRepData(inputQuery)}><img src={searchIcon} alt="search Rep"/></button>
+          <button className='search-button' onClick={() => getRepData(inputQuery)}><img src={searchIcon} alt="search Rep"/></button>
         </div>
     </section>
   );  

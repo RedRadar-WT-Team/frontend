@@ -5,7 +5,7 @@ import './CreateAccount.css';
 import X from '../../assets/x-symbol-svgrepo-com.svg';
 
 
-function CreateAccount() {
+function CreateAccount({baseURL}) {
   const [email, setEmail] = useState("");
   const [usState, setUsState] = useState("");
   const [zip, setZip] = useState("");
@@ -41,7 +41,7 @@ function CreateAccount() {
 
   async function createAccount(formData) {
     try {
-      const response = await fetch(`http://localhost:3000/api/v1/users`, {
+      const response = await fetch(`${baseURL}/api/v1/users`, {
         method: 'POST',
         headers: {
           "Content-Type": "application/json",

@@ -5,7 +5,7 @@ import X from '../../assets/x-symbol-svgrepo-com.svg';
 import StateDropdown from '../CreateAccount/StateDropdown';
 import './EditProfile.css';
 
-function EditProfile() {
+function EditProfile({baseURL}) {
   const navigate = useNavigate();
 
   const [email, setEmail] = useState('');
@@ -18,7 +18,7 @@ function EditProfile() {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await fetch('/api/v1/users/current');
+        const response = await fetch(`${baseURL}/api/v1/users/current`);
         const userData = await response.json();
 
         if (response.ok) {
@@ -44,7 +44,7 @@ function EditProfile() {
           zip,
         };
 
-        const response = await fetch('/api/v1/users/current', {
+        const response = await fetch(`${baseURL}/api/v1/users/current`, {
           method: 'PATCH',
           headers: {'Content-Type': 'application/json'},
           body: JSON.stringify(updatedUserData),

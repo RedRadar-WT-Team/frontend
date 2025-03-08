@@ -2,12 +2,12 @@ import { useParams} from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import './ExecutiveOrderDetailsPage.css';
 
-function ExecutiveOrderDetails() {
+function ExecutiveOrderDetails({ baseURL }) {
   const eoID = useParams().eoId;
   const [clickedEO, setClickedEO] = useState();
 
   function getEODetails() {
-    fetch(`http://127.0.0.1:3000/api/v1/executive_orders/${eoID}`)
+    fetch(`${baseURL}/api/v1/executive_orders/${eoID}`)
     .then(response => response.json())
     .then(data => {
       setClickedEO(data)
