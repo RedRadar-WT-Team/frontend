@@ -8,7 +8,7 @@ describe('Search Results', () => {
     cy.visit('http://localhost:5173/');
   });
 
-  it('should intercept the GET request', () => {
+  it('should intercept the GET request and dispay the mock data', () => {
     cy.intercept('GET', 'http://localhost:3000/api/v1/representatives/search?db=false&query=20854', {
       statusCode: 200,
       fixture: 'reps.json'
