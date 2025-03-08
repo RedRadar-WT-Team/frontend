@@ -35,8 +35,12 @@ header h1 {
 }
 
 .burger-button {
- background-color:  transparent;
- cursor: pointer
+  position: fixed;
+  right: 4em;
+  top: 2em;
+  background-color:  transparent;
+  cursor: pointer;
+  z-index: 7;
 }
 
 .pop-out-container {
@@ -54,3 +58,40 @@ header h1 {
   box-shadow: -5px 0 10px var(--lowOp_black);
 }
 
+/* Responsive Display ---------------*/
+/* Medium Display size */
+@media (max-width: 800px) {
+  header img {
+    width: 6em;
+  }
+
+  header h1 {
+    font-size: 3em;
+    padding-right: 3em;
+  }
+
+  .burger-button {
+    position: fixed;
+    right: 4em;
+    top: 2em;
+  }
+
+  .burger-img {
+    width: 3em;
+  }
+}
+
+/* Small Dispaly size */
+@media (max-width: 500px) {
+  header img {
+    width: 5em;
+  }
+
+  header h1 {
+    font-size: 2em;
+  }
+
+  .burger-img {
+    width: 2.5em;
+  }
+}

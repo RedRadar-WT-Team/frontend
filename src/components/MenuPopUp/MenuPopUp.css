@@ -46,3 +46,51 @@
   display: none;
 }
 
+
+/* Responsive Display ---------------*/
+/* Medium Display size */
+@media (max-width: 810px) {
+  .popup-container {
+    width: 12em;
+    font-size: small;
+    top: 8.72em;
+    right: 4.9em;
+    position: fixed;
+  }
+
+  .pop-up button {
+    width: 10em;
+    font-size: small;
+    position: absolute;
+    right: 1.5em;
+    bottom: 1em;
+  }
+
+
+}
+
+/* Small Dispaly size */
+@media (max-width: 500px) {
+
+  .pop-up {
+    display: flex;
+    flex-direction: row !important;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5em;
+  }
+
+  .pop-up li{
+    padding: 0.3em;
+  }
+
+  .pop-up button {
+    width: auto;
+    margin-top: 1em;
+    position: relative;
+    padding: 1em;
+    position: absolute;
+    bottom: 1em;
+    right: 1em;
+  }
+}
