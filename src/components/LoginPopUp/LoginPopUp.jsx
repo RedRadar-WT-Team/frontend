@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import './LoginPopUp.css';
 import X from '../../assets/x-symbol-svgrepo-com.svg';
-import { baseURL } from '../App/App';
 import { useNavigate, NavLink } from 'react-router-dom';
 
-function LoginPopUp({ isLoginOpen, closeLogin, setCurrentUser }) {
+function LoginPopUp({ isLoginOpen, closeLogin, setCurrentUser, baseURL }) {
   const [email, setEmail] = useState('');
   const [errorMessage, setErrorMessage] = useState(''); 
   const navigate = useNavigate();  // Initialize the navigate hook

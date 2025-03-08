@@ -14,12 +14,10 @@ import RepDetailsPage from '../RepDetailsPage/RepDetailsPage.jsx';
 import ExecutiveOrderDetailsPage from '../ExecutiveOrderDetailsPage/ExecutiveOrderDetailsPage.jsx';
 import AboutPage from '../AboutPage/AboutPage.jsx';
 
-export const baseURL = "http://localhost:3000"; // Use server locally
 
 function App() {
-  
-// const baseURL = "https://repradar-backend.onrender.com";
-
+// const baseURL = "http://localhost:3000"; // Use server locally
+  const baseURL = "https://repradar-backend.onrender.com";
   const navigate = useNavigate();
   
   const [executiveOrders, setExecutiveOrders] = useState([]);
@@ -187,7 +185,7 @@ function App() {
       <Header  popOutMenu={popOutMenu} isOpen={isOpen}/>
       <MenuPopUp popOutLogin={popOutLogin} isOpen={isOpen} showAllExecutiveOrders={showAllExecutiveOrders}/>
       <section className="login_container">
-        <LoginPopUp isLoginOpen={isLoginOpen} closeLogin={closeLogin} navigateToCreate={navigateToCreate} setCurrentUser={setCurrentUser} baseUrl={baseURL} />
+        <LoginPopUp isLoginOpen={isLoginOpen} closeLogin={closeLogin} navigateToCreate={navigateToCreate} setCurrentUser={setCurrentUser} baseURL={baseURL} />
       </section>
       
       <section className='content'>

@@ -18,7 +18,7 @@ function ExecutiveOrderCard({ execOrder, handleSavedEos}) {
           <p>{execOrder.publication_date}</p>
         </div>
       </Link>
-       <button onClick={starClick}><img className="star" src="src/assets/Five-pointed_star.svg" /></button>
+       <button onClick={starClick}><img className="star" src="/Five-pointed_star.svg" /></button>
     </section>
   );
 }
