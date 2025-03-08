@@ -3,7 +3,7 @@ describe('Rep details view', () => {
   const validZip = '55448'
 
   beforeEach(() => {
-    cy.visit('/');
+    cy.visit('http://localhost:5173/');
     cy.get('input').click()
     cy.get('input[type="text"]').type(validZip);
     cy.get('.search-button').click()
