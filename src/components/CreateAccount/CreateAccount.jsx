@@ -111,7 +111,7 @@ function CreateAccount({baseURL}) {
             <button className='submit-button' type="submit">Submit</button>
           </form>
 
-          {(errorMessage.message) && (
+          {(errorMessage?.message) && (
             <div className="error-messages">
               <p style={{ color: 'red'}}>{errorMessage.type === "multiple" ? "More than one of these fields contain errors. Please check your inputs." : errorMessage.message}</p>
             </div>
