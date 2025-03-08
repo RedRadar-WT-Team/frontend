@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import './LoginPopUp.css';
 import X from '../../assets/x-symbol-svgrepo-com.svg';
+import { baseURL } from '../App/App';
 import { useNavigate, NavLink } from 'react-router-dom';
 
-function LoginPopUp({ isLoginOpen, closeLogin, setCurrentUser, baseURL }) {
+function LoginPopUp({ isLoginOpen, closeLogin, setCurrentUser }) {
   const [email, setEmail] = useState('');
   const [errorMessage, setErrorMessage] = useState(''); 
   const navigate = useNavigate();  // Initialize the navigate hook
@@ -15,13 +16,21 @@ function LoginPopUp({ isLoginOpen, closeLogin, setCurrentUser, baseURL }) {
     }
 
     // Send the login request to the backend
-    fetch(`${baseURL}/api/v1/users/logIn?email=${email}`)
-      .then(response => {
-        return response.json()
+    fetch(`${baseURL}/api/v1/session`, {
+      method: "POST", 
+      headers: {
+        "Content-Type": "application/json"
+      }, 
+      body: JSON.stringify({email}),
+      credentials: "include"
+    })
+      .then(response => response.json())
+      .then(data => { 
+        console.log('User info: ', (data));
+        navigate('/profile'); // After successful login, navigate to the profile page
+        closeLogin();
       })
-      .then(data => {;
-            navigate('/profile');}) // After successful login, navigate to the profile page
-      .catch(error => console.log('error message: ', error.message))
+      .catch(error => console.log('Login error: ', error.message))
   };
 
   return (
