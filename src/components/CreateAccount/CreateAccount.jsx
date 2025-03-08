@@ -48,25 +48,31 @@ function CreateAccount({baseURL}) {
         },
         body: JSON.stringify(formData),
       })
-
+      
       if (!response.ok) {
         const json = await response.json();
+        console.log("json: ", json)
         if (json.errors) {
           const errorMessages = json.errors.split(", ");
           let errorObj = {};
           let errorTypes = []
   
           if (errorMessages.some((error) => error.includes("Email"))) {
-            errorTypes.push("email")
-            errorObj.email = errorMessages.find((error) => error.includes("Email"));
+            if (errorMessages.some((error) => error.includes("taken"))) {
+              errorTypes.push("email")
+              errorObj.email = "This email is already taken. Please use a different one.";
+            } else {
+              errorTypes.push("email")
+              errorObj.email = errorMessages.find((error) => error.includes("Email"));
+            } 
           } 
           if (errorMessages.some((error) => error.includes("Zip"))) {
             errorTypes.push("zip")
-            errorObj.email = errorMessages.find((error) => error.includes("Zip"));
+            errorObj.zip = errorMessages.find((error) => error.includes("Zip"));
           }
           if (errorMessages.some((error) => error.includes("State"))) {
             errorTypes.push("state")
-            errorObj.email = errorMessages.find((error) => error.includes("State"));
+            errorObj.state = errorMessages.find((error) => error.includes("State"));
           }
           
           if (errorTypes.length > 1) {
@@ -74,14 +80,18 @@ function CreateAccount({baseURL}) {
               type: "multiple",
               message: "More than one of these fields contain errors. Please check your inputs."
             });
+          } else if  (errorTypes.length === 1) {
+            setErrorMessage({
+              type: errorTypes[0],
+              message: errorObj[errorTypes[0]], 
+            });
           } else {
             setErrorMessage({
-              type: errorTypes[0] || "general",
-              message: errorObj[errorTypes[0]] || json.errors,
+              type: "general",
+              message: json.errors,
             });
           }
         }
-        throw new Error(`Response status: ${response.status}`);
       }
 
       const json = await response.json();
