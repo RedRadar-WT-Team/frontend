@@ -51,7 +51,7 @@ function LoginPopUp({ isLoginOpen, closeLogin, setCurrentUser, baseURL }) {
               </button>
               <p>Don't have an account?</p>
               <button className='to-create-page'>
-                <NavLink to="/create_account" className="nav-link">Create one here!</NavLink>
+                <NavLink to="/create_account" className="nav-link" onClick={closeLogin}>Create one here!</NavLink>
               </button>
             </div>
           </div>

@@ -1,0 +1,23 @@
+.EODetails {
+    display: flex;
+    justify-content: center;
+    background-color: var(--xtra_lowOp_black);
+    width: 100%;
+}
+
+.EOCard {
+    width: 80%;
+    background-color: var(--lowOp_teal);
+    border-radius: 2em;
+    padding: 1em;
+    font-size: x-large;
+}
+
+.EODetails a {
+    color: var(--snow);
+}
+
+.EODetails a:hover {
+    text-decoration: underline;
+    color: var(--lowOp_dogwood);
+}

@@ -1,5 +1,12 @@
+.state-container {
+  display: flex;
+  justify-content: center;
+}
+
 .state-dropdown {
-  background-color: var(--snow);
-  width: 13em;
+  background-color: var(--lowOp_dogwood);
   color: var(--black);
+  margin-left: 1em;
+  text-align: center;
+  width: 10em;
 }

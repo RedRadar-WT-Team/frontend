@@ -1,0 +1,32 @@
+.rep-details-container {
+    display: flex;
+    justify-content: center;
+    background-color: var(--xtra_lowOp_black);
+    width: 100%;
+    position: relative;
+    top: 4em;
+}
+
+.repCard {
+    width: 70%;
+    background-color: var(--lowOp_teal);
+    border-radius: 2em;
+    padding: 1em;
+    font-size: small;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1em;
+}
+
+.repCard img {
+    margin: 1.5em;
+}
+
+.rep-info {
+    display: flex;
+    flex-direction: column;
+    line-height: 1em;
+    margin-bottom: 2em;
+    text-align: right;
+}
