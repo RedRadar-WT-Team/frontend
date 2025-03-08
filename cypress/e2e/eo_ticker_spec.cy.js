@@ -1,7 +1,11 @@
-describe('Homepage Ticker', () => {
-  
+describe('Homepage Ticker', () => {  
   beforeEach(() => {
-    cy.visit('/'); 
+    cy.intercept('GET', 'http://localhost:3000/api/v1/executive_orders/recent', {
+      statusCode: 200, 
+      fixture: 'all_eos.json'
+    }).as('all_eos');
+
+    cy.visit('http://localhost:5173/'); 
   });
 
   it('should render the ticker container and buttons to change slides', () => {

@@ -5,7 +5,6 @@ describe('Eos Detail Page', () => {
       fixture: 'all_eos.json'
     }).as('all_eos');
 
-
     cy.visit('http://localhost:5173/');
     cy.get('.burger-button').click()
     cy.get('.active').click()
