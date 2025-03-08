@@ -109,3 +109,30 @@ p {
 .btn-slide.prev {
   bottom: 1em;
 }
+
+/* Responsive Display ---------------*/
+/* Small Display size */
+@media (max-width: 500px) {
+  .slide {
+    font-size: small;
+  }
+
+  .feather-icon {
+    top: 0.3em;
+  }
+
+  .eo-label {
+    top: 0.3em;
+    right: 0em;
+  }
+  .btn-slide {
+    width: 2em;
+    height: 2.5em;
+    right: 0em;
+  }
+
+  .btn-slide img {
+    width: 1em;
+    height: 1em;
+  }
+}

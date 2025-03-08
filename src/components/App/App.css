@@ -55,3 +55,17 @@ h2 {
   z-index: 2;
 }
 
+/* Responsive Display ---------------*/
+
+/* Medium Display size */
+@media (max-width: 810px) {
+  #root {
+    background-image: url('/hester-qiang-kfLcXmFlb3g-unsplash.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+  }
+}
+/* Small Display size */
+@media (max-width: 500px) {
+}
