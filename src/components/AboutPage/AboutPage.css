@@ -5,16 +5,22 @@
   align-items: center;
   text-align: center;
   background-color: var(--lowOp_black);
-  position: fixed;
   width: 75%;
-  margin-top: 7em;
+  margin-top: 15em;
   border-radius: 10px;
 }
 
+
+
 .about-page-info {
-  /* display: flex;
-  flex-direction: column;
-  justify-content: center; 
-  align-items: center;
-  text-align: center; */
+ padding: 1.5em;
+}
+
+.about-page-info h2 {
+  font-size: xx-large;
+  text-decoration: underline;
+}
+
+.about-page-info h3 {
+  font-size: x-large;
 }

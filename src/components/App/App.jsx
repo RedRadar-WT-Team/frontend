@@ -21,7 +21,7 @@ function App() {
 // const baseURL = "https://repradar-backend.onrender.com";
 
   const navigate = useNavigate();
-
+  
   const [executiveOrders, setExecutiveOrders] = useState([]);
   const [allExecutiveOrders, setAllExecutiveOrders ] = useState({});
   const [repData, setRepData] = useState(null);
@@ -30,6 +30,7 @@ function App() {
   const [detailTarget, setDetailTarget] = useState(""); 
   const [repDetails, setRepDetails] = useState({});
   const [currentUser, setCurrentUser] = useState({});
+  const [error, setError] = useState('')
 
   useEffect(() => {
     showFiveMostRecentExecutiveOrders();
@@ -79,19 +80,32 @@ function App() {
   }
   
    function showAllExecutiveOrders() {
-    fetch(`${baseURL}/api/v1/executive_orders`)
-      .then(response => response.json())
-      .then(data => {
-        setAllExecutiveOrders(data);
-        navigate("/executive_orders")
+      fetch(`${baseURL}/api/v1/executive_orders`)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(response.status);
+        }
+        return response.json();
       })
-      .catch(error => console.log(error.message)
+        .then(data => {
+          setAllExecutiveOrders(data);
+          navigate("/executive_orders")
+        })
+        .catch(error => {
+          console.log(error)
+          setError('Oops! Something went wrong while fetching the executive orders. Please wait and try again later.')
+        }
       )
-  }
+    }
 
   function showFiveMostRecentExecutiveOrders() {
     fetch(`${baseURL}/api/v1/executive_orders/recent`)
-      .then(response => response.json())
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(response.status);
+      }
+      return response.json();
+    })
       .then(data => {
         console.log("five most recent data: ", data);
         
@@ -109,9 +123,11 @@ function App() {
         setExecutiveOrders([]);
       })
       .catch(error => {
-        console.error("Error fetching executive orders:", error.message);
+        console.log(error)
+        setError('Oops! Something went wrong while fetching the executive orders. Please wait and try again later.')
         setExecutiveOrders([]);
-      });
+      }
+    )
   }
 
   function fetchRepDetails(id, location, source) {

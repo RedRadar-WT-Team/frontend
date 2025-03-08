@@ -1,12 +1,13 @@
 .popup-container {
   border-top-left-radius: 10px;
   border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
   background-color: var(--snow);
   padding: 10px;
-  position: absolute;
+  position: fixed;
   top: 7em;
   margin-bottom: 30em;
-  right: 0em;
+  right: 1.23em;
   z-index: 6;
   box-shadow: -10px 0 5px -2px var(--lowOp_black),
               0 8px 5px -2px var(--lowOp_black);
@@ -26,6 +27,10 @@
   padding: 0.4em;
 }
 
+.link:hover {
+  background-color: var(--lowOp_dogwood);
+}
+
 .pop-up a {
   color: var(--garnet);
   font-weight: bold;
@@ -39,10 +44,59 @@
 }
 
 .pop-up button:hover {
-  outline: solid 0.1em var(--teal);
+  outline: solid 0.1em var(--garnet);
+
 }
 
 .hidden {
   display: none;
 }
 
+
+/* Responsive Display ---------------*/
+/* Medium Display size */
+@media (max-width: 810px) {
+  .popup-container {
+    width: 12em;
+    font-size: small;
+    top: 8.72em;
+    right: 4.9em;
+    position: fixed;
+  }
+
+  .pop-up button {
+    width: 10em;
+    font-size: small;
+    position: absolute;
+    right: 1.5em;
+    bottom: 1em;
+  }
+
+
+}
+
+/* Small Dispaly size */
+@media (max-width: 500px) {
+
+  .pop-up {
+    display: flex;
+    flex-direction: row !important;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5em;
+  }
+
+  .pop-up li{
+    padding: 0.3em;
+  }
+
+  .pop-up button {
+    width: auto;
+    margin-top: 1em;
+    position: relative;
+    padding: 1em;
+    position: absolute;
+    bottom: 1em;
+    right: 1em;
+  }
+}

@@ -88,43 +88,47 @@ function CreateAccount({baseURL}) {
           <form onSubmit={handleSubmit} noValidate>
             <div className='form-input-parent'>
               <div className='form-input'>
-                <label>Email:     </label>
+                <label>Email:</label>
                   <input
                     type="email"
                     value={email}
                     onChange={handleEmailChange}
                   />
-                {errorMessage?.email && <p style={{ color: 'red' }}>{errorMessage.email}</p>}
               </div>
               <div className='form-input-state'>
-                <label>State:        </label>
-                  <StateDropdown className='state-dropdown' value={usState} onChange={handleStateChange} />
-                  {errorMessage?.state && <p style={{ color: 'red' }}>{errorMessage.state}</p>}
+                <StateDropdown className='state-dropdown' value={usState} onChange={handleStateChange} />
               </div>
               <div className='form-input'>
-                <label>Zip code:     </label>
+                <label>Zip code:</label>
                   <input
                     type="text"
                     value={zip}
                     onChange={handleZipChange}
                   />
-                  {zipError && <p style={{ color: 'red' }}>{zipError}</p>}
-                  {errorMessage?.zip && <p style={{ color: 'red' }}>{errorMessage.zip}</p>}
               </div>
             </div>
-            
-            {errorMessage && !errorMessage.zip && !errorMessage.email && !errorMessage.state && (
-            <p style={{ color: 'red' }}>{errorMessage.general}</p>
-            )}
-
-            {successMessage && <p style={{ color: 'green' }}>{successMessage}</p>}
 
             <button className='submit-button' type="submit">Submit</button>
           </form>
+
+          {(errorMessage || zipError) && (
+            <div className="error-messages">
+              {errorMessage?.email && <p style={{ color: 'red'}}>{errorMessage.email}</p>}
+              {errorMessage?.state && <p style={{ color: 'red'}}>{errorMessage.state}</p>}
+              {errorMessage?.zip && <p style={{ color: 'red'}}>{errorMessage.zip}</p>}
+              {zipError && <p style={{ color: 'red'}}>{zipError}</p>}
+              {errorMessage && !errorMessage.zip && !errorMessage.email && !errorMessage.state && (
+                <p style={{ color: 'red'}}>{errorMessage.general}</p>
+              )}
+            </div>
+          )}
+
+          {successMessage && <p className="success-message" style={{ color: 'green'}}>{successMessage}</p>}
         </div>
       </div>
     </div>
   );
 }
+
 
 export default CreateAccount;

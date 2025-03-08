@@ -1,3 +1,43 @@
 .ExecutiveOrderCard {
+    display: flex;
+    position: relative;
     background-color: var(--lowOp_teal);
+    border-radius: 2em;
+    padding: 2em 1em;
+    width: 60%;
+    margin: 2em;
+    color: var(--snow);
 }
+
+.ExecutiveOrderCard h2:hover,
+.ExecutiveOrderCard h3:hover,
+.ExecutiveOrderCard p:hover {
+    text-decoration-color: var(--snow) !important;
+    text-decoration: underline;
+}
+
+h3 {
+    color: var(--snow);
+}
+
+p{
+    color: var(--snow);
+}
+
+.ExecutiveOrderCard button {
+    width: 3em;
+    height: 3em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    bottom: 1em;
+    right: 1em;
+    background-color: transparent;
+    z-index: 12;
+}
+
+.ExecutiveOrderCard button:hover {
+    border: 2px solid var(--lowOp_dogwood)
+}
+ 
