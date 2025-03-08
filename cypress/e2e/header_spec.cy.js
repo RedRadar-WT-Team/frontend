@@ -14,6 +14,8 @@ describe('header functionality', () => {
     cy.get('ul li:last').contains('Login')
         .click()
 
+    cy.get('.exit-button').click()
+
     cy.get('.logo').click()
     cy.url().should('not.include', '/login')
   })
