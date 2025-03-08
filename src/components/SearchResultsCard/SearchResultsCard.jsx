@@ -24,7 +24,7 @@ function SearchCard({ photoURL, name, area, party, state, location, id, setDetai
             <p className="search-card-party">{party}</p>
             <p className="search-card-state">{state}</p>
         </div>
-        <button onClick={starClick}><img className="star" src="/public/Five-pointed_star.svg" /></button>
+        <button onClick={starClick}><img className="star" src="/Five-pointed_star.svg" /></button>
       </div>
     </div>
   );
