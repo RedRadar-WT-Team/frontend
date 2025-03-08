@@ -24,6 +24,7 @@
   background-position: center;
   background-attachment: fixed;
   z-index: 1;
+  overflow: auto;
 }
 
 h2 {

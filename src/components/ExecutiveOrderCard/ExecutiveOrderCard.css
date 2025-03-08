@@ -7,6 +7,8 @@
     width: 60%;
     margin: 2em;
     color: var(--snow);
+    justify-content: center;
+    align-items: center;
 }
 
 .ExecutiveOrderCard h2:hover,

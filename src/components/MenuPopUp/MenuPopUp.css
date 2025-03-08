@@ -7,7 +7,7 @@
   position: fixed;
   top: 7em;
   margin-bottom: 30em;
-  right: 1.23em;
+  right: 1em;
   z-index: 6;
   box-shadow: -10px 0 5px -2px var(--lowOp_black),
               0 8px 5px -2px var(--lowOp_black);
@@ -60,7 +60,7 @@
     width: 12em;
     font-size: small;
     top: 8.72em;
-    right: 4.9em;
+    right: 1em;
     position: fixed;
   }
 

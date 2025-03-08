@@ -19,6 +19,7 @@ function ExecutiveOrderDetails({ baseURL }) {
     getEODetails();
   }, [])
 
+
   if(clickedEO) {
     return (
       <section className='EODetails'>
@@ -31,6 +32,7 @@ function ExecutiveOrderDetails({ baseURL }) {
       </section>
     )
   }
+  return <div>Loading...</div>;
 }
 
 export default ExecutiveOrderDetails;
