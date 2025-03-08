@@ -1,5 +1,11 @@
 describe('Eos Detail Page', () => {
   beforeEach(() => {
+    cy.intercept('GET', 'http://localhost:3000/api/v1/executive_orders', {
+      statusCode: 200, 
+      fixture: 'all_eos.json'
+    }).as('all_eos');
+
+
     cy.visit('http://localhost:5173/');
     cy.get('.burger-button').click()
     cy.get('.active').click()
