@@ -40,68 +40,33 @@ function CreateAccount({baseURL}) {
   };
 
   async function createAccount(formData) {
-    try {
-      const response = await fetch(`${baseURL}/api/v1/users`, {
-        method: 'POST',
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      })
-      
-      if (!response.ok) {
-        const json = await response.json();
-        console.log("json: ", json)
-        if (json.errors) {
-          const errorMessages = json.errors.split(", ");
-          let errorObj = {};
-          let errorTypes = []
-  
-          if (errorMessages.some((error) => error.includes("Email"))) {
-            if (errorMessages.some((error) => error.includes("taken"))) {
-              errorTypes.push("email")
-              errorObj.email = "This email is already taken. Please use a different one.";
-            } else {
-              errorTypes.push("email")
-              errorObj.email = errorMessages.find((error) => error.includes("Email"));
-            } 
-          } 
-          if (errorMessages.some((error) => error.includes("Zip"))) {
-            errorTypes.push("zip")
-            errorObj.zip = errorMessages.find((error) => error.includes("Zip"));
-          }
-          if (errorMessages.some((error) => error.includes("State"))) {
-            errorTypes.push("state")
-            errorObj.state = errorMessages.find((error) => error.includes("State"));
-          }
-          
-          if (errorTypes.length > 1) {
-            setErrorMessage({
-              type: "multiple",
-              message: "More than one of these fields contain errors. Please check your inputs."
-            });
-          } else if  (errorTypes.length === 1) {
-            setErrorMessage({
-              type: errorTypes[0],
-              message: errorObj[errorTypes[0]], 
-            });
-          } else {
-            setErrorMessage({
-              type: "general",
-              message: json.errors,
-            });
-          }
+<<<<<<< HEAD
+    fetch(`${baseURL}/api/v1/users`, {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    })
+      .then(response => {
+        if (!response.ok) {
+          // Throw error if response status is not OK
+          return response.json().then((json) => {
+            throw new Error(`Error: ${json.errors || response.statusText}`);
+          });
         }
-      }
-
-      const json = await response.json();
-      console.log("Success:", json);
-      setSuccessMessage("Your account has been created successfully!"); 
-      resetForm(); 
-    } catch (error) {
-      console.error("Error submitting form:", error.message);
-      setSuccessMessage(null); 
-    }
+        return response.json(); // Parse the response if OK
+      })
+      .then(data => {
+        console.log('Created user:', data);
+        setSuccessMessage("Your account has been created successfully!");
+        resetForm(); // Reset form after successful account creation
+        setErrorMessage(null); // Reset any previous error messages
+      })
+      .catch(error => {
+        console.log('Create user error:', error.message);
+        setErrorMessage({ general: error.message });
+      });
   }
 
   const closeCreateAccount = () => {

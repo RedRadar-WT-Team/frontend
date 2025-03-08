@@ -11,42 +11,23 @@ function UserProfile( {baseURL} ) {
   const [localRepresentatives, setLocalRepresentatives] = useState([]);
   const [savedRepresentatives, setSavedRepresentatives] = useState([]);
   const [savedExecutiveOrders, setSavedExecutiveOrders] = useState([]);
-  const [isLoggedIn, setIsLoggedIn] = useState(null);  // Track if the user is logged in
   const [showLoginPopup, setShowLoginPopup] = useState(false);  // Track if login popup is shown]
-  const [statusData, setStatusData] = useState({});
 
-  // Check login status when the component mounts
   useEffect(() => {
-      try {
+    const fetchUserProfile = async () => {
+      fetch(`${baseURL}/api/v1/profile`)
+      .then(response => {
+        return response.json();
+      })
+      .then(data => {
+        setUserInfo(data)
+        console.log(data)
+      })
+      .catch(error => console.log('Error fetching user profile: ', error.message))
+    };
 
-        fetchStatus();
-
-        if (statusData.logged_in) {
-          setIsLoggedIn(true);
-          setUserInfo(statusData.user);  // Set the user information if logged in
-          setShowLoginPopup(false)
-        } else {
-          setIsLoggedIn(false);
-          setShowLoginPopup(true);  // Show login popup if not logged in
-        }
-      } catch (error) {
-        console.error('Error checking login status:', error);
-        setIsLoggedIn(false);
-        setShowLoginPopup(true);  // Show login popup if error occurs
-      }
+    fetchUserProfile();
   }, []);
-
-  // const fetchStatus = () => {
-  //   fetch(`${baseURL}/api/v1/status`)
-  //   .then(response => {
-  //     return response.json();
-  //   })
-  //   .then(data => {
-  //     setStatusData(data);
-  //     console.log(data)
-  //   })
-  //   .catch(error => console.log('error message: ', error.message))
-  // }
 
   // Fetch local representatives based on the user's zip code
   useEffect(() => {
@@ -58,8 +39,7 @@ function UserProfile( {baseURL} ) {
   // Fetch local representatives from an external API
   const fetchLocalRepresentatives = (zip) => {
     setLocalRepresentatives([
-      { name: "Representative 1", party: "Yes", state: "NY" },
-      { name: "Representative 2", party: "No", state: "NY" },
+      localRepresentatives
     ]);
   };
 
@@ -79,29 +59,14 @@ function UserProfile( {baseURL} ) {
     ]);
   };
 
-  if (isLoggedIn === null) {
-    // Show loading state while checking login status
-    return <div>Loading...</div>;
-  }
-
-  if (!isLoggedIn) {
-    // Show the login popup if the user is not logged in
-    return (
-      <div>
-        <h2>Please log in to view your profile.</h2>
-        <LoginPopUp isLoginOpen={showLoginPopup} closeLogin={() => setShowLoginPopup(false)} />
-      </div>
-    );
-  }
-
   return (
     <div className="user-profile-container">
       <div className="quadrant">
         <h2>User Information</h2>
-        <p>Name: {userInfo.name}</p>
+        {/* <p>Name: {userInfo.name}</p>
         <p>Email: {userInfo.email}</p>
         <p>State: {userInfo.state}</p>
-        <p>Zip Code: {userInfo.zip}</p>
+        <p>Zip Code: {userInfo.zip}</p> */}
         <NavLink to="/update">
           <button>Edit Profile</button>
         </NavLink>
@@ -145,3 +110,9 @@ export default UserProfile;
   // we want to display four quadrants: User Information (with edit profile button), Local Representatives (autopopulated from zip provided), Saved Representatives, & Saved Executive Orders
   // set up state to manage data
   // fetch info
+  // fetch 'http://localhost:3000/api/v1/profile'
+  // for now, user info to display is the last user with an id of 1 and the following info: 
+  // User.create!(email: "funtimes@consultancy.com", state: "Maryland", zip: "20879")
+
+  // display saved reps based on info pulled in the api_queried_reps.yml fixture on the BE? 
+
