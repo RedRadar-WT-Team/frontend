@@ -40,7 +40,6 @@ function CreateAccount({baseURL}) {
   };
 
   async function createAccount(formData) {
-<<<<<<< HEAD
     fetch(`${baseURL}/api/v1/users`, {
       method: 'POST',
       headers: {
