@@ -15,8 +15,8 @@ import ExecutiveOrderDetailsPage from '../ExecutiveOrderDetailsPage/ExecutiveOrd
 import AboutPage from '../AboutPage/AboutPage.jsx';
 
 function App() {
-  // const baseURL = "http://localhost:3000"; // Use server locally
-  const baseURL = "https://repradar-backend.onrender.com";
+  const baseURL = "http://localhost:3000"; // Use server locally
+  // const baseURL = "https://repradar-backend.onrender.com";
   const navigate = useNavigate();
 
   const [executiveOrders, setExecutiveOrders] = useState([]);

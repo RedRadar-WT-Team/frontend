@@ -48,13 +48,6 @@ function CreateAccount({baseURL}) {
         },
         body: JSON.stringify(formData),
       })
-      .then(response => {
-        return response.json();
-      })
-      .then(data => {
-        console.log(data)
-      })
-      .catch(error => console.log('error message: ', error.message));
 
       if (!response.ok) {
         const json = await response.json();
@@ -79,7 +72,6 @@ function CreateAccount({baseURL}) {
 
       const json = await response.json();
       console.log("Success:", json);
-      setErrorMessage(null);
       setSuccessMessage("Your account has been created successfully!"); 
       resetForm(); 
     } catch (error) {
@@ -114,11 +106,9 @@ function CreateAccount({baseURL}) {
                     value={email}
                     onChange={handleEmailChange}
                   />
-                {errorMessage?.email && <p style={{ color: 'red' }}>{errorMessage.email}</p>}
               </div>
               <div className='form-input-state'>
                 <StateDropdown className='state-dropdown' value={usState} onChange={handleStateChange} />
-                {errorMessage?.state && <p style={{ color: 'red' }}>{errorMessage.state}</p>}
               </div>
               <div className='form-input'>
                 <label>Zip code:</label>
@@ -127,23 +117,30 @@ function CreateAccount({baseURL}) {
                     value={zip}
                     onChange={handleZipChange}
                   />
-                  {zipError && <p style={{ color: 'red' }}>{zipError}</p>}
-                  {errorMessage?.zip && <p style={{ color: 'red' }}>{errorMessage.zip}</p>}
               </div>
             </div>
-            
-            {errorMessage && !errorMessage.zip && !errorMessage.email && !errorMessage.state && (
-            <p style={{ color: 'red' }}>{errorMessage.general}</p>
-            )}
-
-            {successMessage && <p style={{ color: 'green' }}>{successMessage}</p>}
 
             <button className='submit-button' type="submit">Submit</button>
           </form>
+
+          {(errorMessage || zipError) && (
+            <div className="error-messages">
+              {errorMessage?.email && <p style={{ color: 'red'}}>{errorMessage.email}</p>}
+              {errorMessage?.state && <p style={{ color: 'red'}}>{errorMessage.state}</p>}
+              {errorMessage?.zip && <p style={{ color: 'red'}}>{errorMessage.zip}</p>}
+              {zipError && <p style={{ color: 'red'}}>{zipError}</p>}
+              {errorMessage && !errorMessage.zip && !errorMessage.email && !errorMessage.state && (
+                <p style={{ color: 'red'}}>{errorMessage.general}</p>
+              )}
+            </div>
+          )}
+
+          {successMessage && <p className="success-message" style={{ color: 'green'}}>{successMessage}</p>}
         </div>
       </div>
     </div>
   );
 }
+
 
 export default CreateAccount;
