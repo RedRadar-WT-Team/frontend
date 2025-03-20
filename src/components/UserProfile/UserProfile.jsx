@@ -96,7 +96,7 @@ function UserProfile( { baseURL } ) {
       {localRepresentatives.length > 0 ? (
         <ul>
           {localRepresentatives.map((rep, index) => (
-            <li key={index}>
+            <ul key={index}>
               <img src={rep.attributes.photo_url} alt={rep.attributes.name} width="50" height="50" />
               <div>
                 <p><strong>{rep.attributes.name}</strong></p>
@@ -104,7 +104,7 @@ function UserProfile( { baseURL } ) {
                 <p>Phone: {rep.attributes.phone}</p>
                 <p>Area: {rep.attributes.area}</p>
               </div>
-            </li>
+            </ul>
           ))}
         </ul>
       ) : (
