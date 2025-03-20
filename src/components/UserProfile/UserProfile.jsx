@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import { NavLink } from 'react-router-dom';
 import './UserProfile.css';
 
-function UserProfile( {baseURL} ) {
+function UserProfile( { baseURL } ) {
   const [userInfo, setUserInfo] = useState(null);
   const [localRepresentatives, setLocalRepresentatives] = useState([]);
   const [savedRepresentatives, setSavedRepresentatives] = useState([]);
@@ -39,11 +39,15 @@ function UserProfile( {baseURL} ) {
     }
   }, [userInfo]);
 
-  // Fetch local representatives from an external API
+  // Fetch local representatives 
   const fetchLocalRepresentatives = (zip) => {
-    setLocalRepresentatives([
-      localRepresentatives
-    ]);
+    fetch(`${baseURL}/api/v1/representatives/search?db=false&query=${zip}`)
+    .then(response => response.json())
+    .then(data => {
+      console.log("Local representatives data: ", data.data);
+      setLocalRepresentatives(data.data);  
+    })
+    .catch(error => console.error("Error fetching local representatives:", error));
   };
 
   // Fetch saved representatives (example)
@@ -75,9 +79,9 @@ function UserProfile( {baseURL} ) {
       <h2>User Information</h2>
       {userInfo ? (
         <div>
-          <p>Email: {userInfo.email}</p>
-          <p>State: {userInfo.state}</p>
-          <p>Zip Code: {userInfo.zip}</p>
+          <p><strong>Email:</strong> {userInfo.email}</p>
+          <p><strong>State:</strong> {userInfo.state}</p>
+          <p><strong>Zip Code:</strong> {userInfo.zip}</p>
         </div>
       ) : (
         <p>Loading user data...</p>
@@ -89,14 +93,25 @@ function UserProfile( {baseURL} ) {
 
     <div className="quadrant">
       <h2>Local Representatives</h2>
-      <ul>
-        {localRepresentatives.map((rep, index) => (
-          <li key={index}>
-            {rep.name} - {rep.party} ({rep.state})
-          </li>
-        ))}
-      </ul>
+      {localRepresentatives.length > 0 ? (
+        <ul>
+          {localRepresentatives.map((rep, index) => (
+            <li key={index}>
+              <img src={rep.attributes.photo_url} alt={rep.attributes.name} width="50" height="50" />
+              <div>
+                <p><strong>{rep.attributes.name}</strong></p>
+                <p>Party: {rep.attributes.party}</p>
+                <p>Phone: {rep.attributes.phone}</p>
+                <p>Area: {rep.attributes.area}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p>No local representatives found.</p>
+      )}
     </div>
+
 
     <div className="quadrant">
       <h2>Saved Representatives</h2>

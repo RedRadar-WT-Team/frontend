@@ -192,7 +192,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Homepage executiveOrders={executiveOrders} getRepData={getRepData}/>}/>
           <Route path="/login" element={<LoginPopUp />} /> 
-          <Route path="/profile" element={<UserProfile baseURL={baseURL}/>} />
+          <Route path="/profile" element={<UserProfile repData={repData} baseURL={baseURL} />} />
           <Route path="/executive_orders" element={<AllExecutiveOrdersPage allExecutiveOrders={allExecutiveOrders}  handleSavedEos={handleSavedEos}/>} />
           <Route path="/create_account" element={<CreateAccount baseURL={baseURL} />} />
           <Route path="/update" element={<EditProfile baseURL={baseURL} />} />
