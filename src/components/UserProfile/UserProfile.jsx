@@ -2,8 +2,6 @@
 
 import React, { useState, useEffect } from "react";
 import { NavLink } from 'react-router-dom';
-import MenuPopUp from "../MenuPopUp/MenuPopUp";
-import LoginPopUp from "../LoginPopUp/LoginPopUp";
 import './UserProfile.css';
 
 function UserProfile( {baseURL} ) {
@@ -15,19 +13,24 @@ function UserProfile( {baseURL} ) {
 
   useEffect(() => {
     const fetchUserProfile = async () => {
-      fetch(`${baseURL}/api/v1/profile`)
-      .then(response => {
-        return response.json();
-      })
-      .then(data => {
-        setUserInfo(data)
-        console.log(data)
-      })
-      .catch(error => console.log('Error fetching user profile: ', error.message))
+      const response = await fetch(`${baseURL}/api/v1/profile`, {
+        method: 'GET',
+        credentials: 'include',
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setUserInfo(data.data.attributes); // Assuming you're using a serializer for the user object
+        console.log("data: ", data.data.attributes);
+      } else {
+        // Handle error if the user is not logged in
+        setShowLoginPopup(true);
+        console.log("Please log in to view your profile.");
+      }
     };
 
     fetchUserProfile();
-  }, []);
+  }, [baseURL]);
 
   // Fetch local representatives based on the user's zip code
   useEffect(() => {
@@ -61,46 +64,58 @@ function UserProfile( {baseURL} ) {
 
   return (
     <div className="user-profile-container">
-      <div className="quadrant">
-        <h2>User Information</h2>
-        {/* <p>Name: {userInfo.name}</p>
-        <p>Email: {userInfo.email}</p>
-        <p>State: {userInfo.state}</p>
-        <p>Zip Code: {userInfo.zip}</p> */}
-        <NavLink to="/update">
-          <button>Edit Profile</button>
-        </NavLink>
-      </div>
+        {showLoginPopup && (
+          <div className="login-popup">
+            <p>Please log in to view your profile.</p>
+            {/* You can implement a LoginPopUp component or redirect user to the login page */}
+          </div>
+        )}
 
-      <div className="quadrant">
-        <h2>Local Representatives</h2>
-        <ul>
-          {localRepresentatives.map((rep, index) => (
-            <li key={index}>
-              {rep.name} - {rep.party} ({rep.state})
-            </li>
-          ))}
-        </ul>
-      </div>
-
-      <div className="quadrant">
-        <h2>Saved Representatives</h2>
-        <ul>
-          {savedRepresentatives.map((rep, index) => (
-            <li key={index}>{rep.name}</li>
-          ))}
-        </ul>
-      </div>
-
-      <div className="quadrant eo">
-        <h2>Saved Executive Orders</h2>
-        <ul>
-          {savedExecutiveOrders.map((order, index) => (
-            <li key={index}>{order.title}</li>
-          ))}
-        </ul>
-      </div>
+    <div className="quadrant">
+      <h2>User Information</h2>
+      {userInfo ? (
+        <div>
+          <p>Email: {userInfo.email}</p>
+          <p>State: {userInfo.state}</p>
+          <p>Zip Code: {userInfo.zip}</p>
+        </div>
+      ) : (
+        <p>Loading user data...</p>
+      )}
+      <NavLink to="/update">
+        <button>Edit Profile</button>
+      </NavLink>
     </div>
+
+    <div className="quadrant">
+      <h2>Local Representatives</h2>
+      <ul>
+        {localRepresentatives.map((rep, index) => (
+          <li key={index}>
+            {rep.name} - {rep.party} ({rep.state})
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <div className="quadrant">
+      <h2>Saved Representatives</h2>
+      <ul>
+        {savedRepresentatives.map((rep, index) => (
+          <li key={index}>{rep.name}</li>
+        ))}
+      </ul>
+    </div>
+
+    <div className="quadrant eo">
+      <h2>Saved Executive Orders</h2>
+      <ul>
+        {savedExecutiveOrders.map((order, index) => (
+          <li key={index}>{order.title}</li>
+        ))}
+      </ul>
+    </div>
+  </div>
   );
 }
 

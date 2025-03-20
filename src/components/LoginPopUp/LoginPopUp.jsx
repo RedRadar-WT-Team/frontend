@@ -20,12 +20,12 @@ function LoginPopUp({ isLoginOpen, closeLogin, setCurrentUser, baseURL }) {
       headers: {
         "Content-Type": "application/json"
       }, 
-      body: JSON.stringify({email}),
+      body: JSON.stringify({ email }),
       credentials: "include"
     })
       .then(response => response.json())
       .then(data => { 
-        console.log('User info: ', (data));
+        console.log(data, ":", email, "has been logged in successfully!");
         navigate('/profile'); // After successful login, navigate to the profile page
         closeLogin();
       })
