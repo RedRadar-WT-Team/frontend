@@ -3,13 +3,14 @@
 import React, { useState, useEffect } from "react";
 import { NavLink } from 'react-router-dom';
 import './UserProfile.css';
+import LoginPopUp from "../LoginPopUp/LoginPopUp";
 
 function UserProfile( { baseURL } ) {
   const [userInfo, setUserInfo] = useState(null);
   const [localRepresentatives, setLocalRepresentatives] = useState([]);
   const [savedRepresentatives, setSavedRepresentatives] = useState([]);
   const [savedExecutiveOrders, setSavedExecutiveOrders] = useState([]);
-  const [showLoginPopup, setShowLoginPopup] = useState(false);  // Track if login popup is shown]
+  const [showLoginPopup, setShowLoginPopup] = useState(false); 
 
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -20,10 +21,9 @@ function UserProfile( { baseURL } ) {
 
       if (response.ok) {
         const data = await response.json();
-        setUserInfo(data.data.attributes); // Assuming you're using a serializer for the user object
+        setUserInfo(data.data.attributes); 
         console.log("data: ", data.data.attributes);
       } else {
-        // Handle error if the user is not logged in
         setShowLoginPopup(true);
         console.log("Please log in to view your profile.");
       }
@@ -32,7 +32,7 @@ function UserProfile( { baseURL } ) {
     fetchUserProfile();
   }, [baseURL]);
 
-  // Fetch local representatives based on the user's zip code
+  // on mounting, load local & saved reps and saved EOs
   useEffect(() => {
     if (userInfo && userInfo.zip) {
       fetchLocalRepresentatives(userInfo.zip);
@@ -72,7 +72,6 @@ function UserProfile( { baseURL } ) {
       .catch(error => console.error("Error fetching saved representatives:", error));
   };
   
-
   // Fetch saved executive orders (example)
   const fetchSavedEOs = () => {
     fetch(`${baseURL}/api/v1/executive_orders_users`, {
@@ -86,15 +85,16 @@ function UserProfile( { baseURL } ) {
       .catch(error => console.error("Error fetching saved executive orders:", error));
   };
   
-
   return (
     <div className="user-profile-container">
-        {showLoginPopup && (
-          <div className="login-popup">
-            <p>Please log in to view your profile.</p>
-            {/* You can implement a LoginPopUp component or redirect user to the login page */}
-          </div>
-        )}
+      {showLoginPopup && (
+        <LoginPopUp 
+          isLoginOpen={showLoginPopup} 
+          closeLogin={() => setShowLoginPopup(false)} 
+          setCurrentUser={setUserInfo} 
+          baseURL={baseURL} 
+        />
+      )}
 
     <div className="quadrant">
       <h2>User Information</h2>
