@@ -2,46 +2,45 @@
 
 import React, { useState, useEffect } from "react";
 import { NavLink } from 'react-router-dom';
+import LocalRepsContainer from "../LocalRepsContainer/LocalRepsContainer";
 import MenuPopUp from "../MenuPopUp/MenuPopUp";
 import LoginPopUp from "../LoginPopUp/LoginPopUp";
 import './UserProfile.css';
 
-function UserProfile( {baseURL} ) {
+function UserProfile( {baseURL, getRepData, repData, setDetailTarget, getDetails} ) {
   const [userInfo, setUserInfo] = useState(null);
-  const [localRepresentatives, setLocalRepresentatives] = useState([]);
+  // const [localRepresentatives, setLocalRepresentatives] = useState([]);
   const [savedRepresentatives, setSavedRepresentatives] = useState([]);
   const [savedExecutiveOrders, setSavedExecutiveOrders] = useState([]);
   const [showLoginPopup, setShowLoginPopup] = useState(false);  // Track if login popup is shown]
+  
+  const fetchUserProfile = async () => {
+    fetch(`${baseURL}/api/v1/profile`)
+    .then(response => {
+      return response.json();
+    })
+    .then(data => {
+      setUserInfo(data)
+      console.log(data)
+    })
+    .catch(error => console.log('Error fetching user profile: ', error.message))
+  };
 
   useEffect(() => {
-    const fetchUserProfile = async () => {
-      fetch(`${baseURL}/api/v1/profile`)
-      .then(response => {
-        return response.json();
-      })
-      .then(data => {
-        setUserInfo(data)
-        console.log(data)
-      })
-      .catch(error => console.log('Error fetching user profile: ', error.message))
-    };
-
     fetchUserProfile();
   }, []);
 
   // Fetch local representatives based on the user's zip code
   useEffect(() => {
     if (userInfo && userInfo.zip) {
-      fetchLocalRepresentatives(userInfo.zip);
+      getRepData(userInfo.zip, "local");
     }
   }, [userInfo]);
 
   // Fetch local representatives from an external API
-  const fetchLocalRepresentatives = (zip) => {
-    setLocalRepresentatives([
-      localRepresentatives
-    ]);
-  };
+  // const fetchLocalRepresentatives = (zip) => {
+    
+  // };
 
   // Fetch saved representatives (example)
   const fetchSavedRepresentatives = () => {
@@ -73,14 +72,7 @@ function UserProfile( {baseURL} ) {
       </div>
 
       <div className="quadrant">
-        <h2>Local Representatives</h2>
-        <ul>
-          {localRepresentatives.map((rep, index) => (
-            <li key={index}>
-              {rep.name} - {rep.party} ({rep.state})
-            </li>
-          ))}
-        </ul>
+          <LocalRepsContainer localRepresentatives={ repData } setDetailTarget={setDetailTarget} getDetails={getDetails}/>
       </div>
 
       <div className="quadrant">
