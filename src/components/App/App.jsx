@@ -16,7 +16,7 @@ import AboutPage from '../AboutPage/AboutPage.jsx';
 
 
 function App() {
-// const baseURL = "http://localhost:3000"; // Use server locally
+  // const baseURL = "http://localhost:3000"; // Use server locally
   const baseURL = "https://repradar-backend.onrender.com";
   const navigate = useNavigate();
   
@@ -72,6 +72,7 @@ function App() {
     })
     .then(data => {
       if ( page === "local" ) {
+        console.log("Local: ", data)
         setRepData(data);
       } else {
         setRepData(data)
@@ -109,7 +110,6 @@ function App() {
       return response.json();
     })
       .then(data => {
-        console.log("five most recent data: ", data);
         
         if (Array.isArray(data)) {
           setExecutiveOrders(data);

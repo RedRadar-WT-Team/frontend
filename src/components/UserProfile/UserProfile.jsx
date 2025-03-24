@@ -9,19 +9,21 @@ import './UserProfile.css';
 
 function UserProfile( {baseURL, getRepData, repData, setDetailTarget, getDetails} ) {
   const [userInfo, setUserInfo] = useState(null);
-  // const [localRepresentatives, setLocalRepresentatives] = useState([]);
+  const [localRepresentatives, setLocalRepresentatives] = useState([]);
   const [savedRepresentatives, setSavedRepresentatives] = useState([]);
   const [savedExecutiveOrders, setSavedExecutiveOrders] = useState([]);
   const [showLoginPopup, setShowLoginPopup] = useState(false);  // Track if login popup is shown]
   
   const fetchUserProfile = async () => {
-    fetch(`${baseURL}/api/v1/profile`)
+    fetch(`${baseURL}/api/v1/users`, {
+      method: "GET", 
+      credentials: 'include'})
     .then(response => {
       return response.json();
     })
     .then(data => {
       setUserInfo(data)
-      console.log(data)
+      console.log("Profile: ", data)
     })
     .catch(error => console.log('Error fetching user profile: ', error.message))
   };
@@ -72,7 +74,7 @@ function UserProfile( {baseURL, getRepData, repData, setDetailTarget, getDetails
       </div>
 
       <div className="quadrant">
-          <LocalRepsContainer localRepresentatives={ repData } setDetailTarget={setDetailTarget} getDetails={getDetails}/>
+          {/* <LocalRepsContainer localRepresentatives={ repData } setDetailTarget={setDetailTarget} getDetails={getDetails}/> */}
       </div>
 
       <div className="quadrant">
