@@ -16,7 +16,7 @@ import AboutPage from '../AboutPage/AboutPage.jsx';
 
 
 function App() {
-// const baseURL = "http://localhost:3000"; // Use server locally
+  // const baseURL = "http://localhost:3000"; // Use server locally
   const baseURL = "https://repradar-backend.onrender.com";
   const navigate = useNavigate();
   
@@ -64,15 +64,20 @@ function App() {
   }
 
   // Fetches to backend
-  function getRepData(query) {
+  function getRepData(query, page = "") {
     fetch(`${baseURL}/api/v1/representatives/search?db=false&query=${query}`)
     .then(response => {
       console.log(response)
       return response.json();
     })
     .then(data => {
-      setRepData(data)
-      navigate('/results')
+      if ( page === "local" ) {
+        console.log("Local: ", data)
+        setRepData(data);
+      } else {
+        setRepData(data)
+        navigate('/results')
+      }
     })
     .catch(error => console.log('error message: ', error.message))
   }
@@ -105,7 +110,6 @@ function App() {
       return response.json();
     })
       .then(data => {
-        console.log("five most recent data: ", data);
         
         if (Array.isArray(data)) {
           setExecutiveOrders(data);
@@ -192,7 +196,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Homepage executiveOrders={executiveOrders} getRepData={getRepData}/>}/>
           <Route path="/login" element={<LoginPopUp />} /> 
-          <Route path="/profile" element={<UserProfile baseURL={baseURL}/>} />
+          <Route path="/profile" element={<UserProfile baseURL={baseURL} getRepData={ getRepData } repData={ repData } setDetailTarget={setDetailTarget} getDetails={getRepDetails}/>} />
           <Route path="/executive_orders" element={<AllExecutiveOrdersPage allExecutiveOrders={allExecutiveOrders}  handleSavedEos={handleSavedEos}/>} />
           <Route path="/create_account" element={<CreateAccount baseURL={baseURL} />} />
           <Route path="/update" element={<EditProfile baseURL={baseURL} />} />
