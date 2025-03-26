@@ -1,10 +1,12 @@
 import { useParams} from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import './ExecutiveOrderDetailsPage.css';
+import { format } from 'date-fns';
 
 function ExecutiveOrderDetails({ baseURL }) {
   const eoID = useParams().eoId;
   const [clickedEO, setClickedEO] = useState();
+
 
   function getEODetails() {
     console.log('Fetching EO details from:', `${baseURL}/api/v1/executive_orders/${eoID}`);
@@ -41,7 +43,7 @@ function ExecutiveOrderDetails({ baseURL }) {
         <div className="EOCard"> 
           <h2>{ clickedEO.data.attributes.title }</h2>
           <h3>Document #: { clickedEO.data.attributes.document_number}</h3>
-          <h3>Published Date: { clickedEO.data.attributes.publication_date}</h3>
+          <h3>Publication Date: { format(new Date(clickedEO.data.attributes.publication_date), "MMMM dd, yyyy")}</h3>
           <p className="eo-summary">{ clickedEO.data.attributes.summary }</p>
           <a href={ clickedEO.data.attributes.pdf_url }>Click me to see full executive order</a>
         </div>
