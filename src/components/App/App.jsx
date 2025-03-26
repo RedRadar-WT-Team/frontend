@@ -16,8 +16,8 @@ import AboutPage from '../AboutPage/AboutPage.jsx';
 
 
 function App() {
-  // const baseURL = "http://localhost:3000"; // Use server locally
-  const baseURL = "https://repradar-backend.onrender.com";
+  const baseURL = "http://localhost:3000"; // Use server locally
+  // const baseURL = "https://repradar-backend.onrender.com";
   const navigate = useNavigate();
   
   const [executiveOrders, setExecutiveOrders] = useState([]);
@@ -145,23 +145,45 @@ function App() {
   }
 
   function saveEos(EoNum) {
-    fetch(`${baseURL}/api/v1/executive_orders_users/${EoNum}?user_id=${currentUser}`, {
+    if (!currentUser || !currentUser.id) {
+      setError('Please log in to save executive orders');
+      return;
+    }
+
+    setError('');  
+    
+    fetch(`${baseURL}/api/v1/executive_orders_users/${EoNum}?user_id=${currentUser.id}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
     })
     .then(response => {
+      if (!response.ok) {
+        throw new Error('Failed to save executive order');
+      }
       return response.json();
     })
     .then(data => {
-      navigate("/profile")
+
+      navigate("/profile");
     })
-    .catch(error => console.log('error message: ', error.message))
+    .catch(error => {
+      console.error('Error saving executive order:', error);
+      setError(error.message || 'Failed to save executive order');
+    });
+  }
+
+  function handleSavedEos(EoNum) {
+    if (!EoNum) {
+      console.error('No executive order number provided');
+      return;
+    }
+    saveEos(EoNum);
   }
 
   function saveReps(id, location) {
-    fetch(`${baseURL}/api/v1/representatives?query=${location}&id=${id}&user_id=${currentUser}`, {
+    fetch(`${baseURL}/api/v1/representatives?query=${location}&id=${id}&user_id=${currentUser.id}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -183,7 +205,6 @@ function App() {
   function handleSavedReps(id, location) {
     saveReps(id, location);
   }
-
   return (
     <main className='App'>
       <Header  popOutMenu={popOutMenu} isOpen={isOpen}/>
