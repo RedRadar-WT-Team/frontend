@@ -3,6 +3,10 @@ import ExecutiveOrderCard from '../ExecutiveOrderCard/ExecutiveOrderCard'
 
 function AllExecutiveOrdersPage({allExecutiveOrders, setDetailsTarget, getDetails, handleSavedEos}) {
 
+  if (!allExecutiveOrders?.data || !Array.isArray(allExecutiveOrders.data)) {
+    return <p> Loading... </p>
+  }
+
   const allExecOrders = allExecutiveOrders.data.map((execOrder) => {
       return (
       <ExecutiveOrderCard
@@ -12,7 +16,7 @@ function AllExecutiveOrdersPage({allExecutiveOrders, setDetailsTarget, getDetail
         getDetails={getDetails}
         handleSavedEos={handleSavedEos}
       />
-    )
+    );
   })
 
   return (
