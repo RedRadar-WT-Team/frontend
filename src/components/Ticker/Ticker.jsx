@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import './Ticker.css';
 import BtnSlider from './BtnSlider';
@@ -6,6 +7,7 @@ import featherPenIcon from './icons/feather_pen_svg.svg';
 function Ticker( { executiveOrders } ){
 
   const [tickerIndex, setTickerIndex] = useState(1)
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (Array.isArray(executiveOrders) && executiveOrders.length > 0) {
@@ -45,6 +47,10 @@ function Ticker( { executiveOrders } ){
     }
   }
 
+  const eoClick = (id) => {
+    navigate(`/executive_orders/${id}`);
+  }
+
   return (
     <section className="container">
       <h2>Most Recent Executive Orders!</h2>
@@ -63,7 +69,8 @@ function Ticker( { executiveOrders } ){
           return (
             <div 
             key={order.id || index}
-            className={tickerIndex === index + 1 ? "slide active-anim" : "slide"}>
+            className={tickerIndex === index + 1 ? "slide active-anim" : "slide"}
+            onClick={() => eoClick(order.id)} >
                <p>{orderData.publication_date}</p>
                <h3>{orderData.title}</h3>
             </div>
