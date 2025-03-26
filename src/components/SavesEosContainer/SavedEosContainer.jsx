@@ -8,9 +8,10 @@ function SavedEosContainer({ savedEos }) {
     }
 
     const eos = savedEos.data.map((eo) => {
+        console.log(eo)
         return ( 
         <SavedEoCards  title={ eo.attributes.title }
-                        executive_order_number={eo.attributes.executive_order_number}
+                        executive_order_number={eo.attributes.document_number}
                         publication_date={eo.attributes.publication_date}
                         id={ eo.attributes.id }
                         key={ eo.attributes.id}
@@ -21,7 +22,9 @@ function SavedEosContainer({ savedEos }) {
     return (
         <section className='saved-container'>
             <h2>Your Saved Executive Orders</h2>
-            {eos}
+            <div className="card-scroll">
+                {eos}
+            </div>
         </section>
     );
 }
