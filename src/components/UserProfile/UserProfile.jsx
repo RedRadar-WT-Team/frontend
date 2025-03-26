@@ -97,13 +97,4 @@ function UserProfile( {baseURL, getRepData, localReps, setDetailsTarget, getRepD
 
 export default UserProfile;
 
-  // when we click the User Profile from the /profile link on menuPopUp
-  // we want to display four quadrants: User Information (with edit profile button), Local Representatives (autopopulated from zip provided), Saved Representatives, & Saved Executive Orders
-  // set up state to manage data
-  // fetch info
-  // fetch 'http://localhost:3000/api/v1/profile'
-  // for now, user info to display is the last user with an id of 1 and the following info: 
-  // User.create!(email: "funtimes@consultancy.com", state: "Maryland", zip: "20879")
-
-  // display saved reps based on info pulled in the api_queried_reps.yml fixture on the BE? 
 
