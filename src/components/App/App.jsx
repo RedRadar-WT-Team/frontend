@@ -197,7 +197,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Homepage executiveOrders={executiveOrders} getRepData={getRepData}/>}/>
           <Route path="/login" element={<LoginPopUp />} /> 
-          <Route path="/profile" element={<UserProfile baseURL={baseURL} getRepData={ getRepData } localReps={ localRepresentatives } setDetailTarget={setDetailTarget} getRepDetails={getRepDetails}/>} />
+          <Route path="/profile" element={<UserProfile baseURL={baseURL} getRepData={ getRepData } localReps={ localRepresentatives } setDetailsTarget={handleDetailsTarget} getRepDetails={getRepDetails}/>} />
           <Route path="/executive_orders" element={<AllExecutiveOrdersPage allExecutiveOrders={allExecutiveOrders}  handleSavedEos={handleSavedEos}/>} />
           <Route path="/create_account" element={<CreateAccount baseURL={baseURL} />} />
           <Route path="/update" element={<EditProfile baseURL={baseURL} />} />

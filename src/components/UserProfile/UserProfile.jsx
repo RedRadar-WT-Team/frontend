@@ -7,7 +7,7 @@ import MenuPopUp from "../MenuPopUp/MenuPopUp";
 import LoginPopUp from "../LoginPopUp/LoginPopUp";
 import './UserProfile.css';
 
-function UserProfile( {baseURL, getRepData, localReps, setDetailTarget, getRepDetails} ) {
+function UserProfile( {baseURL, getRepData, localReps, setDetailsTarget, getRepDetails} ) {
   const [userInfo, setUserInfo] = useState({});
   const [savedRepresentatives, setSavedRepresentatives] = useState([]);
   const [savedExecutiveOrders, setSavedExecutiveOrders] = useState([]);
@@ -66,7 +66,7 @@ function UserProfile( {baseURL, getRepData, localReps, setDetailTarget, getRepDe
       </div>
 
       <div className="quadrant">
-          <LocalRepsContainer localReps={ localReps } setDetailTarget={setDetailTarget} getRepDetails={getRepDetails}/>
+          <LocalRepsContainer localReps={ localReps } setDetailsTarget={setDetailsTarget} getRepDetails={getRepDetails}/>
       </div>
 
       <div className="quadrant">
