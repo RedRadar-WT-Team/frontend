@@ -25,6 +25,7 @@
 
 .pop-up li {
   padding: 0.4em;
+  list-style: none;
 }
 
 .link:hover {
