@@ -19,7 +19,7 @@ function SavedEosContainer({ savedEos }) {
     });
 
     return (
-        <section className='localContainer'>
+        <section className='saved-container'>
             <h2>Your Saved Executive Orders</h2>
             {eos}
         </section>
