@@ -23,6 +23,7 @@ function App() {
   const [executiveOrders, setExecutiveOrders] = useState([]);
   const [allExecutiveOrders, setAllExecutiveOrders ] = useState({});
   const [repData, setRepData] = useState(null);
+  const [localRepresentatives, setLocalRepresentatives] = useState([]);
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [detailTarget, setDetailTarget] = useState(""); 
@@ -68,12 +69,12 @@ function App() {
     fetch(`${baseURL}/api/v1/representatives/search?db=false&query=${query}`)
     .then(response => {
       console.log(response)
+      console.log(query)
       return response.json();
     })
     .then(data => {
       if ( page === "local" ) {
-        console.log("Local: ", data)
-        setRepData(data);
+        setLocalRepresentatives(data);
       } else {
         setRepData(data)
         navigate('/results')
@@ -196,7 +197,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Homepage executiveOrders={executiveOrders} getRepData={getRepData}/>}/>
           <Route path="/login" element={<LoginPopUp />} /> 
-          <Route path="/profile" element={<UserProfile baseURL={baseURL} getRepData={ getRepData } repData={ repData } setDetailTarget={setDetailTarget} getDetails={getRepDetails}/>} />
+          <Route path="/profile" element={<UserProfile baseURL={baseURL} getRepData={ getRepData } localReps={ localRepresentatives } setDetailTarget={setDetailTarget} getDetails={getRepDetails}/>} />
           <Route path="/executive_orders" element={<AllExecutiveOrdersPage allExecutiveOrders={allExecutiveOrders}  handleSavedEos={handleSavedEos}/>} />
           <Route path="/create_account" element={<CreateAccount baseURL={baseURL} />} />
           <Route path="/update" element={<EditProfile baseURL={baseURL} />} />
