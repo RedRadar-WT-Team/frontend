@@ -7,6 +7,10 @@
     padding: 1em;
 }
 
+.local-rep-card:hover {
+    cursor: pointer;
+}
+
 .local-rep-card img {
     width: 10em;
 }

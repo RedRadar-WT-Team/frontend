@@ -25,7 +25,9 @@ function SavedRepsContainer({ savedReps, setDetailsTarget, getRepDetails }) {
     return (
         <section className='saved-container'>
             <h2>Your Saved Representatives</h2>
-            {reps}
+            <div className="card-scroll">
+                {reps}
+            </div>
         </section>
     );
 }

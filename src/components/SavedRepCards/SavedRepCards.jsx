@@ -8,7 +8,7 @@ function SavedRepsCards({ photoURL, name, party, area, location, id, setDetailsT
     }
 
     return (
-        <div className='local-rep-card' onClick={ cardClick }>
+        <div className='rep-card' onClick={ cardClick }>
             <img src={ photoURL } alt={ `phot of ${name}`} />
 
             <div className='local-rep-content'>
