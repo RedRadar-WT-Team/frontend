@@ -3,6 +3,8 @@
 import React, { useState, useEffect } from "react";
 import UserDetails from "../UserDetails/UserDetails";
 import LocalRepsContainer from "../LocalRepsContainer/LocalRepsContainer";
+import SavedEosContainer from "../SavesEosContainer/SavedEosContainer";
+import SavedRepsContainer from "../SavedRepsContainer/SavedRepsContainer";
 import MenuPopUp from "../MenuPopUp/MenuPopUp";
 import LoginPopUp from "../LoginPopUp/LoginPopUp";
 import './UserProfile.css';
@@ -13,7 +15,7 @@ function UserProfile( {baseURL, getRepData, localReps, setDetailsTarget, getRepD
   const [savedExecutiveOrders, setSavedExecutiveOrders] = useState([]);
   const [showLoginPopup, setShowLoginPopup] = useState(false);  // Track if login popup is shown]
   
-  const fetchUserProfile = async () => {
+  const fetchUserProfile = () => {
     fetch(`${baseURL}/api/v1/users`, {
       method: "GET", 
       credentials: 'include'})
@@ -38,26 +40,39 @@ function UserProfile( {baseURL, getRepData, localReps, setDetailsTarget, getRepD
     }
   }, [userInfo]);
 
-  // Fetch local representatives from an external API
-  // const fetchLocalRepresentatives = (zip) => {
-    
-  // };
 
-  // Fetch saved representatives (example)
+  // Fetch saved representatives
   const fetchSavedRepresentatives = () => {
-    setSavedRepresentatives([
-      { name: "Saved Representative 1" },
-      { name: "Saved Representative 2" },
-    ]);
+    fetch(`${baseURL}/api/v1/representatives_users`, {
+      method: "GET", 
+      credentials: 'include'})
+    .then(response => {
+      return response.json();
+    })
+    .then(data => {
+      setSavedRepresentatives(data)
+    })
+    .catch(error => console.log('Error fetching saved reps: ', error.message))
   };
 
-  // Fetch saved executive orders (example)
+  // Fetch saved executive orders
   const fetchSavedEOs = () => {
-    setSavedExecutiveOrders([
-      { title: "Executive Order 1" },
-      { title: "Executive Order 2" },
-    ]);
+    fetch(`${baseURL}/api/v1/executive_orders_users`, {
+      method: "GET", 
+      credentials: 'include'})
+    .then(response => {
+      return response.json();
+    })
+    .then(data => {
+      setSavedExecutiveOrders(data)
+    })
+    .catch(error => console.log('Error fetching saved eos: ', error.message))
   };
+
+  useEffect(() => {
+    fetchSavedRepresentatives();
+    fetchSavedEOs();
+  }, [])
 
   return (
     <div className="user-profile-container">
@@ -70,21 +85,11 @@ function UserProfile( {baseURL, getRepData, localReps, setDetailsTarget, getRepD
       </div>
 
       <div className="quadrant">
-        <h2>Saved Representatives</h2>
-        <ul>
-          {savedRepresentatives.map((rep, index) => (
-            <li key={index}>{rep.name}</li>
-          ))}
-        </ul>
+        <SavedRepsContainer savedReps={savedRepresentatives} setDetailsTarget={setDetailsTarget} getRepDetails={getRepDetails}/>
       </div>
 
-      <div className="quadrant eo">
-        <h2>Saved Executive Orders</h2>
-        <ul>
-          {savedExecutiveOrders.map((order, index) => (
-            <li key={index}>{order.title}</li>
-          ))}
-        </ul>
+      <div className="quadrant">
+        <SavedEosContainer savedEos={savedExecutiveOrders} />
       </div>
     </div>
   );
