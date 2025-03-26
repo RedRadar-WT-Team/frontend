@@ -8,15 +8,15 @@ function UserDetails( { userInfo }) {
             <div className="details">
                 <div className="detail">
                     <label>Email:</label>
-                    <p>{userInfo.data.attributes.email}</p>
+                    <p>{userInfo?.data?.attributes?.email || "Loading... "}</p>
                 </div>
                 <div className="detail">
                     <label>State:</label>
-                    <p>{userInfo.data.attributes.state}</p>
+                    <p>{userInfo?.data?.attributes?.state || "Loading... "}</p>
                 </div>
                 <div className="detail">
                     <label>Zip Code:</label>
-                    <p>{userInfo.data.attributes.zip}</p>
+                    <p>{userInfo?.data?.attributes?.zip || "Loading... "}</p>
                 </div>
             </div>
             <NavLink to="/update">

@@ -7,9 +7,8 @@ import MenuPopUp from "../MenuPopUp/MenuPopUp";
 import LoginPopUp from "../LoginPopUp/LoginPopUp";
 import './UserProfile.css';
 
-function UserProfile( {baseURL, getRepData, repData, setDetailTarget, getDetails} ) {
+function UserProfile( {baseURL, getRepData, localReps, setDetailTarget, getDetails} ) {
   const [userInfo, setUserInfo] = useState({});
-  const [localRepresentatives, setLocalRepresentatives] = useState([]);
   const [savedRepresentatives, setSavedRepresentatives] = useState([]);
   const [savedExecutiveOrders, setSavedExecutiveOrders] = useState([]);
   const [showLoginPopup, setShowLoginPopup] = useState(false);  // Track if login popup is shown]
@@ -19,12 +18,10 @@ function UserProfile( {baseURL, getRepData, repData, setDetailTarget, getDetails
       method: "GET", 
       credentials: 'include'})
     .then(response => {
-      console.log("Profile response: ", response)
       return response.json();
     })
     .then(data => {
       setUserInfo(data)
-      console.log("Profile: ", data)
     })
     .catch(error => console.log('Error fetching user profile: ', error.message))
   };
@@ -35,9 +32,9 @@ function UserProfile( {baseURL, getRepData, repData, setDetailTarget, getDetails
 
   // Fetch local representatives based on the user's zip code
   useEffect(() => {
-    console.log("userInfo: ", userInfo)
-    if (userInfo && userInfo.zip) {
-      getRepData(userInfo.zip, "local");
+    if (userInfo?.data?.attributes?.zip) {
+      console.log(userInfo.data.attributes.zip)
+      getRepData(userInfo.data.attributes.zip, "local");
     }
   }, [userInfo]);
 
@@ -69,7 +66,7 @@ function UserProfile( {baseURL, getRepData, repData, setDetailTarget, getDetails
       </div>
 
       <div className="quadrant">
-          {/* <LocalRepsContainer localRepresentatives={ repData } setDetailTarget={setDetailTarget} getDetails={getDetails}/> */}
+          <LocalRepsContainer localReps={ localReps } setDetailTarget={setDetailTarget} getDetails={getDetails}/>
       </div>
 
       <div className="quadrant">
