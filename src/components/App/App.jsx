@@ -145,15 +145,13 @@ function App() {
   }
 
   function saveEos(EoNum) {
-    if (!currentUser || !currentUser.id) {
-      setError('Please log in to save executive orders');
-      return;
-    }
-
+    console.log("EO NUM: ", EoNum)
+    
     setError('');  
     
-    fetch(`${baseURL}/api/v1/executive_orders_users/${EoNum}?user_id=${currentUser.id}`, {
+    fetch(`${baseURL}/api/v1/executive_orders_users?executive_order_number=${EoNum}`, {
       method: 'POST',
+      credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
       },
@@ -165,6 +163,8 @@ function App() {
       return response.json();
     })
     .then(data => {
+
+      console.log("DATA: ", data)
 
       navigate("/profile");
     })
@@ -178,13 +178,15 @@ function App() {
     if (!EoNum) {
       console.error('No executive order number provided');
       return;
+    } else {
+      saveEos(EoNum);
     }
-    saveEos(EoNum);
   }
 
   function saveReps(id, location) {
-    fetch(`${baseURL}/api/v1/representatives?query=${location}&id=${id}&user_id=${currentUser.id}`, {
+    fetch(`${baseURL}/api/v1/representatives_users?query=${location}&id=${id}`, {
       method: 'POST',
+      credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
       },
@@ -198,12 +200,14 @@ function App() {
     .catch(error => console.log('error message: ', error.message))
   }
 
-  function handleSavedEos(EoNum) {
-    saveEos(EoNum);
-  }
 
   function handleSavedReps(id, location) {
-    saveReps(id, location);
+    if (!id && !location) {
+      console.error('No Rep data provided');
+      return;
+    } else {
+      saveReps(id, location);
+    }
   }
   return (
     <main className='App'>
