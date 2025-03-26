@@ -1,5 +1,5 @@
-import SavedEosCards from '../SavedEosCards/SavedEosCards'
-import './SavedEosContainer.css';
+import SavedEoCards from '../SavedEoCards/SavedEoCards'
+import './SaveEosContainer.css';
 
 function SavedEosContainer({ savedEos }) {
 
@@ -9,7 +9,7 @@ function SavedEosContainer({ savedEos }) {
 
     const eos = savedEos.data.map((eo) => {
         return ( 
-        <SavedEosCards  title={ eo.attributes.title }
+        <SavedEoCards  title={ eo.attributes.title }
                         executive_order_number={eo.attributes.executive_order_number}
                         publication_date={eo.attributes.publication_date}
                         id={ eo.attributes.id }

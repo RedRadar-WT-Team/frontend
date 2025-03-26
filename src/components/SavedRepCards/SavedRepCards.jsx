@@ -1,4 +1,4 @@
-import './SavedRepsCards.css';
+import './SavedRepCards.css';
 
 function SavedRepsCards({ photoURL, name, party, area, location, id, setDetailsTarget, getRepDetails}) {
 

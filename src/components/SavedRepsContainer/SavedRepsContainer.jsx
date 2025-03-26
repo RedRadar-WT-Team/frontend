@@ -1,4 +1,4 @@
-import SavedRepsCards from '../SavedRepsCards/SavedRepsCards'
+import SavedRepCards from '../SavedRepCards/SavedRepCards'
 import './SavedRepsContainer.css';
 
 function SavedRepsContainer({ savedReps, setDetailsTarget, getRepDetails }) {
@@ -9,7 +9,7 @@ function SavedRepsContainer({ savedReps, setDetailsTarget, getRepDetails }) {
 
     const reps = savedReps.data.map((rep) => {
         return ( 
-        <SavedRepsCards photoURL = { rep.attributes.photo_url }
+        <SavedRepCards photoURL = { rep.attributes.photo_url }
                         name={ rep.attributes.name }
                         party={ rep.attributes.party }
                         area={ rep.attributes.area }

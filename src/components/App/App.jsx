@@ -63,13 +63,10 @@ function App() {
       fetchRepDetails(id, location, "true")
     }
   }
-
   // Fetches to backend
   function getRepData(query, page = "") {
     fetch(`${baseURL}/api/v1/representatives/search?db=false&query=${query}`)
     .then(response => {
-      console.log(response)
-      console.log(query)
       return response.json();
     })
     .then(data => {
@@ -146,8 +143,7 @@ function App() {
   }
 
   function saveEos(EoNum) {
-    console.log("EO NUM: ", EoNum)
-    
+    console.log("saveEo: ", EoNum)
     setError('');  
     
     fetch(`${baseURL}/api/v1/executive_orders_users?executive_order_number=${EoNum}`, {
@@ -164,9 +160,6 @@ function App() {
       return response.json();
     })
     .then(data => {
-
-      console.log("DATA: ", data)
-
       navigate("/profile");
     })
     .catch(error => {

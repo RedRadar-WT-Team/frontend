@@ -1,4 +1,4 @@
-import './SavedEosCards.css';
+import './SavedEoCards.css';
 import { useNavigate } from 'react-router-dom';
 
 function SavedEosCards({ title, executive_order_number, publication_date, id}) {

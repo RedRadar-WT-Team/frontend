@@ -51,7 +51,6 @@ function CreateAccount({baseURL}) {
       
       if (!response.ok) {
         const json = await response.json();
-        console.log("json: ", json)
         if (json.errors) {
           const errorMessages = json.errors.split(", ");
           let errorObj = {};

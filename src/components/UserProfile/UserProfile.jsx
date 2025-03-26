@@ -35,7 +35,6 @@ function UserProfile( {baseURL, getRepData, localReps, setDetailsTarget, getRepD
   // Fetch local representatives based on the user's zip code
   useEffect(() => {
     if (userInfo?.data?.attributes?.zip) {
-      console.log(userInfo.data.attributes.zip)
       getRepData(userInfo.data.attributes.zip, "local");
     }
   }, [userInfo]);

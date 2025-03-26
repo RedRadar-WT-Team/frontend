@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 function ExecutiveOrderCard({ execOrder, handleSavedEos}) {
     
   const starClick = (event) => {
-    console.log("execOrder.document_number: ", execOrder.document_number)
     event.stopPropagation();
     handleSavedEos(execOrder.document_number);
   }
