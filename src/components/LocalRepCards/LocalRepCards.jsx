@@ -1,10 +1,10 @@
 import './LocalRepCards.css'
 
-function LocalRepCards({ photoURL, name, party, area, location, id, setDetailsTarget, getDetails }) {
+function LocalRepCards({ photoURL, name, party, area, location, id, setDetailsTarget, getRepDetails }) {
 
     const cardClick = () => {
         setDetailsTarget("rep")
-        getDetails(id, location)
+        getRepDetails(id, location)
     }
 
     return(

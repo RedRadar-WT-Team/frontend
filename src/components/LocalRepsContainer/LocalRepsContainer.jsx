@@ -1,7 +1,7 @@
 import LocalRepCards from '../LocalRepCards/LocalRepCards'
 import './LocalRepsContainer.css';
 
-function LocalRepsContainer({ localReps }) {
+function LocalRepsContainer({ localReps, setDetailsTarget, getRepDetails }) {
 
     if (!localReps?.data || !Array.isArray(localReps.data)) {
         return <p> Loading... </p>
@@ -16,8 +16,8 @@ function LocalRepsContainer({ localReps }) {
                         location={ rep.attributes.location }
                         id={ rep.attributes.id }
                         key={ rep.attributes.id}
-                        // setDetailsTarget = { setDetailsTarget }
-                        // getDetails = { getDetails }
+                        setDetailsTarget = { setDetailsTarget }
+                        getRepDetails = { getRepDetails }
                         />
         
         );
