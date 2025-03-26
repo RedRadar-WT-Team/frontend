@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 
 function UserDetails( { userInfo }) {
     return(
-        <div>
+        <div className="details-container">
             <h2>User Information</h2>
             <div className="details">
                 <div className="detail">
