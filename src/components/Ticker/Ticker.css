@@ -52,6 +52,10 @@
   transition: opacity ease-in-out 0.2s;
 }
 
+.slide:hover {
+  cursor: pointer;
+}
+
 .slide.active-anim {
   opacity: 1;
 }

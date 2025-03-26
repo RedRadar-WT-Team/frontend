@@ -26,7 +26,9 @@ function LocalRepsContainer({ localReps, setDetailsTarget, getRepDetails }) {
     return (
         <section className='localContainer'>
             <h2>Your Local Reps</h2>
-            {reps}
+            <div className="card-scroll">
+                {reps}
+            </div>
         </section>
     );
 }

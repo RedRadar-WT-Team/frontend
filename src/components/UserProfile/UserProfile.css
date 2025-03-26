@@ -24,7 +24,7 @@
 .quadrant {
   border: 2px solid var(--garnet);
   padding: 20px;
-  border-radius: 8px;
+  border-radius: 10px;
   background-color: var(--pale-dogwood);
 }
 
@@ -44,4 +44,26 @@ button {
 
 button:hover {
   background-color: var(--teal);
+}
+
+
+.card-scroll {
+  overflow-y: auto;
+  max-height: 15em;
+  margin-right: 0.3em;
+  padding-right: 0.7em;
+}
+
+.card-scroll::-webkit-scrollbar {
+  width: 0.5em;
+  margin-left: 0.5em;
+}
+
+.card-scroll::-webkit-scrollbar-thumb {
+  border-radius: 0.7em;
+  background-color: var(--lowOp_teal);
+}
+
+.card-scroll::-webkit-scrollbar-track {
+  margin-left: 0.5em;
 }
