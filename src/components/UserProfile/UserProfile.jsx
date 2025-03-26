@@ -1,14 +1,14 @@
 // src/components/UserProfile/UserProfile.jsx
 
 import React, { useState, useEffect } from "react";
-import { NavLink } from 'react-router-dom';
+import UserDetails from "../UserDetails/UserDetails";
 import LocalRepsContainer from "../LocalRepsContainer/LocalRepsContainer";
 import MenuPopUp from "../MenuPopUp/MenuPopUp";
 import LoginPopUp from "../LoginPopUp/LoginPopUp";
 import './UserProfile.css';
 
 function UserProfile( {baseURL, getRepData, repData, setDetailTarget, getDetails} ) {
-  const [userInfo, setUserInfo] = useState(null);
+  const [userInfo, setUserInfo] = useState({});
   const [localRepresentatives, setLocalRepresentatives] = useState([]);
   const [savedRepresentatives, setSavedRepresentatives] = useState([]);
   const [savedExecutiveOrders, setSavedExecutiveOrders] = useState([]);
@@ -19,6 +19,7 @@ function UserProfile( {baseURL, getRepData, repData, setDetailTarget, getDetails
       method: "GET", 
       credentials: 'include'})
     .then(response => {
+      console.log("Profile response: ", response)
       return response.json();
     })
     .then(data => {
@@ -34,6 +35,7 @@ function UserProfile( {baseURL, getRepData, repData, setDetailTarget, getDetails
 
   // Fetch local representatives based on the user's zip code
   useEffect(() => {
+    console.log("userInfo: ", userInfo)
     if (userInfo && userInfo.zip) {
       getRepData(userInfo.zip, "local");
     }
@@ -63,14 +65,7 @@ function UserProfile( {baseURL, getRepData, repData, setDetailTarget, getDetails
   return (
     <div className="user-profile-container">
       <div className="quadrant">
-        <h2>User Information</h2>
-        {/* <p>Name: {userInfo.name}</p>
-        <p>Email: {userInfo.email}</p>
-        <p>State: {userInfo.state}</p>
-        <p>Zip Code: {userInfo.zip}</p> */}
-        <NavLink to="/update">
-          <button>Edit Profile</button>
-        </NavLink>
+        <UserDetails userInfo={userInfo}/>
       </div>
 
       <div className="quadrant">
