@@ -57,6 +57,7 @@ function App() {
   }
 
   function getRepDetails(id, location) {
+
    if (detailTarget === "rep") {
       fetchRepDetails(id, location, "false")
     } else if (detailTarget === "repDB") {

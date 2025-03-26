@@ -3,8 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import { format } from 'date-fns';
 
 function SavedEosCards({ title, executive_order_number, publication_date, id}) {
+    const navigate = useNavigate();
+    
     const cardClick = () => {
-        useNavigate(`/executive_orders/${id}`);
+        navigate(`/executive_orders/${executive_order_number}`);
     }
 
     return (
