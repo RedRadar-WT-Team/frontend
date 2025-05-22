@@ -3,6 +3,7 @@
     justify-content: center;
     background-color: var(--xtra_lowOp_black);
     width: 100%;
+    padding: 1em;
 }
 
 .EOCard {
@@ -11,6 +12,10 @@
     border-radius: 2em;
     padding: 1em;
     font-size: x-large;
+}
+
+.eo-summary {
+    font-size: 0.8em;
 }
 
 .EODetails a {

@@ -25,7 +25,6 @@ function LoginPopUp({ isLoginOpen, closeLogin, setCurrentUser, baseURL }) {
     })
       .then(response => response.json())
       .then(data => { 
-        console.log('User info: ', (data));
         navigate('/profile'); // After successful login, navigate to the profile page
         closeLogin();
       })

@@ -16,19 +16,20 @@ import AboutPage from '../AboutPage/AboutPage.jsx';
 
 
 function App() {
-  const baseURL = "http://localhost:3000"; // Use server locally
-  // const baseURL = "https://repradar-backend.onrender.com";
+  // const baseURL = "http://localhost:3000"; // Use server locally
+  const baseURL = "https://rr-backend-534q.onrender.com";
   const navigate = useNavigate();
   
   const [executiveOrders, setExecutiveOrders] = useState([]);
   const [allExecutiveOrders, setAllExecutiveOrders ] = useState({});
   const [repData, setRepData] = useState(null);
+  const [localRepresentatives, setLocalRepresentatives] = useState([]);
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [detailTarget, setDetailTarget] = useState(""); 
   const [repDetails, setRepDetails] = useState({});
   const [currentUser, setCurrentUser] = useState({});
-  const [error, setError] = useState('')
+  const [error, setError] = useState('');
 
   useEffect(() => {
     showFiveMostRecentExecutiveOrders();
@@ -56,24 +57,22 @@ function App() {
   }
 
   function getRepDetails(id, location) {
+
    if (detailTarget === "rep") {
       fetchRepDetails(id, location, "false")
     } else if (detailTarget === "repDB") {
       fetchRepDetails(id, location, "true")
     }
   }
-
   // Fetches to backend
   function getRepData(query, page = "") {
     fetch(`${baseURL}/api/v1/representatives/search?db=false&query=${query}`)
     .then(response => {
-      console.log(response)
       return response.json();
     })
     .then(data => {
       if ( page === "local" ) {
-        console.log("Local: ", data)
-        setRepData(data);
+        setLocalRepresentatives(data);
       } else {
         setRepData(data)
         navigate('/results')
@@ -145,8 +144,7 @@ function App() {
   }
 
   function saveEos(EoNum) {
-    console.log("EO NUM: ", EoNum)
-    
+    console.log("saveEo: ", EoNum)
     setError('');  
     
     fetch(`${baseURL}/api/v1/executive_orders_users?executive_order_number=${EoNum}`, {
@@ -163,9 +161,6 @@ function App() {
       return response.json();
     })
     .then(data => {
-
-      console.log("DATA: ", data)
-
       navigate("/profile");
     })
     .catch(error => {
@@ -221,7 +216,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Homepage executiveOrders={executiveOrders} getRepData={getRepData}/>}/>
           <Route path="/login" element={<LoginPopUp />} /> 
-          <Route path="/profile" element={<UserProfile baseURL={baseURL} getRepData={ getRepData } repData={ repData } setDetailTarget={setDetailTarget} getDetails={getRepDetails}/>} />
+          <Route path="/profile" element={<UserProfile baseURL={baseURL} getRepData={ getRepData } localReps={ localRepresentatives } setDetailsTarget={handleDetailsTarget} getRepDetails={getRepDetails}/>} />
           <Route path="/executive_orders" element={<AllExecutiveOrdersPage allExecutiveOrders={allExecutiveOrders}  handleSavedEos={handleSavedEos}/>} />
           <Route path="/create_account" element={<CreateAccount baseURL={baseURL} />} />
           <Route path="/update" element={<EditProfile baseURL={baseURL} />} />

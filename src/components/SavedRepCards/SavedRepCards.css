@@ -1,0 +1,16 @@
+.rep-card {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 1.5em;
+    background-color: var( --lowOp_white);
+    border-radius: 1em;
+    padding: 1em;
+}
+
+.rep-card:hover {
+    cursor: pointer;
+}
+
+.rep-card img {
+    width: 10em;
+}
