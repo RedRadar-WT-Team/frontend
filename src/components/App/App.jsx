@@ -17,7 +17,7 @@ import AboutPage from '../AboutPage/AboutPage.jsx';
 
 function App() {
   // const baseURL = "http://localhost:3000"; // Use server locally
-  const baseURL = "https://rr-backend-534q.onrender.com";
+  const baseURL = "https://rep-radar-backend.onrender.com"
   const navigate = useNavigate();
   
   const [executiveOrders, setExecutiveOrders] = useState([]);
